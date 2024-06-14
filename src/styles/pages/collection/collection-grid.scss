@@ -1,0 +1,227 @@
+@import '../../components/fonts';
+@import '../../lib/animate';
+
+//
+//  Typography
+//  _____________________________________________
+.collection-listing-wrapper {
+    .item {
+        @include body-font-4;
+        .price-box {
+            @include body-font-5;
+            .product-compare-price {
+                color: $red;
+            }
+        }
+        .out-of-stock {
+            @include body-font-4;
+        }
+        &.promo{
+            h4{
+                color: $grayscale800;
+                @include title-font-5-light;
+                text-transform: uppercase;
+            }
+            label{
+                color: $cellcosmetRed;
+                @include body-font-4;
+                text-transform: uppercase;
+            }
+            p{
+                @include body-font-3;
+                color: $grayscale800;
+            }
+            small{
+                color: $grayscale800;
+                @include body-font-5;
+            }
+            cta{
+                @include cta-1;
+                color: $black;
+            }
+        }
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+
+.product-collection {
+    &.large {
+        
+    }
+    &.small {
+        
+    }
+    .collection-listing-wrapper {
+        overflow: hidden;
+    }
+    .collection-products {
+        
+    }
+}
+
+.item{
+    .product-desc{
+        padding: 8px 0;
+    }
+}
+
+.item.promo {
+    background: $white;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    img{
+        // height: 100%;
+    }
+    .promo-link {
+        display: block;
+        position: absolute;
+        width: auto;
+        img{
+            padding-bottom: 10px;
+            display: block;
+        }
+        h4{
+            display: block;
+            padding-bottom: 12px;
+        }
+        label{
+            display: block;
+            padding-bottom: 12px;
+        }
+        p{
+            display: block;
+            padding-bottom: 12px;
+
+        }
+        small{
+            display: block;
+            padding-bottom: 8px;
+        }
+        cta{
+            max-width: 140px;
+            margin: 0;
+            background-color: transparent;
+            color: $black;
+            border-color: $black;
+        }
+    }
+    &.promo-1{
+
+    }
+    &.promo-2{
+
+    }
+    &.style-light {
+        color: $white;
+        background: $darkGrey;
+    }
+    &.style-dark {
+        color: $black;
+        background: $lightGrey;
+    }
+}
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    .collection-products{
+        .item{
+            padding: 0 20px;
+            &.promo{
+                &.promo-1{
+                    padding: 0 20px;
+                    .promo-link{
+                        bottom: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        cta{
+                            margin: 0 auto;
+                        }
+                    }
+                }
+                &.promo-2{
+                    display: none;
+                }
+            }
+        }
+    }
+    .product-collection {
+        .collection-products {
+            @include gridSystemWithPromo(1,20px);
+        }
+        &.large {
+            .collection-products {
+                @include gridSystemWithPromo(1,20px);
+                .item.promo {
+                    min-height: 300px;
+                }
+            } 
+        }
+        &.small {
+            .collection-products {
+                @include gridSystemWithPromo(1,20px);
+                .item.promo {
+                    display: none;
+                }
+            } 
+        }
+    }
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    .collection-products {
+        row-gap: 50px;
+        .item {
+            .product-image-wrapper {
+                &:hover {
+                    .product-image.alt {
+                        @include opacity(1);
+                    }
+                }
+            }
+            &.promo{
+                &.promo-1{
+                    .promo-link{
+                        bottom:  30px;
+                        left: 30px;
+                        text-align: left;
+                    }
+                }
+                &.promo-2{
+                    .promo-link{
+                        right: 40px;
+                        width: 50%;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+    .product-collection {
+        &.large {
+            .collection-products {
+                // @include gridSystemWithPromo(3,33px);
+                @include gridSystemWithPromo(4,12px);
+            } 
+        }
+        &.small {
+            .collection-products {
+                @include gridSystemWithPromo(2,12px);
+                .item.promo {
+                    display: none;
+                }
+            } 
+        }
+    }
+}

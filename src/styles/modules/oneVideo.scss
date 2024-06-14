@@ -1,0 +1,178 @@
+@import '../components/fonts';
+
+// css components can be re-used on any page of the site
+$video-ctl-size: 40px;
+
+.video-wrapper {
+	overflow: hidden;
+
+	&.bg-video{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		video, iframe{
+			@include transition(all $fast ease-in);
+			opacity: 0;
+			visibility: hidden;
+			object-fit: cover;
+		}
+
+		&.playing {
+			iframe{
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+
+		video {
+			&:not([autoplay]) {
+				& + .video-ctl{
+					opacity: 1;
+				}
+			}
+		}
+	}
+	
+	iframe, video {
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+		@include vcenter-fallback();
+	}
+	
+	video::-webkit-media-controls {
+        display:none !important;
+    }
+	
+	div.video-box {
+		position: absolute;
+		z-index: 0;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.content-wrapper{
+		max-width: $maxContentWidth;
+		margin: auto;
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translate3d(-50%,0,0);
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+
+	.video-ctl {
+		top: 50%;
+		left: 50%;
+		z-index: 999;
+		position: absolute;
+		cursor: pointer;
+		text-align: center;
+		color: transparent;
+		@include transform(translate(-50%,-50%));
+		@include transition(all $fast);
+		width: $video-ctl-size;
+		height: $video-ctl-size;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='91' viewBox='0 0 90 91' fill='none'%3E%3Ccircle cx='44.7877' cy='45.5377' r='43.8472' stroke='white' stroke-width='1.48635'/%3E%3Cpath d='M61.0595 44.2532C62.0504 44.8253 62.0504 46.2555 61.0595 46.8276L36.6562 60.9169C35.6653 61.489 34.4267 60.7739 34.4267 59.6297L34.4267 31.4511C34.4267 30.3069 35.6653 29.5918 36.6562 30.1639L61.0595 44.2532Z' fill='white'/%3E%3C/svg%3E");
+		background-repeat:no-repeat;
+		background-position:center center;
+		background-size: 100% 100%, auto;
+		
+		&.playing {
+			background-image: none;
+		}
+	}
+
+	.video-poster {
+		z-index: 2;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 1;
+		visibility: visible;
+		@include transition(all $fast ease-in);
+	}
+
+	&.playing {
+		.video-poster {
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
+}
+
+
+//
+// Small Screens Only
+//  _____________________________________________
+@include query-small {
+	.video-wrapper {
+		iframe, video {
+			width: 100% !important;
+			height: 100% !important;
+			left: 0;
+			top: 0;
+			@include transform(translate(0%,0%));
+		}
+	}
+};
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+	.video-wrapper {
+		// iframe, video {
+			
+		// }
+		
+		// iframe {
+		// 	z-index: 3;
+		// }
+		
+		// video {
+		// 	z-index: 0;
+		// }
+		
+		// div.video-box {
+		// 	&[data-video-type="vimeo"] {
+		// 		z-index: 3;
+		// 	}
+		// }
+	}
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+	
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+	.video-wrapper {
+		.video-ctl {
+
+			&:before {
+				
+			}
+		}
+		&:hover {
+			.video-ctl {
+				// opacity: 1;
+				// @include transform(translate(-50%,-50%) scale(1,1));
+			}
+		}
+	}
+};

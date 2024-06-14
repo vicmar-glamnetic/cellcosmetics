@@ -1,0 +1,45 @@
+---
+description: Pending Payment Error.
+---
+
+{% capture email_title %} Your payment couldn’t be processed for order {{ order_name }} {% endcapture %}
+{% capture email_body %}
+  You have not been charged. Click below to try paying for the order again. If you have any questions about your order, please contact <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>.
+{% endcapture %}
+
+<container class="pending-payment-error">
+  <row>
+    <columns>
+      <p class="order-number__text">Order {{ order_name }}</p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      {% if checkout_payment_collection_url %}
+        <table class="actions" width="100%">
+          <tr>
+            <td class="button__cell first"><a href="{{ checkout_payment_collection_url }}" class="button__text">Pay Now</a></td>
+            {% if shop.url %}
+              <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+            {% endif %}
+          </tr>
+        </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+
+  <row class="section customer-information">
+    <columns>
+      {{> customer_info}}
+    </columns>
+  </row>
+</container>

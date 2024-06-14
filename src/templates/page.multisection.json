@@ -1,0 +1,15 @@
+{
+    "name": "Default multisection template",
+    "sections": {
+        "module1": {
+            "type": "multisection-module-1"
+        },
+        "module2": {
+            "type": "multisection-module-2"
+        }
+    },
+    "order": [
+        "module1",
+        "module2"
+    ]
+}

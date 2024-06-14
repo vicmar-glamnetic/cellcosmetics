@@ -1,0 +1,183 @@
+{% comment %}
+Example request:
+    From: <img class="nav-image" src="{{ block.settings.image | img_url: '200x' }}" alt="{{ block.settings.image.alt }}" />
+    To : {%- include 'responsive-image', image: block.settings.image, size: '160x', imageSmall: block.settings.image, class: 'nav-image', id: '', sizeMedium: '175x', sizeSmall: '145x' -%}
+    Params:
+        - image: The source image object that display on Desktop (above 1024px) [Required]
+        - size: Size for large screen (above 1024px) [Required]
+        - imageSmall: The source image object that display on mobile devices (below 1024px) [Optional]
+        - sizeMedium: Size for medium screen (between 768px and 1024px) [Optional]
+        - sizeSmall: Size for small screen (below 768px) [Optional]
+        - class: The class name of the image [Optional]
+        - id: The id name of the image [Optional]
+        - imageAlt: The image alt text if passed image is not an object
+        - heightFix: Load placeholder image at same ratio as main image src.
+{% endcomment %}
+
+{% comment %} For none object image, such as image url and image from metafields {% endcomment %}
+{%- unless image.src -%}
+    {% assign noneObjectImageFormat = '.jpg' %}
+    {%- if image contains '.png' -%}
+        {% assign noneObjectImageFormat = '.png' %}
+    {%- elsif image contains '.jpeg' -%}
+        {% assign noneObjectImageFormat = '.jpeg' %}
+    {%- elsif image contains '.gif' -%}
+        {% assign noneObjectImageFormat = '.gif' %}
+    {%- elsif image contains '.JPG' -%}
+        {% assign noneObjectImageFormat = '.JPG' %}
+    {%- elsif image contains '.PNG' -%}
+        {% assign noneObjectImageFormat = '.PNG' %}
+    {%- elsif image contains '.JPEG' -%}
+        {% assign noneObjectImageFormat = '.JPEG' %}
+    {%- elsif image contains '.GIF' -%}
+        {% assign noneObjectImageFormat = '.GIF' %}
+    {%- endif -%}
+    
+    {% assign toBeReplaced = noneObjectImageFormat %}
+    {% assign replacedWith = '_' %}
+    {% assign replacedWith = replacedWith | append: size | append: noneObjectImageFormat %}
+    {% assign imageConverted = image | replace: toBeReplaced, replacedWith %}
+{%- endunless -%}
+
+{%- unless imageSmall.src -%}
+    {% assign noneObjectImageSmallFormat = '.jpg' %}
+    {%- if imageSmall contains '.png' -%}
+        {% assign noneObjectImageSmallFormat = '.png' %}
+    {%- elsif imageSmall contains '.jpeg' -%}
+        {% assign noneObjectImageSmallFormat = '.jpeg' %}
+    {%- elsif imageSmall contains '.gif' -%}
+        {% assign noneObjectImageSmallFormat = '.gif' %}
+    {%- elsif imageSmall contains '.JPG' -%}
+        {% assign noneObjectImageSmallFormat = '.JPG' %}
+    {%- elsif imageSmall contains '.PNG' -%}
+        {% assign noneObjectImageSmallFormat = '.PNG' %}
+    {%- elsif imageSmall contains '.JPEG' -%}
+        {% assign noneObjectImageSmallFormat = '.JPEG' %}
+    {%- elsif imageSmall contains '.GIF' -%}
+        {% assign noneObjectImageSmallFormat = '.GIF' %}
+    {%- endif -%}
+    
+    {% assign toBeReplaced = noneObjectImageSmallFormat %}
+    {% assign imageMedium = sizeSmall %}
+    {%- if sizeSmall -%}
+        {% assign replacedWith = '_' %}
+        {% assign replacedWith = replacedWith | append: sizeSmall | append: noneObjectImageSmallFormat %}
+        {% assign imageSmallConverted = imageSmall | replace: toBeReplaced, replacedWith %}
+    {%- elsif sizeMedium -%}
+        {% assign replacedWith = '_' %}
+        {% assign replacedWith = replacedWith | append: sizeMedium | append: noneObjectImageSmallFormat %}
+        {% assign imageMediumConverted = imageSmall | replace: toBeReplaced, replacedWith %}    
+    {%- endif -%}
+{%- endunless -%}
+
+{%- assign _sizeLazy = sizeLazy | default: '1x' -%}
+
+<picture
+    class="
+        responsive
+        {%- if class %} {{ class }} {% endif -%}
+        {%- if heightFix %} height-fix {% endif -%}
+    "
+    {%- if id %} id="{{ id }}" {% endif -%}
+    data-handle="{{ image | handleize }}"
+    data-handle-mobile="{{ imageSmall | handleize }}"
+>
+    {% if sizeSmall and imageSmall %}
+        <source
+            media="(max-width: 450px)"
+            srcset="
+                {%- if imageSmall.src -%}
+                    {{ imageSmall.src | img_url: _sizeLazy }}
+                {%- else -%}
+                    {{ "placeholder.jpg" | file_img_url: _sizeLazy }}
+                {%- endif -%}
+            "
+            data-srcset="
+                {%- if imageSmall.src -%}
+                    {{ imageSmall.src | img_url: sizeSmall }},
+                    {{ imageSmall.src | img_url: sizeSmall, scale: 2 }} 2x
+                {%- else -%}
+                    {{ imageSmallConverted }}
+                {%- endif -%}
+            "
+        >
+    {% endif %}
+
+    {% if sizeMedium and imageSmall %}
+        <source
+            media="(max-width: 1024px)"
+            srcset="
+                {%- if imageSmall.src -%}
+                    {{ imageSmall.src | img_url: _sizeLazy }}
+                {%- else -%}
+                    {{ "placeholder.jpg" | file_img_url: _sizeLazy }}
+                {%- endif -%}
+            "
+            data-srcset="
+                {%- if imageSmall.src -%}
+                    {{ imageSmall.src | img_url: sizeMedium }},
+                    {{ imageSmall.src | img_url: sizeMedium, scale: 2 }} 2x
+                {%- else -%}
+                    {{ imageSmallConverted }}
+                {%- endif -%}
+            "
+        >
+    {% endif %}
+
+    <source
+        media="(min-width: 1025px)"
+        srcset="
+            {%- if image.src -%}
+                {{ image.src | img_url: _sizeLazy }}
+            {%- endif -%}
+        "
+        data-srcset="
+            {%- if image.src -%}
+                {{ image.src | img_url: size }},
+                {{ image.src | img_url: size, scale: 2 }} 2x
+            {%- else -%}
+                {{ imageConverted }}
+            {%- endif -%}
+        "
+    >
+
+    <img
+        class="lazy"
+        src="
+            {%- if image.src -%}
+                {{ image.src | img_url: _sizeLazy }}
+            {%- endif -%}
+        "
+        data-src="
+            {%- if image.src -%}
+                {{ image.src | img_url: size }}
+            {%- else -%}
+                {{ imageConverted }}
+            {%- endif -%}
+        "
+        alt="{{ image.alt | default: imageAlt | escape }}"
+    >
+
+    {% if heightFix %}
+        <style>
+        {%- if imageSmall.src -%}
+            {%- assign image_height = imageSmall.height | times: 1.0 -%}
+            {%- assign image_width = imageSmall.width | times: 1.0 -%}
+            @media screen and (max-width: 1024px) {
+                picture[data-handle-mobile="{{ imageSmall | handleize }}"].height-fix {
+                    padding-top: {{- image_height | divided_by: image_width | times: 100.0 -}}%;
+                }
+            }
+        {%- endif -%}
+        {%- if image.src -%}
+            {%- assign image_height = image.height | times: 1.0 -%}
+            {%- assign image_width = image.width | times: 1.0 -%}
+            @media screen and (min-width: 1025px) {
+                picture[data-handle="{{ image | handleize }}"].height-fix {
+                    padding-top: {{- image_height | divided_by: image_width | times: 100.0 -}}%;
+                }
+            }
+        {%- endif -%}
+        </style>
+    {% endif %}
+</picture>

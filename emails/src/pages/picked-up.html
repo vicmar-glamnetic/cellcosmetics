@@ -1,0 +1,33 @@
+---
+description: Your order was picked up.
+---
+
+{% capture email_title %}Your order has been picked up{% endcapture %}
+{% capture email_body %}Thank you for shopping at {{ shop_name }}{% endcapture %}
+
+<container class="picked-up">
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      {% if shop.url %}
+        <table class="actions" width="100%">
+          <tr>
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Visit our store</a></td>
+          </tr>
+        </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+</container>

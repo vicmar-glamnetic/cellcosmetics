@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "google-form": {
+            "type": "page-google-form"
+        }
+    },
+    "order": [
+        "google-form"
+    ]
+}

@@ -1,0 +1,25 @@
+---
+description: Your order has been refunded.
+---
+
+{% capture email_title %}Your Order {{ order_name }} Has Been Refunded{% endcapture %}
+{% capture email_body %}If you have any questions, <a href="{{{{raw}}}}{{ shop.url }}{{{{/raw}}}}/pages/contact" style="text-decoration: underline;">please let us know</a>.{% endcapture %}
+
+<container class="order-refund">
+
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      <h2 class="heading">ORDER DETAILS</h2>
+      <h3 class="order-header">To view the full order summary, <a href="{{ order_status_url }}" class="">click here</a></h3>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

@@ -1,0 +1,55 @@
+{% paginate collection.products by 2 %}
+<div class="lookbook-main">
+    
+    {% comment %}
+    {% include 'breadcrumb' %}
+    {% endcomment %}
+    
+    <div class="lookbook-header">
+        <h1 class="section-header">{{ collection.title }}</h1>
+    </div>
+    
+    <div class="lookbook-products" >
+        {% for product in collection.products %}
+        <div class="item" data-page="{{ current_page }}" data-handle="{{ product.handle }}">
+            <img class="look-image" src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+            <p class="look-title">{{ product.title }}</p>
+            {% for col in product.collections %}
+                {% assign words = col.title | split: '_lookbook' %}
+                {% assign hasLinkedCollection = words | size %}
+                {% if hasLinkedCollection > 1 %}
+                {% comment %}
+                We found linked col, so render the linked products below
+                {% endcomment %}
+                    <div class="sibling-product-container">
+                    {% for sibling in col.products %}
+                        {% if sibling.handle != product.handle %}
+                        {%- assign current_variant = sibling.selected_or_first_available_variant -%}
+                        <div class="sibling">
+                            <img class="sibling-image" src="{{ sibling.featured_image.src | img_url: 'large' }}" alt="{{ sibling.featured_image.alt | escape }}">
+                            <a class="sibling-title" href="{{ sibling.url }}" >{{ sibling.title }}</a>
+                            <div class="price-box">
+                                <span class="product-price" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+                                    {{ current_variant.price | money | remove: '.00' }}
+                                </span>
+
+                                {% if product.compare_at_price_max > product.price %}
+                                <p class="product-compare-price">
+                                    {{ current_variant.compare_at_price | money | remove: '.00' }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+        {% include 'pagination' %}
+    {% endif %}
+</div>
+{% endpaginate %}

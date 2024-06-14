@@ -1,0 +1,57 @@
+<div class="account-dashboard">
+    <div class="account-banner">
+        <h1>
+            {%- if customer.first_name -%}
+                {{- 'customer.account.account_welcome' | t: name: customer.first_name -}}
+            {%- else -%}
+                {{- 'customer.account.welcome' | t -}}
+            {%- endif -%}
+        </h1>
+    </div>
+    <div class="account-details account-wrapper">
+        <div class="account-header">
+            <h2 class="button active first">{{ 'customer.orders.title' | t }}</h2>
+            <a class="button" href="{{ routes.account_addresses_url }}">{{ 'customer.addresses.title' | t }}</a>
+        </div>
+        <div class="account-body {% if customer.orders.size == 0 %}empty{% endif %}">
+            {%- if customer.orders.size != 0 -%}
+            <div class="order-list">
+                {% paginate customer.orders by 20 %}
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'customer.orders.order_number' | t }} #</th>
+                            <th>{{ 'customer.orders.date' | t }}</th>
+                            <th class="hide-medium-down">{{ 'customer.orders.payment_status' | t }}</th>
+                            <th class="hide-medium-down">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                            <th>{{ 'customer.orders.total' | t }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in customer.orders %}
+                        <tr class="responsive-table-row">
+                            <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name }}</td>
+                            <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'mmddyy' }}</td>
+                            <td class="hide-medium-down" data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+                            <td class="hide-medium-down" data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+                            <td class="total" data-label="{{ 'customer.orders.total' | t }}"><span>{{ order.total_price | money }}</span><a class="details" href="{{ order.customer_url }}">Details</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if paginate.pages > 1 %}
+                    {% include 'pagination' %}
+                {% endif %}
+                {% endpaginate %}
+            </div>
+            {%- else -%}
+            <div class="order-list-empty">
+                <p>{{ 'customer.orders.none' | t }}</p>
+                <a href="{{ routes.root_url }}">{{ 'customer.orders.none_link' | t }}</a>
+            </div>    
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+
+

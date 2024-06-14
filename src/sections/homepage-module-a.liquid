@@ -1,0 +1,471 @@
+{% schema %}
+{
+    "name": "Homepage Module A",
+    "max_blocks": 4,
+    "blocks": [
+        {
+            "type": "slide",
+            "name": "Slide full bleed",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_a",
+                    "label": "Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_mobile",
+                    "label": "Mobile Image"
+                },
+                {
+                    "type": "video_url",
+                    "id": "video_url",
+                    "accept": ["youtube", "vimeo"],
+                    "label": "Video URL",
+                    "info": "Add either youtube or vimeo direct video"
+                },
+                {
+                    "type": "text",
+                    "id": "preheadline",
+                    "label": "PreHeadline Text"
+                },
+                {
+                    "type": "color",
+                    "id": "preheadline_foreground",
+                    "label": "Text Color",
+                    "default": "#A80A14"
+                },
+                {
+                    "type": "color",
+                    "id": "preheadline_background",
+                    "label": "Background Color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "preheadline_background_transparent",
+                    "label": "Transparent background",
+                    "default": false
+                },
+                {
+                    "type": "color",
+                    "id": "preheadline_border",
+                    "label": "Border Color",
+                    "default": "#A80A14"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "preheadline_border_hide",
+                    "label": "Hide Border",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "headline",
+                    "label": "Headline Text"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color_desktop",
+                    "label": "Main Text Color Desktop",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color_mobile",
+                    "label": "Main Text Color Mobile",
+                    "default": "#fff"
+                },
+                {
+                    "type": "text",
+                    "id": "subheadline",
+                    "label": "SubHeadline Text"
+                },
+                {
+                    "type": "text",
+                    "id": "cta",
+                    "label": "CTA Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "CTA Link"
+                },
+                {
+                    "type": "color",
+                    "id": "button_foreground",
+                    "label": "Button Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "button_background",
+                    "label": "Button Background Color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "radio",
+                    "options": [
+                        { "value": "text-left", "label": "Left" },
+                        { "value": "text-center", "label": "Center" },
+                        { "value": "text-right", "label": "Right" }
+                    ],
+                    "default": "text-center",
+                    "id": "text_align",
+                    "label": "Text Alignment"
+                },
+                {
+                    "type": "radio",
+                    "default": "mobile-bottom",
+                    "id": "mobile_vertical_alignment",
+                    "label": "Mobile Vertical text alignment",
+                    "options": [
+                        {
+                        "label": "Top",
+                        "value": "mobile-top"
+                        },
+                        {
+                        "label": "Middle",
+                        "value": "mobile-middle"
+                        },
+                        {
+                        "label": "Bottom",
+                        "value": "mobile-bottom"
+                        }
+                    ]
+                },
+                {
+                    "type": "radio",
+                    "default": "bottom",
+                    "id": "vertical_text_alignment",
+                    "label": "Vertical text alignment",
+                    "options": [
+                        {
+                        "label": "Top",
+                        "value": "top"
+                        },
+                        {
+                        "label": "Middle",
+                        "value": "middle"
+                        },
+                        {
+                        "label": "Bottom",
+                        "value": "bottom"
+                        }
+                    ]
+                },
+                {
+                    "type": "radio",
+                    "default": "left",
+                    "id": "horizontal_text_alignment",
+                    "label": "Horizontal text alignment",
+                    "options": [
+                        {
+                        "label": "Left",
+                        "value": "left"
+                        },
+                        {
+                        "label": "Center",
+                        "value": "center"
+                        },
+                        {
+                        "label": "Right",
+                        "value": "right"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "date_from",
+                    "label": "Date from:"
+                },
+                {
+                    "type": "text",
+                    "id": "date_to",
+                    "label": "Date to:"
+                }
+            ]
+        },
+        {
+            "type": "slide_splitted",
+            "name": "Slide splitted",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_a",
+                    "label": "Image Left"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_b",
+                    "label": "Image Right"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_mobile",
+                    "label": "Mobile Image"
+                },
+                {
+                    "type": "text",
+                    "id": "preheadline",
+                    "label": "PreHeadline Text"
+                },
+                {
+                    "type": "color",
+                    "id": "preheadline_foreground",
+                    "label": "Text Color",
+                    "default": "#A80A14"
+                },
+                {
+                    "type": "color",
+                    "id": "preheadline_background",
+                    "label": "Background Color",
+                    "default": "#fff"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "preheadline_background_transparent",
+                    "label": "Transparent background",
+                    "default": false
+                },
+                {
+                    "type": "color",
+                    "id": "preheadline_border",
+                    "label": "Border Color",
+                    "default": "#A80A14"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "preheadline_border_hide",
+                    "label": "Hide Border",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "headline",
+                    "label": "Headline Text"
+                },
+                {
+                    "type": "text",
+                    "id": "subheadline",
+                    "label": "SubHeadline Text"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color_desktop",
+                    "label": "Main Text Color Desktop",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color_mobile",
+                    "label": "Main Text Color Mobile",
+                    "default": "#fff"
+                },
+                {
+                    "type": "text",
+                    "id": "cta",
+                    "label": "CTA Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "CTA Link"
+                },
+                {
+                    "type": "color",
+                    "id": "button_foreground",
+                    "label": "Button Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "button_background",
+                    "label": "Button Background Color",
+                    "default": "#fff"
+                },
+                
+                {
+                    "type": "radio",
+                    "options": [
+                        { "value": "text-left", "label": "Left" },
+                        { "value": "text-center", "label": "Center" },
+                        { "value": "text-right", "label": "Right" }
+                    ],
+                    "default": "text-center",
+                    "id": "text_align",
+                    "label": "Text Alignment"
+                },
+                {
+                    "type": "radio",
+                    "default": "mobile-bottom",
+                    "id": "mobile_vertical_alignment",
+                    "label": "Mobile Vertical text alignment",
+                    "options": [
+                        {
+                        "label": "Top",
+                        "value": "mobile-top"
+                        },
+                        {
+                        "label": "Middle",
+                        "value": "mobile-middle"
+                        },
+                        {
+                        "label": "Bottom",
+                        "value": "mobile-bottom"
+                        }
+                    ]
+                },
+                {
+                    "type": "radio",
+                    "default": "bottom",
+                    "id": "vertical_text_alignment",
+                    "label": "Vertical text alignment",
+                    "options": [
+                        {
+                        "label": "Top",
+                        "value": "top"
+                        },
+                        {
+                        "label": "Middle",
+                        "value": "middle"
+                        },
+                        {
+                        "label": "Bottom",
+                        "value": "bottom"
+                        }
+                    ]
+                },
+                {
+                    "type": "radio",
+                    "default": "left",
+                    "id": "horizontal_text_alignment",
+                    "label": "Horizontal text alignment",
+                    "options": [
+                        {
+                        "label": "Left",
+                        "value": "left"
+                        },
+                        {
+                        "label": "Center",
+                        "value": "center"
+                        },
+                        {
+                        "label": "Right",
+                        "value": "right"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "date_from",
+                    "label": "Date from:"
+                },
+                {
+                    "type": "text",
+                    "id": "date_to",
+                    "label": "Date to:"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Homepage Module A",
+            "category": "Homepage",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+
+{% assign today = "now" | date: "%s" %}
+{% if section.blocks.size > 0 %}
+    <section class="hpmodule hp-module-a {% if section.blocks.size > 1 %}slick{% endif %}">
+        {% for block in section.blocks %}
+            {% assign date_from = block.settings.date_from | date: "%s" %}
+            {% assign date_to = block.settings.date_to | date: "%s" %}
+            {% assign showSlide = true %}
+           
+           {%- if date_from != blank -%}
+               {%- if today < date_from -%}
+                 {% assign showSlide = false %}
+              {%- endif -%}
+            {%- endif -%}
+     
+           {%- if date_to != blank -%}
+             {%- if  today > date_to -%}
+               {% assign showSlide = false %}
+            {%- endif -%}
+          {%- endif -%}
+
+          
+          {%- if showSlide == true -%}           
+            <div class="slider-block-{{block.id }} block-container {{ block.settings.mobile_vertical_alignment }} {{ block.settings.vertical_text_alignment }} {{ block.settings.horizontal_text_alignment }} {{ block.settings.text_align }} ">
+                {% if block.settings.cta != blank %}
+                    <a href="{{ block.settings.link }}" class="slider-container-link"><span style="visibility:hidden;">{{ block.settings.cta }}</span></a>
+                {% endif %}
+                {% if block.type == 'slide_splitted' %}
+                    <div class="splitted-images">
+                        <span class="absolute-image desktop-image desktop-image-a lazy" role="img" aria-label="{{ section.settings.image_a.alt }}" style="background-image:url('{{ block.settings.image_a | img_url: '1x' }}');" data-bg="{{ block.settings.image_a | image_url }}"></span>
+                        <span class="absolute-image desktop-image desktop-image-b lazy" role="img" aria-label="{{ section.settings.image_a.alt }}" style="background-image:url('{{ block.settings.image_b | img_url: '1x' }}');" data-bg="{{ block.settings.image_b | image_url }}"></span>
+                    </div>
+                {% else %}
+                    <span class="absolute-image desktop-image lazy" role="img" aria-label="{{ section.settings.image_a.alt }}" style="background-image:url('{{ block.settings.image_a | img_url: '1x' }}');" data-bg="{{ block.settings.image_a | image_url }}"></span>
+                {% endif %}
+                <span class="absolute-image mobile-image lazy" role="img" aria-label="{{ section.settings.image_mobile.alt }}" style="background-image:url('{{ block.settings.image_mobile | img_url: '1x' }}');" data-bg="{{ block.settings.image_mobile | image_url }}"></span>
+                {% if block.settings.video_url != blank %}
+                    <div class="video-wrapper"
+                        data-video-type="{{- block.settings.video_url.type -}}"
+                        data-video-id="{{- block.settings.video_url.id -}}"
+                        data-video-src="{{- block.settings.video_url -}}">
+                        <div class="video-poster">
+                            <span class="absolute-image desktop-image lazy" role="img" aria-label="{{ section.settings.image_a.alt }}" style="background-image:url('{{ block.settings.image_a | img_url: '1x' }}');" data-bg="{{ block.settings.image_a | image_url }}"></span>
+                            <span class="absolute-image mobile-image lazy" role="img" aria-label="{{ section.settings.image_mobile.alt }}" style="background-image:url('{{ block.settings.image_mobile | img_url: '1x' }}');" data-bg="{{ block.settings.image_mobile | image_url }}"></span>
+                        </div>
+                        <div id="{{- block.settings.video_url.id -}}" class="video-player"></div>
+                        <button class="video-ctl paused"></button>
+                    </div>
+                {% endif %}
+                
+                {%- style -%}
+                    .slider-block-{{block.id }} .headline.title-font-2-light,
+                    .slider-block-{{block.id }} .subheadline.title-font-3-light {
+                        color: {{block.settings.text_color_desktop }}
+                    }
+
+                    @media screen and (max-width: 767px) {
+                        .slider-block-{{block.id }} .headline.title-font-2-light,
+                        .slider-block-{{block.id }} .subheadline.title-font-3-light {
+                            color: {{block.settings.text_color_mobile }}
+                        }                     
+                    }
+                {%- endstyle -%}
+
+                {% comment %} Add .bottom to .inner-wrapper to push text to bottom of container {% endcomment %}
+                <div class="inner-wrapper">
+                    <div class="text">
+                    {%- if block.settings.preheadline != blank -%}
+                        <div class="preheadline" style="color: {{block.settings.preheadline_foreground }}; background: {% if block.settings.preheadline_background_transparent %}transparent{% else %}{{block.settings.preheadline_background }}{% endif %}; border:{% if block.settings.preheadline_border_hide %}none{% else %}1px solid {{block.settings.preheadline_border }}{% endif %}">{{ block.settings.preheadline | escape }}</div>
+                    {%- endif -%}
+                    {% if block.settings.headline != blank %}
+                        <h1 class="headline title-font-2-light">{{ block.settings.headline }}</h1>
+                    {% endif %}
+                    {% if block.settings.headline != blank %}
+                        <h3 class="subheadline title-font-3-light">{{ block.settings.subheadline }}</h3>
+                    {% endif %}
+                    {% if block.settings.cta != blank %}
+                        <div class="cta-wrap">
+                            <a href="{{ block.settings.link }}" style="color: {{block.settings.button_foreground }}; background-color: {{block.settings.button_background }}" class="cta-1"><span>{{ block.settings.cta }}</span></a>
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+        {% endfor %}
+    </section>
+{% endif %}

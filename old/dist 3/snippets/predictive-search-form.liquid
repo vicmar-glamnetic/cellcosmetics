@@ -1,0 +1,37 @@
+<div class="predictive-search-form">
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search-form" id="SearchForm">
+    {% comment %}
+    <label for="Search">Search</label>
+    {% endcomment %}
+      <input
+        id="{{ search_form_id }}"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        role="combobox"
+        aria-expanded="false"
+        aria-owns="predictive-search-results"
+        aria-controls="predictive-search-results"
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        placeholder="Search"
+      >
+      <input name="options[prefix]" type="hidden" value="last">
+
+      <button type="reset" class="btn reset__button{% if search.terms == blank %} hidden{% endif %}" aria-label="{{ 'general.search.reset' | t }}">
+        <span class="icon-fallback-text">{{ 'general.search.reset' | t }}</span>
+      </button>
+
+      <button type="submit" class="btn search__button" aria-label="{{ 'general.search.search' | t }}">
+        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+      </button>
+
+      <span class="btn close__button" aria-label="{{ 'general.search.close' | t }}">
+        <span class="icon-fallback-text">{{ 'general.search.close' | t }}</span>
+      </span>
+
+  </form>
+
+  <div id="predictive-search" tabindex="-1" class="predictive-search predictive-search--search-template"></div>
+
+</div>

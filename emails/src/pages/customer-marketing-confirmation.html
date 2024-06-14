@@ -1,0 +1,25 @@
+---
+description: Confirm marketing signup.
+---
+
+{% capture email_title %}Confirm you want to receive email marketing{% endcapture %}
+{% capture email_body %}You need to confirm that you want to receive marketing updates from us. If you didn’t subscribe, then you don’t need to do anything.{% endcapture %}
+
+<container class="customer-marketing-confirmation">
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">
+        <p>{{ email_body }}</p>
+      </div>
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ customer.subscribe_url }}" class="button__text">Confirm Subscription</a></td>
+          {% if shop.url %}
+          <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+    </columns>
+  </row>
+</container>

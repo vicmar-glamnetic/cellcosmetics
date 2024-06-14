@@ -1,0 +1,23 @@
+GITLAB_PROJECT_ID="your_project_id"
+
+curl --header "PRIVATE-TOKEN: glpat-8Nd3P7ckan7JQnQJx24b" \
+"https://gitlab.com/api/v4/projects/52929981/variables"
+
+https://gitlab.com/cellcosmetusa/cellcosmetus
+
+export GITLAB_ACCESS_TOKEN="glpat-8Nd3P7ckan7JQnQJx24b"
+
+# Replace 'your_gitlab_access_token' with your actual access token
+GITLAB_ACCESS_TOKEN="your_gitlab_access_token"
+
+# Fetch project details using the GitLab API
+curl --header "PRIVATE-TOKEN: glpat-8Nd3P7ckan7JQnQJx24b" "https://gitlab.com/api/v4/projects/cellcosmetusa%2Fcellcosmetus" | jq '.id'
+
+PROJECT_ID="52929981"
+
+curl --header "PRIVATE-TOKEN: $GITLAB_ACCESS_TOKEN" \
+"https://gitlab.com/api/v4/projects/$PROJECT_ID/variables"
+
+
+export GITLAB_ACCESS_TOKEN="glpat-8Nd3P7ckan7JQnQJx24b"
+PROJECT_ID="58611307"

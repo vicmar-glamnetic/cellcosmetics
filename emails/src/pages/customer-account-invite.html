@@ -1,0 +1,33 @@
+---
+description: Activate your account.
+---
+
+{% capture email_title %} Activate your account {% endcapture %}
+{% capture email_body %}Hi {{ customer.first_name }}, you've created a new customer account at <a href="{{shop.url}}">{{shop.name}}</a>. All you have to do is activate it and choose a password. {% endcapture %}
+
+<container class="customer-account-invite">
+
+  <row>
+    <columns>
+
+      <h2 class="email-title">{{ email_title }}</h2>
+
+      {% if custom_message != blank %}
+        <div class="main-content">{{ custom_message }}</div>
+      {% else %}
+        <div class="main-content">{{ email_body }}</div>
+      {% endif %}
+      
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ customer.account_activation_url }}" class="button__text">Activate your account</a></td>
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Visit our store</a></td>
+          {% endif %}
+        </tr>
+      </table>
+
+    </columns>
+  </row>
+
+</container>

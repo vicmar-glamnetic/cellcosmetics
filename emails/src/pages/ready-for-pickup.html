@@ -1,0 +1,88 @@
+---
+description: Your order is ready for pickup.
+---
+
+{% capture email_title %}Your order is ready for pickup{% endcapture %}
+{% capture email_body %}Bring your confirmation email when you come to collect your order.{% endcapture %}
+
+<container class="ready-for-pickup">
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">
+        {% if pickup_instructions != blank %}
+        <p>{{ pickup_instructions }}</p>
+        {% else %}
+        <p>{{ email_body }}</p>
+        {% endif %}
+      </div>
+      {% if order_status_url %}
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">View Your Order</a></td>
+          {% if shop.url %}
+          <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <table class="section--margin">
+        <tr>
+          <td>
+            <h4>Pickup location</h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>{{ location.name }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>{{ location.address1 }}</p>
+          </td>
+        </tr>
+        {% if location.address2 != blank %}
+        <tr>
+          <td>
+            <p>{{ location.address2 }}</p>
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td>
+            <p>{{ location.city | capitalize }} {{ location.province | capitalize }} {{ location.zip | upcase }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td class="empty-line">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <a href="http://www.google.com/maps/search/?api=1&query={{ location.name }} - {{ [location.address1, location.address2].compact.join(', ') }}, {{ location.city }}, {{ location.province }}, {{ location.zip }}" target="_blank">
+            Open map&nbsp;
+            <span class="small">&rarr;</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+</container>

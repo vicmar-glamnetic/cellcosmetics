@@ -1,0 +1,137 @@
+{% assign mainFormId = 'AddToCartForm' %}
+{% assign mainSelectorId = 'productSelect' %}
+{% assign mainAddToBagCTAId = 'AddToCart' %}
+{% assign variable = value %}
+{% assign variant_prefix = '' %}
+
+{%- if layout == 'quickshop' or plp_quickbuy -%}
+    {% assign mainFormId = 'AddToCartForm-' | append: product.id %}
+    {% assign mainSelectorId = 'productSelect-' | append: product.id  %}
+    {% assign mainAddToBagCTAId = 'AddToCart-' | append: product.id  %}
+{% elsif layout == "sticky" %}
+    {% assign mainFormId = 'AddToCartForm-Sticky' %}
+    {% assign mainSelectorId = 'productSelect-Sticky'  %}
+    {% assign mainAddToBagCTAId = 'AddToCart-Sticky'  %}
+    {% assign variant_prefix = 'Sticky-' %}
+{%- endif -%}
+
+{% comment %}
+ID addToCartForm is a selector for the ajax cart plugin
+{% endcomment %}
+<form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" id="{{- mainFormId -}}" class="add-to-cart-form">
+    
+    <script class="variants-json" type="application/json" data-product-json >
+        {{ product.variants | json }}
+    </script>
+    
+    <input
+        type="hidden"
+        name="id"
+        value="{{ product.selected_or_first_available_variant.id }}"
+        id="{{- mainSelectorId -}}"
+        disabled
+        class="product-variant-id"
+    >
+    <input type="hidden" name="form_type" value="product">
+    <input type="hidden" name="utf8" value="✓">
+    {% if isPreOrder %}
+        <input type="hidden" name="properties[{{ preOrderBadge }}]" value="{{ product_preorder_msg }}"/>
+    {% endif %}
+    {% if isFinalSale %}
+        <input type="hidden" name="properties[{{ finalSaleBadge }}]" value="{{ product_finalsale_msg }}"/>
+    {% endif %}
+    
+    <div class="row">
+        {%- include 'product-price', product: product -%}
+        <div class="product-attribute-container js">
+            {%- unless isGiftCard -%}
+                {% include 'product-swatches', prefix: variant_prefix %}
+            {%- endunless -%}
+            {%- unless plp_quickbuy -%}
+                {% include 'product-swatches-linked' %}    
+            {%- endunless -%}
+        </div>
+    </div>
+
+    <noscript class="product-attribute-container selector-wrapper">
+      <label class="swatch-label" for="Variants-{{ section.id }}">
+        Options
+      </label>
+      <div class="swatch-select__wrapper">
+        <select
+          name="id"
+          class="swatch-select"
+        >
+          {%- for variant in product.variants -%}
+            <option
+              {% if variant == product.selected_or_first_available_variant %}
+                selected="selected"
+              {% endif %}
+              {% if variant.available == false %}
+                disabled
+              {% endif %}
+              value="{{ variant.id }}"
+            >
+              {%- liquid
+                echo variant.title
+                echo variant.price | money | strip_html | prepend: ' - '
+                if variant.available == false
+                  echo 'products.product.sold_out' | t | prepend: ' - '
+                endif
+                if variant.quantity_rule.increment > 1
+                  echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
+                endif
+                if variant.quantity_rule.min > 1
+                  echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
+                endif
+                if variant.quantity_rule.max != null
+                  echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
+                endif
+                # TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter
+                # theme-check-disable
+                assign cart_quantity = cart | item_count_for_variant: variant.id
+                # theme-check-enable
+                if cart_quantity > 0
+                  echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
+                endif
+              -%}
+            </option>
+            <span class="icon-chevron-down"></span>
+          {%- endfor -%}
+        </select>
+      </div>
+    </noscript>
+
+    <div class="form-errors" hidden></div>
+
+    {%- if product.selected_or_first_available_variant.price > 0 -%}
+    <div class="add-to-cart-wrapper">
+        <div class="product-qty-container">
+            <button class="qty-btn minus js">{{ 'cart.general.reduce_quantity' | t }}</button>
+            <input
+                min="1" 
+                type="number"
+                id="quantity"
+                name="quantity"
+                value="1"
+                class="qty-input"
+            />
+            <button class="qty-btn plus js">{{ 'cart.general.increase_quantity' | t }}</button>
+        </div>  
+        <button
+            id="{{- mainAddToBagCTAId -}}"
+            class="btn cta add-to-cart-btn {% if isPreOrder %}pre-order{% endif %}"
+            type="submit"
+            name="add"
+        >
+            <span class="add-to-cart-text" >
+                {% if isPreOrder %}
+                    {{ 'products.product.pre_order' | t }}
+                {% else %}
+                    {{ 'products.product.add_to_cart' | t }} 
+                {% endif %}
+            </span>
+        </button>
+    </div>
+    {%- endif -%}
+</form>

@@ -1,0 +1,94 @@
+image: node:16-alpine
+
+stages:
+ - build
+ - deploy
+
+.dev:
+  variables:
+    SHOPIFY_CLI_TTY: $SHOPIFY_CLI_TTY
+    SHOPIFY_FLAG_STORE: $STORE_DEV
+    SHOPIFY_CLI_THEME_TOKEN: $TOKEN_DEV
+  only:
+    - qa
+
+.prod:
+  variables:
+    SHOPIFY_CLI_TTY: $SHOPIFY_CLI_TTY
+    SHOPIFY_FLAG_STORE: $STORE_PROD
+    SHOPIFY_CLI_THEME_TOKEN: $TOKEN_PROD
+  only:
+    - main
+
+.live:
+  variables:
+    THEME: $THEME_LIVE
+  environment:
+    name: Live
+    url: https://cellcosmet-us-dev.myshopify.com
+
+.staging:
+  variables:
+    THEME: $THEME_STAGING
+  environment:
+    name: Staging
+    url: https://cellcosmet-us-dev.myshopify.com
+
+.qa:
+  variables:
+    THEME: $THEME_QA
+  environment:
+    name: QA
+    url: https://cellcosmet-us-dev.myshopify.com
+
+.deploy:
+  stage: deploy
+  artifacts:
+    paths:
+      - ./
+  before_script:
+    - apk add git
+    - apk add curl gcc g++ make
+    - apk add ruby-full
+    - apk add ruby-dev
+    - apk add linux-headers
+    - gem install ffi -- --disable-system-libffi
+    - gem install bundler
+    - npm install -g @shopify/cli@3.56.1 @shopify/theme@3.56.1
+    - chmod +x /usr/local/lib/node_modules/@shopify/theme/node_modules/@shopify/cli-kit/assets/cli-ruby/bin/shopify
+  script :
+    - git fetch https://mtdrs:${ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git --tags --force
+    - sh deploy.sh
+  
+build:
+  stage: build
+  only: 
+    - qa
+    - main
+  tags:
+    - docker
+  artifacts:
+    paths:
+      - ./
+  script:
+    - npm install
+    - npm run build
+
+deploy_qa:
+  extends:
+    - .dev
+    - .qa
+    - .deploy
+
+deploy_staging:
+  extends:
+    - .prod
+    - .staging
+    - .deploy
+
+deploy_live:
+  when: manual
+  extends:
+    - .prod
+    - .live
+    - .deploy

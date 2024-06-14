@@ -1,0 +1,42 @@
+{% schema %}
+    {
+        
+        "name": "Footer Banner",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Logo Image"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading",
+                "default": "THE SCIENCE OF COSMETICS"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Footer Banner",
+                "settings": {}
+            }
+        ]
+    
+    }
+    {% endschema %}
+    
+    <div class="footer-module footer-banner">  
+        <h3 class="banner-headline">{{section.settings.heading}}</h3>
+
+        {% if section.settings.image != nil %}
+            {%- include 'responsive-image-lazy',
+                image: section.settings.image,
+                imageSmall: section.settings.image,
+                alt: section.settings.image.alt,
+                size: '480x',
+                sizeMedium: '480x',
+                sizeSmall: '480x',
+                heightFix: false,
+            -%}
+        {% endif %}
+    </div>

@@ -1,0 +1,17 @@
+{% comment %} 
+    VIP Customer detection
+    This snippet only checks if a logged in customer is a VIP member.
+    If Restriction is off, everyone is VIP!
+    Use flag `isVIP` in your logic block to control the output for VIP and None VIP user
+{% endcomment %}
+{% assign isVIP = true %}
+{%- if settings.vip_restriction_enabled -%}
+    {% assign isVIP = false %}
+    {%- if customer -%}
+        {%- for tag in customer.tags -%}
+            {%- if settings.vip_customer_tags contains tag -%}
+                {% assign isVIP = true %}
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endif -%}
+{%- endif -%}

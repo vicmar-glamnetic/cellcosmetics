@@ -1,0 +1,49 @@
+<table class="row">
+  {% for line_item in return.line_items %}
+    <tr class="order-list__item">
+      <td class="order-list__item__cell">
+        <table>
+          <td>
+            {% if line_item.image %}
+              <img src="{{{{raw}}}}{{ line_item | img_url: 'compact' }}{{{{/raw}}}}" align="left" width="150" class="order-list__product-image"/>
+            {% endif %}
+          </td>
+          <td class="order-list__product-description-cell">
+            {% assign line_display = line_item.quantity  %}
+
+            <span class="order-list__item-title">{{{{raw}}}}{{ line_item.title }}{{{{/raw}}}}&nbsp;&times;&nbsp;{{{{raw}}}}{{ line_display }}{{{{/raw}}}}</span><br/>
+
+            {% if line_item.variant_title != 'Default Title' %}
+              <span class="order-list__item-variant">{{{{raw}}}}{{ line_item.variant_title }}{{{{/raw}}}}</span><br/>
+            {% endif %}
+
+            {% if line_item.discount_allocations %}
+              {% for discount_allocation in line_item.discount_allocations %}
+                <span class="order-list__item-discount-allocation">
+                  <img src="{{{{raw}}}}{{ 'notifications/discounttag.png' | shopify_asset_url }}{{{{/raw}}}}" width="18" height="18" class="discount-tag-icon" />
+                  <span>
+                    {{{{raw}}}}{{ discount_allocation.discount_application.title | upcase }}{{{{/raw}}}}
+                    {{{{raw}}}}(-{{ discount_allocation.amount | money }}){{{{/raw}}}}
+                  </span>
+                </span>
+              {% endfor %}
+            {% endif %}
+          </td>
+
+          <td class="order-list__price-cell">
+            {% if line_item.original_line_price != line_item.final_line_price %}
+              <del class="order-list__item-original-price">{{{{raw}}}}{{ line_item.original_line_price | money }}{{{{/raw}}}}</del>
+            {% endif %}
+            <p class="order-list__item-price">
+              {% if line_item.final_line_price > 0 %}
+              {{{{raw}}}}{{ line_item.final_line_price | money }}{{{{/raw}}}}
+              {% else %}
+                Free
+              {% endif %}
+            </p>
+          </td>
+        </table>
+      </td>
+    </tr>
+  {% endfor %}
+</table>

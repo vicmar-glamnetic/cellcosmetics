@@ -1,0 +1,14 @@
+{
+    "sections": {
+        "main": {
+            "type": "product-main"
+        },
+        "size-chart": {
+            "type": "product-size-chart"
+        }
+    },
+    "order": [
+        "main",
+        "size-chart"
+    ]
+}

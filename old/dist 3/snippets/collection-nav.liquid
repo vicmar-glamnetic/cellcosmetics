@@ -1,0 +1,17 @@
+{%- if layout == 'one-column' -%}
+    <div class="collection-nav">
+        {% if collection.all_products_count > 0 %}
+            <span class="item-count">{{ collection.all_products_count }} Item{% if collection.all_products_count > 1 %}s{% endif %}</span>
+            {% endif %}
+        <div class="tools">
+            {% include 'collection-tools', layout: layout %}
+        </div>
+    </div>
+{%- else layout == 'two-columns' -%}
+    <div class="collection-nav tools">
+        {% include 'collection-tools', layout: layout %}
+    </div>
+    <div class="collection-nav nav">
+        {% include 'collection-filtering', layout: layout %}
+    </div>
+{%- endif -%}

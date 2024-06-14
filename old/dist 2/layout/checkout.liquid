@@ -1,0 +1,98 @@
+{%- assign isCheckout = true -%}
+
+<!doctype html>
+    <html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+    <head>
+		{{ checkout_stylesheets }}
+
+		{% comment %}
+			Meta tags
+		{% endcomment %}
+        {% include '1r-head-code' %}
+    
+		<meta name="referrer" content="origin">
+
+		{{ content_for_header }}
+
+        {% assign checkoutBGImg = false %}
+        {% if settings.checkout_background != blank %}
+            {% assign checkoutBGImg = settings.checkout_background %}
+        {% endif %}
+
+		{%- if settings.custom_head_code != blank -%}
+			{{ settings.custom_head_code }}
+		{%- endif -%}
+    </head>
+
+    <body class="template-checkout {% if checkoutBGImg %}has-bg-image{% endif %}">
+
+		{% if settings.custom_body_code != blank %}
+			{{ settings.custom_body_code }}
+		{% endif %}
+
+		{{ skip_to_content_link }}
+
+		{% render 'ga4-checkout-coupons' %}
+
+		<header class="banner" data-header>
+            <div class="wrap">
+                <div class="h1" itemscope itemtype="http://schema.org/Organization">
+                    <a href="{{ routes.root_url }}" itemprop="url" class="site-logo site-header__logo-image"></a>
+                </div>
+                <div class="hidden">
+                    {{ content_for_logo }}
+                </div>
+            </div>
+		</header>
+
+		<div class="content" data-content {% if checkoutBGImg %}style="background-image: url('{{ checkoutBGImg | img_url: '1200x' }}');{% endif %}">
+
+		    {{ order_summary_toggle }}
+            
+			<div class="wrap">
+				<div class="main" role="main">
+					<div class="main__header">
+						{{ breadcrumb }}
+						{{ alternative_payment_methods }}
+					</div>
+					<div class="main__content">
+						{{ content_for_layout }}
+
+						{% if settings.checkout_terms %}
+                            <label class="accept-terms-checkbox {% if settings.checkout_terms == false %}hide{% endif %}" for="accept-terms">
+                                <input type="checkbox" id="accept-terms" name="gift-message">
+                                <div class="check-mark"></div>
+                                <div class="terms-content-wrap">
+                                <span class="terms-text">{{ 'cart.general.terms_conditions_check_html' | t }}</span>
+                                <span class="terms-error">{{ 'cart.general.terms_conditions_error' | t }}</span>
+                                </div>
+                            </label>
+						{% endif %}
+
+						{% if settings.checkout_notes != blank %}
+							<div class="checkout-notes">
+								{{ settings.checkout_notes }}
+							</div>
+						{% endif %}
+
+					</div>
+					<div class="main__footer">
+						{{ content_for_footer }}
+					</div>
+				</div>
+				<div class="sidebar" role="complementary">
+					<div class="sidebar__content">
+						{{ content_for_order_summary }}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{ tracking_code }}
+
+        {% comment %}
+            1R FE Framework including CSS and JS
+        {% endcomment %}
+        {%- include '1r-framework' -%}
+	</body>
+</html>

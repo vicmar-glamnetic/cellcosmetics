@@ -1,0 +1,54 @@
+---
+description: Track your shipment.
+---
+
+{% if fulfillment.item_count == item_count %}   {% capture shipment_name %}Your order is{% endcapture %}
+{% elsif fulfillment.item_count > 1 %}   {% if fulfillment_status == 'fulfilled' %}
+    {% capture shipment_name %}The last items in your order are{% endcapture %}
+  {% else %}
+    {% capture shipment_name %}Some items in your order are{% endcapture %}
+  {% endif %}
+{% else %}   {% if fulfillment_status == 'fulfilled' %}
+    {% capture shipment_name %}The last item in your order is{% endcapture %}
+  {% else %}
+    {% capture shipment_name %}One item in your order is{% endcapture %}
+  {% endif %}
+{% endif %}
+
+{% capture email_title %}{{ shipment_name }} out for delivery{% endcapture %}
+{% capture email_body %}{{ shipment_name }} out for delivery. Track your shipment to see the delivery status.{% endcapture %}
+{% capture email_emphasis %}Estimated delivery date: <strong>{{fulfillment.estimated_delivery_at | date: "%B %d, %Y"}}</strong>{% endcapture %}
+
+<container class="shipment-out-for-delivery">
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      {% if fulfillment.estimated_delivery_at %}
+        <p>{{ email_emphasis }}</p>
+      {% endif %}
+      <table class="actions" width="100%">
+        <tr>
+          {% if order_status_url %}
+            <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">Track my shipment</a></td>
+          {% endif %}
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

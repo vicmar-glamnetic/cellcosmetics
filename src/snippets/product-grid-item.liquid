@@ -1,0 +1,99 @@
+{%- unless list_image_size -%}
+    {% assign list_image_size = '1400x' %}
+{%- endunless -%}
+
+{%- include 'product-core-data', product: product -%}
+
+<div class="item product-grid-item" data-handle="{{ product.handle }}" data-id="{{ product.id }}" data-page="{{ current_page }}" data-product-index="{{ forloop.index }}" >
+    {%- render 'ga4-item-data', item: product, itemVariant: current_variant -%}
+    <div class="product-image-wrapper">
+        <a class="product-link" href="{{ product.url | within: collection }}">
+            {%- include 'responsive-image-lazy',
+                class: 'product-image',
+                image: product.featured_image,
+                imageSmall: product.featured_image,
+                imageAlt: image.alt,
+                size: list_image_size,
+                sizeMedium: list_image_size,
+                sizeSmall: list_image_size,
+                heightFix: false,
+            -%}
+            {%- include 'responsive-image-lazy',
+                class: 'product-image alt hide',
+                image: product.images[1],
+                imageSmall: product.images[1],
+                imageAlt: image.alt,
+                size: list_image_size,
+                sizeMedium: list_image_size,
+                sizeSmall: list_image_size,
+                heightFix: false,
+            -%}
+        </a>
+        
+        {%- include 'product-badge' -%}
+        
+        {%- if isPreOrder -%}
+        <div class="product-preorder-badge">
+            <span>{{ preOrderBadge }}</span>
+        </div>
+        {%- endif -%}
+        
+        {%- if isFinalSale -%}
+        <div class="product-finalsale-badge">
+            <span>{{ finalSaleBadge }}</span>
+        </div>
+        {%- endif -%}
+        
+    </div>
+    <div class="product-info-wrapper">
+        <div class="oke-collection">
+          <p class="product-name body-font-4">{{ product.title }}</p> 
+          {% render 'okendo-reviews-product-rating-summary', product: product %}
+        </div>
+
+        {% assign plpShortDesc = product.metafields["custom_fields"]["plp_product_card_description"] %}
+        {% if plpShortDesc != blank %}
+            <p class="product-desc body-font-3">{{ plpShortDesc }}</p>
+        {% else %}
+            <p class="product-desc body-font-3">{{ product.description }}</p>
+        {% endif %}
+
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+        {%- assign hasSpecialPrice = false -%}
+        {% if product.compare_at_price_max > product.price %}
+            {%- assign hasSpecialPrice = true -%}
+        {% endif %}    
+        <div class="price-box {% if hasSpecialPrice %} has-special{% endif %}">
+            <span class="h2 product-price body-font-4" itemprop="price" content="{{- current_variant.price | divided_by: 100.00 -}}">
+                {%- if product.variants.size > 1 -%}
+                {{ product.price_min | money }} - {{ product.price_max | money }}
+                {%- else -%}
+                {{- current_variant.price | money -}}        
+                {%- endif -%}
+            </span>
+
+            {% if hasSpecialPrice %}
+            <span class="product-compare-price">
+                {{- current_variant.compare_at_price | money -}}
+            </span>
+            {% endif %}
+        </div>
+
+        {%- if sold_out -%}
+        <p class="out-of-stock">{{ 'products.product.sold_out' | t }}</p>
+        {%- endif -%}
+        
+        {%- include 'product-compare-add', product: product -%}
+    </div>
+    {% unless sold_out %}
+        {%- if plp_quickshop -%}
+        <button class="quick-shop-trigger" data-url="{{ product.url | within: collection }}">{{ 'collections.general.quick_shop' | t }}</button>    
+        {%- endif -%}
+
+        {%- if plp_quickbuy -%}
+        <div class="quick-buy-container hidden" >
+            {%- include 'product-core-form' -%}
+        </div>    
+        {%- endif -%}
+    {% endunless %}
+</div>

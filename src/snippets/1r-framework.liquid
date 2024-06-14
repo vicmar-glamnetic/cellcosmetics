@@ -1,0 +1,51 @@
+{%- unless isPasswordPage or isCheckout -%}
+    {% comment %} 3rd Party Scripts and Snippets {% endcomment %}
+    {%- if settings.enable_crosssell -%}
+        <!-- Cross Sell custom code start. Do not change -->
+        {%- include 'cross-sell-custom' -%}
+        <!-- Cross Sell custom code end. Do not change -->
+    {%- endif -%}
+
+    {%- if settings.enable_review and settings.review_type == "yotpo" -%}
+        <!-- Yotpo code start. Do not change -->
+        <script type="text/javascript">(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/{{settings.yotpo_api_key}}/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
+        <!-- Yotpo code end. Do not change -->
+    {%- endif -%}
+
+    {%- if settings.bis_integration_type == "klaviyo" -%}
+        {% comment %} Use Klaviyo App Embed instead of adding a script for klaviyo.js {% endcomment %}
+
+        {% comment %} Klaviyo BIS requires adding a script for onsite.js {% endcomment %}
+        {% include 'back-in-stock-klaviyo' %}
+    {%- else -%}
+        {% include 'back-in-stock-helper' %}
+    {%- endif -%}
+
+    {% comment %} Head code injection {% endcomment %}
+    {%- if settings.custom_head_code != blank -%}
+        {{ settings.custom_head_code }}
+    {%- endif -%}
+{%- endunless -%}
+
+{% assign hideTrailingZeros = true %}
+
+{% comment %} Shopify default scripts {% endcomment %}
+<script src="{{ 'vendor.js' | asset_url }}"></script>
+{%- if isCheckout -%}
+    {{ checkout_scripts }}
+
+    {% comment %} 1R Scripts {% endcomment %}
+    {%- include 'script-tags.checkout' -%}
+{%- else -%}
+    {% comment %}<script src="{{ 'ajax-cart.js' | asset_url }}"></script>{% endcomment %}
+    <script src="{{ 'option_selection.js' | shopify_asset_url }}"></script>
+    {%- if template.directory == 'customers' -%}
+        <script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    {%- endif -%}
+    {%- if gift_card != blank -%}
+        <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}"></script>
+    {%- endif -%}
+
+    {% comment %} 1R Scripts {% endcomment %}
+    {%- include 'script-tags.theme' -%}
+{%- endif -%}

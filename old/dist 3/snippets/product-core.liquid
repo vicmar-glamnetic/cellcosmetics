@@ -1,0 +1,164 @@
+{%- unless current_variant -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- endunless -%}
+
+{%- unless featured_image -%}
+  {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+{%- endunless -%}
+
+{%- unless all_tags -%}
+  {% assign all_tags = product.tags | downcase %}
+{%- endunless -%}
+
+{%- unless metafields -%}
+  {% assign metafields = product.metafields["global"] %}
+{%- endunless -%}
+
+<div class="product-core {{ layout }}">
+  <div
+    itemprop="offers"
+    itemscope
+    itemtype="http://schema.org/Offer">
+    <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+    <meta itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+    <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+    {%- render 'ga4-item-data', item: product, itemVariant: current_variant -%}
+    <div class="product-core-inner">
+
+      {%- unless layout == 'quickshop' or settings.enable_review == false -%}
+        {%- include 'product-reviews', review_widget: 'badge' -%}
+      {%- endunless -%}
+
+      {% if layout == 'quickshop' %}
+            
+        <div class="product-core-block block-badges">
+            {%- include 'product-badge' -%}
+            {%- if isFinalSale -%}
+            <div class="product-badge product-finalsale-badge">
+                <span>{{ finalSaleBadge }}</span>
+            </div>
+            {%- endif -%}
+        </div>
+        
+        <div class="product-core-block block-title">
+            <h1 itemprop="name">{{ product.title }}</h1>
+            {%- include 'product-price', product: product -%}
+        </div>
+        
+        <div class="product-core-block block-description product-description" itemprop="description">
+            <p class="sku">SKU# {{ current_variant.sku }}</p>
+            {{ product.description }}
+            
+            {%- if isPreOrder -%}
+            <p class="pre-order-message">{{ product_preorder_msg }}</p>    
+            {%- endif -%}
+            
+            {%- if isFinalSale -%}
+            <p class="final-sale-message">{{ product_finalsale_msg }}</p>    
+            {%- endif -%}
+        </div>
+        
+        <div class="product-core-block block-core">
+            {%- include 'product-core-form' -%}
+            <a class="view-full" href="{{ product.url }}">{{- 'products.product.view_full' | t -}}</a>    
+        </div>
+
+      {% else %}
+
+        {% for block in section.blocks %}
+
+          {% case block.type %}
+            {% when '@app' %}
+            {% render block %}
+            {% when 'badges' %}
+            <div class="product-core-block block-badges">
+              {%- include 'product-badge' -%}
+              {%- if isFinalSale -%}
+                <div class="product-badge product-finalsale-badge">
+                  <span>{{ finalSaleBadge }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+            {% when 'title' %}
+            <div class="product-core-block block-title">
+              <h1 class="title-font-4" itemprop="name">{{ product.title }}</h1>
+            </div>
+            {% when 'price' %}
+            {%- include 'product-price', product: product -%}
+            {% when 'sku' %}
+            <p class="sku">SKU# {{ current_variant.sku }}</p>
+            {% when 'description' %}
+            <div class="block-description body-font-2-emphasis">
+              {{ product.description }}
+              <p data-scroll="metafields-tabs" class="body-font-3-emphasis read-more">Read more</p>
+            </div>
+            {% when 'pre-order' %}
+            {%- if isPreOrder -%}
+              <p class="pre-order-message">{{ product_preorder_msg }}</p>
+            {%- endif -%}
+            {% when 'final-sale' %}
+            {%- if isFinalSale -%}
+              <p class="final-sale-message">{{ product_finalsale_msg }}</p>
+            {%- endif -%}
+            {% when 'form' %}
+            <div class="product-core-block block-core">
+              {%- include 'product-core-form' -%}
+              
+              {%- if layout == 'quickshop' -%}
+                <a class="view-full" href="{{ product.url }}">{{- 'products.product.view_full' | t -}}</a>
+              {%- endif -%}
+            </div>
+            {% when 'metafields' %}
+              <div class="block-metafields">
+                <div class="accordion-container tab-accordion-system">
+                  
+                {% assign counter = 0 %}
+                  {% for i in (1..5) %}
+                    {% assign iteration = forloop.index %}
+                    {% assign titleIteration = "tab-" | append: iteration | append: '-title' %}
+                    {% assign textIteration = "tab-" | append: iteration | append: '-abstract' %}
+                    {% assign titleTab = product.metafields["custom_fields"][titleIteration] %}
+                    {% assign textTab = product.metafields["custom_fields"][textIteration] %}
+                  
+                    {% if titleTab == blank or textTab == blank %}
+                      {% break %}
+                    {% else %}
+
+                    <div class="system {% if forloop.first %} active {% endif %}">
+                        <div class="system-title system-title-{{ counter }} body-font-2-emphasis {% if forloop.last %}system-title-last{% endif %}" data-target="system-{{- counter -}}">
+                            {{ titleTab }}
+                        </div>
+                        <div class="system-content" data-target="system-{{- counter -}}">
+                            <div class="content-inner body-font-2">
+                              {{ textTab }}
+                              <p data-scroll="{{ titleTab | downcase | handleize }}" class="body-font-3-emphasis read-more">Read more</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% assign counter = counter | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+                </div>
+              </div>
+            {% when 'additional-info' %}
+              <div class="block-additional-info">
+                {%- include 'responsive-image',
+                    image: block.settings.icon,
+                    imageSmall: block.settings.icon,
+                    alt: block.settings.icon.alt,
+                    size: '80x',
+                    sizeMedium: '80x',
+                    sizeSmall: '80x',
+                    heightFix: false,
+                -%}
+                <p class="body-font-2-emphasis">{{ block.settings.text }}</p>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      {% endif %} 
+    </div>
+    <!-- End of product-core-inner -->
+  </div>
+  <!-- End of SEO offers -->
+</div>
+<!-- End of product-core -->

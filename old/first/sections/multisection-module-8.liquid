@@ -1,0 +1,88 @@
+{% schema %}
+{
+    "name": "Multisection Module 8",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline Text"
+        },
+        {
+            "type": "textarea",
+            "id": "description",
+            "label": "Body Text"
+        },
+        {
+            "type": "text",
+            "id": "cta",
+            "label": "CTA Text"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "CTA Link"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color"
+        },
+        {
+            "type": "checkbox",
+            "id": "flip_content",
+            "default": false,
+            "label": "Flip Content",
+            "info": "Flip positions of the module components"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Multisection Module 8",
+            "category": "Additional Content",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+
+    <section class="multisection-module multisection-module-8 {% if section.settings.flip_content%}flipped{% endif %}" style="background-color: {{section.settings.bg_color}}">
+
+            <div class="block-container">
+                
+                <div class="content-block">
+                    {% if section.settings.headline != blank %}
+                        <h3 class="headline title-font-4-light">{{ section.settings.headline }}</h3>
+                    {% endif %}
+                    {% if section.settings.description != blank %}
+                        <p class="description body-font-1">{{ section.settings.description }}</p>
+                    {% endif %}
+                    {% if section.settings.cta != blank %}
+                        <div class="cta-wrap">
+                            <a href="{{ section.settings.link }}" class="cta-3"><span>{{ section.settings.cta }}</span></a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="image-block">
+                    {%- include 'responsive-image-lazy',
+                        image: section.settings.image,
+                        imageSmall: section.settings.image,
+                        alt: section.settings.image.alt,
+                        size: '600x',
+                        sizeMedium: '600x',
+                        sizeSmall: '600x',
+                        heightFix: true,
+                    -%}
+                </div>
+
+            </div>
+
+    </section>

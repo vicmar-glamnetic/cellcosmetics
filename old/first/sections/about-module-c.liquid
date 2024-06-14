@@ -1,0 +1,49 @@
+{% schema %}
+{
+    
+    "name": "About Module C",
+    "settings": [
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color"
+        },
+        {
+            "type": "radio",
+            "options": [
+                { "value": "style-light", "label": "Light" },
+                { "value": "style-dark", "label": "Dark" }
+            ],
+            "default": "style-dark",
+            "id": "text_color",
+            "label": "Font Color"
+        },
+        {
+            "type": "radio",
+            "options": [
+                { "value": "text-left", "label": "Left" },
+                { "value": "text-center", "label": "Center" },
+                { "value": "text-right", "label": "Right" }
+            ],
+            "default": "text-center",
+            "id": "text_align",
+            "label": "Text Alignment"
+        }
+    ],
+    "presets": [
+        {
+            "name": "About Module C",
+            "settings": {}
+        }
+    ]
+}
+{% endschema %}
+
+<div class="about-module about-module-c" style="background-color: {{section.settings.bg_color}}"> 
+    <h2 class="headline {{section.settings.text_align}} {{ section.settings.text_color }}">{{section.settings.headline}}</h2>
+</div>

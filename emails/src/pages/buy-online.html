@@ -1,0 +1,45 @@
+---
+description: Here is your saved cart.
+---
+
+{% capture email_title %}Are you ready to complete your order?{% endcapture %}
+
+<container class="buy-online">
+
+  <row>
+    <columns>
+      
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">
+        {% if custom_message != blank %}
+        <p>{{ custom_message }}</p>
+        {% elsif reserve_inventory_until %}
+        {% endif %}
+      </div>
+      {% if order_status_url %}
+        <table class="actions" width="100%">
+          <tr>
+            <td class="button__cell first"><a href="{{ invoice_url }}" class="button__text">Complete your purchase</a></td>
+            {% if shop.url %}
+              <td class="button__cell last secondary"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+            {% endif %}
+          </tr>
+        </table>
+      {% endif %}
+
+      <row class="section order-list">
+        <columns>
+          {{> product_list}}
+        </columns>
+      </row>
+
+      <row class="section customer-information">
+        <columns>
+          {{> customer_info}}
+        </columns>
+      </row>
+
+    </columns>
+  </row>
+
+</container>

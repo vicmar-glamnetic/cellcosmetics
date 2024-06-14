@@ -1,0 +1,192 @@
+@import '../components/fonts';
+
+//
+//  For search result page and 404 page style
+//  _____________________________________________
+
+//
+//  Typography
+//  _____________________________________________
+.search-results-banner {
+    .search-results-title {
+        @include title-font-3-light;
+    }
+    .search-results-description {
+        @include body-font-1;
+    }
+    a {
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+}
+.collection-nav{
+    .item-count{
+        @include body-font-2;
+    }
+}
+//
+//  Common
+//  _____________________________________________
+.search-results {
+    height: 100%;
+    .search-results-banner {
+        text-align: left;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        // align-items: center;
+        // align-content: center;
+        background: $greyBackground;
+        color: $black;
+        // &.no-result {
+        //     height: 100%;
+        // }
+        .search-results-banner-inner {
+
+        }
+        .search-form {
+            width: 100%;
+            max-width: 460px;
+            min-width: 300px;
+            position: relative;
+            border: 1px solid;
+            display: flex;
+            input {
+                width: calc(100% - 20px);
+                padding: 15px;
+            }
+            .search__button{
+                @include icon-btn($icon-search-solid, inherit, 14px);
+                padding-right: 15px;
+            }
+            .reset__button{
+                @include icon-btn($icon-refresh-cw, inherit, 13px);
+                padding-right: 15px;
+            }
+        }
+    }
+    .collection-nav {
+        .collection-nav-block {
+            &.mode {
+                display: none;
+            }
+        }
+        .item-count{
+            line-height: 50px;
+            color: $grayscale800;
+        }
+        .tools{
+            display: none !important;
+        }
+    }
+    .search-nav-block{
+        position: relative;
+        .filter-form{
+            .filter-group{
+                .filter-group-summary{
+                    display: flex;
+                    flex-direction: row;
+                    text-indent: 0 !important;
+                    @include icon-fonts-after($icon-chevron-down, inherit, 13px);   
+                    position: relative;
+                    &:after{
+                        position: absolute;
+                        right: 0;
+                    }
+                }
+            }
+            .filter-group-display{
+                padding: 10px;
+            }
+        }
+    }
+    .hidden{
+        display: none;
+    }
+    .collection-listing-wrapper{
+        padding-bottom: 75px;
+    }
+}
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    .search-results-banner {
+        padding: 20px;
+    }
+    .search-results{
+        .search-nav-block{
+            .filter-form{
+                padding: 10px;
+            }
+        }
+    }
+};
+
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    .search-results-banner {
+        padding: 55px 0;
+    }
+    .search-results {
+        .collection-products {
+            @include gridSystemWithPromo(4,10px);
+        }
+        .search-results-banner {
+            .search-form{
+                min-width: 460px;
+            }
+            .search-results-banner-inner {
+                max-width: $xxLargeScreen;
+                margin: 0 auto;
+                padding-left: 96px;
+            }
+        }
+        .collection-nav{
+            .item-count{
+                padding-right: 40px;
+            }
+        }
+        .search-nav-block{
+            max-width: $xxLargeScreen;
+            margin: 0 auto;
+            line-height: $headerSmallScreenHeight;
+            .filter-form{
+                width: 100%;
+                display: flex;
+                .filter-group{
+                    max-width: 200px;
+                    display: block;
+                    width: 100%;
+                    z-index: 1;
+                    padding-right: 20px;
+                    position: relative;
+                }
+                .filter-group-display__list{
+                    max-height: 250px;
+                    overflow: scroll;
+                }
+                .filter-group-display__list-item{
+                    line-height: 40px;
+                }
+                .filter-group-display{
+                    background-color: $white;
+                    position: absolute;
+                    width: 100%;
+                    max-width: 180px;
+                }
+            }
+            .active-filters__remove-filter{
+                padding-left: 10px;
+            }
+        }
+        .collection-listing-wrapper{
+            padding-bottom: 100px;
+        }
+    }
+};

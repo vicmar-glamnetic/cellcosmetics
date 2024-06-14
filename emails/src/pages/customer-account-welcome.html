@@ -1,0 +1,28 @@
+---
+description: Visit out store.
+---
+
+{% capture email_title %}Welcome To Cellcosmet US{% endcapture %}
+{% capture email_body %}You’re on your way to discovering the most effective cellular skincare for healthier, more radiant skin.{% endcapture %}
+
+<container class="customer-account-welcome">
+
+  <row>
+    <columns>
+
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      
+      {% if shop.url %}
+        <table class="actions center">
+          <tr>
+              <td class="button__cell"><a href="{{ shop.url }}" class="button__text">Start Shopping</a></td>
+          </tr>
+        </table>
+      {% endif %}
+
+    </columns>
+  </row>
+  
+
+</container>

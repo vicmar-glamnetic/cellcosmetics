@@ -1,0 +1,70 @@
+---
+description: Here is your return label
+---
+
+{% capture email_title %}Your return label is ready{% endcapture %}
+{% capture email_body %}{% endcapture %}
+
+<container class="return-label-created">
+
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      
+      <h2 class="email-title">{{ email_title }}</h2>
+      {% if custom_message != blank %}
+        <div class="main-content">{{ custom_message }}</div>
+      {% else %}
+        <div class="main-content">{{ email_body }}</div>
+      {% endif %}
+      
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ return_label.public_file_url }}" class="button__text">Print return label</a></td>
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Visit our store</a></td>
+          {% endif %}
+        </tr>
+      </table>
+
+    </columns>
+  </row>
+
+
+  <row>
+    <columns>
+      <table class="row section">
+        <tr>
+          <td class="section__cell">
+              <table class="">
+                <tr>
+                  <td>
+                    <h3>Instructions</h3>
+                  </td>
+                </tr>
+              </table>
+              <table class="">
+                <tr>
+                  <td>
+                    
+                  <ol>
+                    <li class="return-label__instruction-step">Pack the items you're returning.</li>
+                    <li class="return-label__instruction-step">Print your return label and attach it to the package. Cover any existing shipping labels.</li>
+                    <li class="return-label__instruction-step">Give the package to the carrier identified on the label.</li>
+                  </ol>
+                  </td>
+                </tr>
+              </table>
+          </td>
+        </tr>
+      </table>
+
+    </columns>
+  </row>  
+
+</container>

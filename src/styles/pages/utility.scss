@@ -1,0 +1,387 @@
+@import '../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+[class*="template-suffix-utility"] {
+    .utility-nav {
+        .link {
+            @include body-utility-1;
+            text-transform: uppercase;
+            @include query-large-up {
+                @include opacity(0.4);
+                color: $cellcosmetRed;
+                &.active{
+                    @include opacity(1);
+                }
+            }
+        }
+        .sublink {
+            @include body-utility-4;
+            text-transform: uppercase;
+            @include query-large-up {
+                &.active{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    .btn {
+        @include cta-2;
+    }
+    .utility-title {
+        text-transform: capitalize;
+        @include title-font-2;
+    }
+    .utility-page-title {
+        text-transform: capitalize;
+        @include title-font-2;
+    }
+    .utility-section-title {
+        @include body-utility-1;
+    }
+    .contact-info {
+        * {
+            @include body-font-8;
+        }
+    }
+    .contact-form{
+        .form-success{
+            font-weight: bold;
+        }
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+$utilityNavWidth: 20%;
+[class*="template-suffix-utility"] {
+    .utility-page{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .utility-banner {
+        height: 215px;
+        text-align: center;
+        width: 100%;
+        @include flexcenter;
+    }
+
+    .utility-nav {
+        color: $black;
+        background: $lightGrey3;
+        display: flex;
+        flex-wrap: nowrap;
+        width: $utilityNavWidth;
+        padding: 60px;
+        padding-left: 0;
+        .links, .sublinks {
+            display: flex;
+            flex-direction: column;
+        }
+        .sublinks {
+            margin-left: 20px;
+        }
+        .link-container {
+            display: flex;
+            flex-direction: column;
+            & > * {
+                order: 1;
+                .link-wrapper {
+                    margin-top: 0;
+                }
+            }
+        }
+        .link, .sublink {
+            margin-bottom: 20px;
+        }
+        a {
+            display: block;
+        }
+    }
+    .utility-content {
+        // background: $lightGrey;
+        section {
+            margin-bottom: 25px;
+            p{
+                margin-bottom: 20px
+            }
+        }
+        .raw-content {
+            p {
+                @include body-font-3;
+            }
+            .title {
+                @include body-utility-1;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .field {
+        background: $white;
+        .input-wrapper{
+            border: 1px solid $black;
+            padding: 5px;
+            margin-bottom: 10px;
+            input, textarea{
+                width: 100%;
+            }
+            label{
+                display: none;
+            }
+        }
+    }
+    
+    .utility-title {
+
+    }
+    .utility-page-title {
+        border-bottom: 1px solid;
+    }
+    .utility-section-title {
+        text-align: center;
+    }
+    .utility-subtitle {
+
+    }
+    .contact-wrapper {
+        display: flex;
+        position: relative;
+        .contact-form {
+            max-width: 640px;
+        }
+        .contact-info {
+            max-width: 250px;
+            .info-tel{
+                @include icon-fonts-before($icon-phone, $black, 14px);
+            }
+            .info-mail{
+                @include icon-fonts-before($icon-mail, $black, 14px);
+            }
+            .info-email{
+                @include icon-fonts-before($icon-mail, $black, 14px);
+            }
+            .info-block{
+                position: relative;
+                margin-bottom: 20px;
+                text-indent: 0;
+                .info-block-title{
+                    margin-bottom: 7px;
+                }
+            }
+        }
+    }
+    .contact-form{
+        .form-success{
+            margin-bottom: 20px;
+        }
+    }
+}
+
+// Contact Us Page
+[class*="template-suffix-utility"].page-contact-us {
+    address {
+        white-space: normal;
+    }
+}
+
+// Other Pages
+[class*="template-suffix-utility"]:not(.page-contact-us) {
+    .utility-content {
+        .inner-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+    }
+}
+
+//
+//  Small + Medium screen sizes - Prev: Tablet and Mobile
+//  _____________________________________________
+$utilityNavWidth: 100%;
+@include query-medium-down {
+    [class*="template-suffix-utility"] {
+        .utility-banner {
+
+        }
+        .utility-nav {
+            width: $utilityNavWidth;
+            padding: 20px 23px;
+            
+            .links {
+                width: 100%;
+                &.opened {
+                    .link{
+                        &.select-link {
+                            &:after{
+                                @include transform(translateY(-50%) rotate(180deg));
+                            }
+                        }
+                    }
+                    .link-container {
+                        max-height: 2000px;
+                        visibility: visible;
+                        @include opacity(1);
+                    }
+                }
+            }
+
+            .link, .sublink{
+                margin-bottom: 0;
+                margin-top: 20px;
+            }
+            
+            .link.select-link{
+                @include icon-fonts-after($icon-chevron-down, $black, 12px);
+                position: relative;
+                margin-top: 0;
+                text-indent: 0;
+                &:after{
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    @include transform(translateY(-50%));
+                }
+            }
+                
+            .link-container {
+                overflow: hidden;
+                max-height: 0;
+                visibility: hidden;
+                @include opacity(0);
+                @include transition(all $slow);
+                & > .active {
+                    order: 0;
+                    &:not(.link-wrapper) {
+                        display: none;
+                    }
+                    &.link-wrapper {
+                        .link.active {
+                            display: none;
+                        }
+                    }
+                }
+            }
+            
+        }
+        .utility-content {
+            width: 100%;
+            padding: 30px 23px;
+            .inner-wrapper{
+                max-width: 640px;
+                margin: 0 auto;
+            }
+        }
+        .utility-page-title {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .utility-section-title {
+            margin-bottom: 25px;
+        }
+        .contact-wrapper {
+            flex-direction: column;
+            .contact-form{
+                margin-bottom: 25px;
+            }
+            .contact-info{
+                margin: 0 auto;
+                .info-block{
+                    padding-top: 25px;
+                    text-align: center;
+                    &:before{
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+};
+
+//
+//  Large screen sizes - Prev: Desktop
+//  _____________________________________________
+@include query-large-up {
+    $utilityNavWidth: 25%;
+    [class*="template-suffix-utility"] {
+        .utility-page {
+            max-width: $xxLargeScreen;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .utility-nav {
+            flex: 0 0 $utilityNavWidth;
+            background-color: transparent !important;
+            max-width: 350px;
+            padding: 60px 60px 60px;
+            justify-content: flex-end;
+            position: sticky;
+            top: 72px;
+            height: 600px;
+
+            .link{
+                margin-bottom: 30px;
+                &.select-link{
+                    display: none;
+                }
+            }
+            .sublinks {
+                margin-bottom: 30px;
+            }
+            .select-sublinks{
+                display: none;
+            }
+        }
+        .utility-content {
+            padding: 60px;
+            min-height: calc(100vh - var(--header-height, #{$headerLargeScreenHeight * 2 + 20px}) - #{$footerTopLargeScreenHeight});
+            flex: 1 0 calc(100% - #{$utilityNavWidth});
+            section {
+                padding-bottom: 35px;
+                margin-bottom: 40px;
+            }
+        }
+        .utility-page-title {
+            padding-bottom: 35px;
+            margin-bottom: 40px;
+        }
+        .utility-section-title {
+            margin-bottom: 35px;
+        }
+        .utility-subtitle {
+
+        }
+        .contact-wrapper {
+            justify-content: center;
+            .contact-form {
+                width: 100%;
+                // margin-right: 75px;
+            }
+            .contact-info {
+                .info-block{
+                    padding-left: 25px;
+                    &:before{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Contact Us Page
+    [class*="template-suffix-utility"].page-contact-us {
+        
+    }
+
+    // Other Pages
+    [class*="template-suffix-utility"]:not(.page-contact-us) {
+        
+    }
+};

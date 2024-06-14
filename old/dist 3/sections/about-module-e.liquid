@@ -1,0 +1,45 @@
+{% schema %}
+{
+    "name": "About Module E",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image_placeholder",
+            "label": "Image"
+        },
+        {
+            "type": "video_url",
+            "id": "video_url",
+            "accept": ["youtube", "vimeo"],
+            "label": "Video URL",
+            "info": "Add either youtube or vimeo direct video"
+        }
+    ],
+    "presets": [
+        {
+            "name": "About Module E",
+            "settings": {}
+        }
+    ]
+}
+{% endschema %}
+
+<div class="about-module about-module-e"> 
+    <div class="inner-wrapper">
+        <div class="video-content-wrapper">
+            {% if section.settings.video_url != blank or section.settings.image_placeholder != blank  %}
+                <div class="video-wrapper"
+                    data-video-type="{{- section.settings.video_url.type -}}"
+                    data-video-id="{{- section.settings.video_url.id -}}"
+                    data-video-src="{{- section.settings.video_url -}}">
+                    <div class="video-poster">
+                        <span class="absolute-image desktop-image lazy" role="img" aria-label="{{ section.settings.image_placeholder.alt }}" style="background-image:url('{{ section.settings.image_placeholder | img_url: '1x' }}');" data-bg="{{ section.settings.image_placeholder | img_url: '1200x' }}"></span>
+                        <span class="absolute-image mobile-image lazy" role="img" aria-label="{{ section.settings.image_placeholder.alt }}" style="background-image:url('{{ section.settings.image_placeholder | img_url: '1x' }}');" data-bg="{{ section.settings.image_placeholder | img_url: '768x' }}"></span>
+                    </div>
+                    <div id="{{- section.settings.video_url.id -}}" class="video-player"></div>
+                    <button class="video-ctl paused"></button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

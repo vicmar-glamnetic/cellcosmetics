@@ -1,0 +1,11 @@
+{
+    "name": "Multisection template",
+    "sections": {
+        "module1": {
+            "type": "multisection-module-1"
+        }
+    },
+    "order": [
+        "module1"
+    ]
+}

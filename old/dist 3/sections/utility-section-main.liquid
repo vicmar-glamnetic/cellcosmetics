@@ -1,0 +1,132 @@
+{% comment %}
+    This will be the master template for repeatable sections. Changes/Updates will need to be carried over to 
+    other utility sections.
+{% endcomment %}
+{% schema %}
+{
+    "name": "Utility Sections",
+    "blocks": [
+        {
+            "type": "section_block",
+            "name": "Content Block",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "section_title",
+                    "label": "Content Title"
+                },
+                {
+                    "type": "text",
+                    "id": "section_href",
+                    "label": "Content Href"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "section_accordion",
+                    "label": "Has Accordions?"
+                },
+                {
+                    "type": "html",
+                    "id": "section_details",
+                    "label": "Content Details"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Utility",
+            "category": "Custom Content",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+<div class="utility-page {{ page.handle }}">
+    <div class="utility-nav">
+        <div class="inner-wrapper links">
+            {%- assign utility_nav_linklist = settings.utility_nav_linklist -%}
+            {%- if linklists[utility_nav_linklist].links.size > 0 -%}
+            
+                {% assign navLinkHtml = '' %}
+                {%- for link in linklists[utility_nav_linklist].links -%}
+                    {% if link.active %}
+                        <span class="link select-link">{{ link.title }}</span>
+                        {% assign activeLink = link %}
+                    {%- endif -%}
+                    
+                    {% capture navLinkHtmlItem %}
+                        {%- if link.levels > 0 -%}
+                        <div class="link-wrapper {% if link.active %}active{% endif %}">
+                            <a class="link {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+                            <div class="sublinks {% if link.active %}active{% endif %}">
+                            {% for sublink in link.links %}  
+                                <a class="sublink" href="{{- link.url -}}#{{ sublink.title | handleize }}">{{ sublink.title }}</a>
+                            {% endfor %}  
+                            </div>
+                        </div>
+                        {%- else -%}
+                        <a class="link {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>    
+                        {%- endif -%}
+                    {% endcapture %}
+                    {% assign navLinkHtml = navLinkHtml | append: navLinkHtmlItem %}
+                {%- endfor -%}
+        
+                <div class="link-container">
+                    {{ navLinkHtml }}
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+    <div class="utility-content">
+        <div class="inner-wrapper">
+            {% comment %} <h1 class="utility-page-title">{{ page.title }}</h1> {% endcomment %}
+
+            {% assign counter = 0 %}
+            {%- for block in section.blocks -%}
+            <section id="{{ block.settings.section_href | handleize }}">
+                {%- if block.settings.section_title != blank -%}
+                    <h2 class="utility-section-title">{{ block.settings.section_title }}</h2>
+                {%- endif -%}
+                {%- if block.settings.section_accordion -%}
+                    <div class="accordion-container tab-accordion-system">
+                        {% assign rawContent = block.settings.section_details %}
+                        {% assign accordingSystems = rawContent | split: 'accordion_title:' %}
+                        {%- for accordingSystem in accordingSystems -%}
+                            {%- if accordingSystem != blank -%}
+                            {% assign accordingSystemComp = accordingSystem | split: 'accordion_content:' %}
+                            <div class="system {% if counter == 0 %}active{% endif %}">
+                                <div class="system-title utility-subtitle system-title-{{ counter }}" data-target="system-{{- counter -}}">
+                                    {{ accordingSystemComp[0] }}
+                                </div>
+                                <div class="system-content" data-target="system-{{- counter -}}">
+                                    <div class="content-inner">
+                                        {{ accordingSystemComp[1] }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% assign counter = counter | plus: 1 %}    
+                            {%- endif -%}
+                        {%- endfor -%}
+                    </div>
+                {%- else -%}
+                    {% assign rawContent = block.settings.section_details %}
+                    <div class="raw-content">
+                        {%- if rawContent contains ':paragraph:' -%}
+                            {% assign paragraphs = rawContent | split: ':paragraph:' %}
+                            {%- for paragraph in paragraphs -%}
+                                <p>{{paragraph}}</p>
+                            {%- endfor -%}
+                        {%- else -%}
+                            {{ rawContent }}
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+            </section>
+            {%- endfor -%}
+        </div>
+    </div>
+</div>

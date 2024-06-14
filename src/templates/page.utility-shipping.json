@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "shipping": {
+            "type": "utility-section-main"
+        }
+    },
+    "order": [
+        "shipping"
+    ]
+}

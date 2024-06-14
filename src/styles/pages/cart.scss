@@ -1,0 +1,154 @@
+@import '../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+.template-cart{
+	.page-title, .summary-title {
+		@include title-font-5;
+	}
+}
+
+//
+//  Common
+//  _____________________________________________
+.template-cart {	
+	#MainContent {
+		overflow-x: hidden;
+	}
+	.shopify-section {
+		height: 100%; // Fix height when page is shorter than viewport
+	}
+	.page-title{
+		padding: 16px 0 10px;
+		border-top: 1px solid $metal;
+		border-bottom: 1px solid $metal;
+	}
+
+	.summary-title {
+		margin-bottom: 20px;
+	}
+	.minicart-only{
+		display: none !important;
+	}
+	.shipping-message{
+		display: none;
+	}
+}
+
+//
+//  Small screen sizes - Prev: Mobile only
+//  _____________________________________________
+@include query-small {
+	.template-cart{
+		.summary-title{
+			display: none;
+		}
+		.continue-shopping{
+			position: absolute;
+			bottom: 14px;
+    		width: calc(100% - 40px);
+    		left: 20px;
+		}
+		form{
+			position: relative;
+			padding-bottom: 60px;
+		}
+		.cart-summary, .cart-items{
+			padding: 20px;
+		}
+	}
+
+};//query-small
+
+//
+//  Small + Medium screen sizes - Prev: Tablet and Mobile
+//  _____________________________________________
+@include query-medium-down {
+
+    
+};//query-medium-down
+
+//
+//  Medium screen sizes - Prev: Tablet Only
+//  _____________________________________________
+@include query-medium {
+    
+};//query-medium
+
+//
+//  Medium + Large screen sizes - Prev: Tablet and Desktop
+//  _____________________________________________
+@include query-medium-up {
+	main {
+		.cart {
+			max-width: $maxContentWidth;
+			margin: auto;
+			flex-direction: row;
+
+			.cart-items-wrapper{
+				flex-grow: 7.5;
+			}
+			.cart-summary-wrapper {
+				flex-grow: 2.5;
+				position: relative;
+
+				&:before {
+					content: '';
+					position: absolute;
+					// background: $lightGrey;
+					z-index: -1;
+					left: 0;
+					top: 0;
+					width: 100vw;
+					height: 100%;
+				}
+			}
+			.cart-items, .cart-summary {
+				padding: 80px 50px;
+			}
+			.cart-items {
+				.cart-empty-message {
+					// text-align: left;
+				}
+			}
+			.cart-item {
+				max-height: 300px;
+
+				.item-image {
+					width: 160px;
+				}
+				.item-info{
+					justify-content: flex-end;
+				}
+			}
+			.cart-summary {
+				background: transparent;
+				.shipping-message{
+					
+				}
+			}
+			.total{
+				border-top: 1px solid $metal;
+			}
+		}
+	}
+};//query-medium-up
+
+//
+//  XLarge down screen sizes - Prev: Small Desktop
+//  _____________________________________________
+@include query-large {
+    
+};//query-large
+
+@include query-large-up {
+
+};
+
+//
+//  XLarge up screen sizes
+//  _____________________________________________
+@include query-xlarge-up {
+    
+};

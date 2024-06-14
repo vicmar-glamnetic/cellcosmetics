@@ -1,0 +1,136 @@
+{% schema %}
+{
+    "name": "Homepage Module C",
+    "max_blocks": 4,
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image_a",
+            "label": "Image"
+        },
+        {
+            "type": "radio",
+            "options": [
+                { "value": "", "label": "Normal: A - B" },
+                { "value": "flip", "label": "Flip: B - A" }
+            ],
+            "default": "",
+            "id": "flip",
+            "label": "Module Order"
+        },
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline Text"
+        },
+        {
+            "type": "text",
+            "id": "subheadline",
+            "label": "Sub-Headline Text"
+        },
+        {
+            "type": "textarea",
+            "id": "copy",
+            "label": "Copy Text"
+        },
+        {
+            "type": "text",
+            "id": "cta",
+            "label": "CTA Text"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "CTA Link"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "icon",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_a",
+                    "label": "Icon Image"
+                },
+                {
+                    "type": "text",
+                    "id": "headline",
+                    "label": "Icon Headline Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Homepage Module C",
+            "category": "Homepage",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+<section class="hpmodule hp-module-c {{ section.settings.style }}">
+
+    <div class="flex-row {{ section.settings.flip }}">
+
+        <div class="column first">
+            {%- include 'responsive-image-lazy',
+                image: section.settings.image_a,
+                imageSmall: section.settings.imaimage_age,
+                alt: section.settings.image_a.alt,
+                size: '1500x',
+                sizeMedium: '1500x',
+                sizeSmall: '768x',
+                heightFix: true,
+            -%}
+        </div>
+
+        <div class="column second">
+            <div class="block-container">
+                <div class="inner-wrapper">
+                    {% if section.settings.subheadline != blank %}
+                        <p class="subheadline body-font-4">{{ section.settings.subheadline }}</p>
+                    {% endif %}
+                    {% if section.settings.headline != blank %}
+                        <h2 class="headline title-font-5">{{ section.settings.headline }}</h2>
+                    {% endif %}
+                    {% if section.settings.copy != blank %}
+                        <p class="copy body-font-2">{{ section.settings.copy }}</p>
+                    {% endif %}
+                    {% if section.blocks.size > 0 %}
+                        <div class="icons-wrapper">
+                            {% for block in section.blocks %}
+                                {% if block.settings.image_a != blank %}
+                                    <div class="icon-block">
+                                        {%- include 'responsive-image-lazy',
+                                            image: block.settings.image_a,
+                                            imageSmall: block.settings.image_a,
+                                            alt: block.settings.image_a.alt,
+                                            size: '768x',
+                                            sizeMedium: '768x',
+                                            sizeSmall: '768x',
+                                            heightFix: false,
+                                        -%}
+                                        {% if block.settings.headline != blank %}
+                                            <h3 class="headline-icon body-font-3-emphasis">{{ block.settings.headline }}</h3>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if section.settings.cta != blank %}
+                        <div class="cta-wrap">
+                            <a href="{{ section.settings.link }}" class="cta-2"><span>{{ section.settings.cta }}</span></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

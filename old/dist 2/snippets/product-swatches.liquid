@@ -1,0 +1,114 @@
+{%- comment -%}
+<!--
+This block is used to find which index the colors options belongs to.
+Returns colorNum of 1, 2 or 3. colorNum defaults to 2.
+
+assign activeClassStr = 'active' to enable pre-select
+
+-->
+{%- endcomment -%}
+{%- assign variantOption = 'shade' -%}
+{%- assign sizeOption = 'size' -%}
+{%- assign colorNum = 2 -%}
+{%- assign activeClassStr = 'active' -%}
+
+{%- for option in product.options_with_values -%}
+
+
+		{%- assign optTitle = option.name | downcase -%}
+		<fieldset class="selector-wrapper oneswatch oneswatch-{{- option.name | handleize -}}">
+			
+			<legend class="swatch-label">{{ option.name }}</legend>
+			
+			{%- if optTitle == variantOption -%}
+				{%- assign activeClass = activeClassStr -%}
+				{%- for optionIndex in product.options -%}
+					{%- assign optionName = optionIndex | downcase -%}
+					{%- if optionName == optTitle -%}
+						{%- assign colorNum = forloop.index -%}
+					{%- endif -%}
+				{%- endfor -%}
+				
+				<div class="swatches {{optTitle}}s clearfix" data-option="{{forloop.index | minus: 1}}" data-name="{{optTitle}}">
+					{%- for value in option.values -%}
+					
+						{%- assign variantImg = "" -%}
+						{%- assign swatchImg = "" -%}
+						{%- for variant in product.variants -%}
+							{%- assign optionIndex = colorNum | minus: 1 -%}
+							{%- if variant.available and variant.options[optionIndex] contains value -%}
+								{%- assign variantImg = variant.image.src | product_img_url: 'large' -%}
+								{%- assign variantSku = variant.sku | replace: '.', '-' -%}
+								{%- break -%}
+							{%- endif -%}
+						{%- endfor -%}
+						
+						{%- if settings.image_swatches_enable -%}
+							{%- for image in product.images -%}
+								{%- assign imageSrcSections = image.src | replace: '.png', '' | replace: '.jpg', '' -%}
+								{%- assign imageSrcSections = imageSrcSections | split: '_' -%}
+								{%- assign valueCompressed =  value | handleize | replace: '-', '' -%}
+								{%- if imageSrcSections[2] == 'swatch' and imageSrcSections[1] == variantSku -%}
+									{%- assign swatchImg = image -%}
+								{%- endif -%}
+							{%- endfor -%}
+						{%- endif -%}
+
+						<input
+							type="radio"
+							id="{{ prefix }}{{ option.name }}--{{ forloop.index0 }}"
+							name="{{ option.name }}"
+							value="{{ value | escape }}"
+							data-select="{{ value }}"
+							data-swatch="{{ swatchImg }}"
+							data-name="{{ value }}"
+							data-image="{{ variantImg }}"
+							{% if forloop.first and settings.product_preselect_enable %}checked{% endif %}
+						/>
+						<label
+							for="{{ prefix }}{{ option.name }}--{{ forloop.index0 }}"
+							class="swatch {{ optTitle }} swatch-{{ value | handleize }} {{ activeClass }}"
+						>
+							{%- if swatchImg != blank -%}
+								<img src="{{ swatchImg | img_url: '50x' }}" alt="{{ value }}" />
+								<span class="shade-value">{{- value -}}</span>
+							{%- else -%}
+								{{- value -}}
+							{%- endif -%}
+						</label>
+						{%- assign activeClass = '' -%}
+						
+					{%- endfor -%}
+				</div>
+			{%- else -%}
+				{%- assign activeClass = activeClassStr -%}
+				<div class="swatches {{optTitle}}s clearfix" data-option="{{forloop.index | minus: 1}}" data-name="{{optTitle}}">
+					{%- for value in option.values -%}
+						<input
+							type="radio"
+							id="{{ prefix }}{{ option.name }}--{{ forloop.index0 }}"
+							name="{{ option.name }}"
+							value="{{ value | escape }}"
+							{% if forloop.first and settings.product_preselect_enable %}checked{% endif %}
+						/>
+						<label
+							for="{{ prefix }}{{ option.name }}--{{ forloop.index0 }}"
+							class="swatch swatch-{{ value | handleize }} {{ activeClass }}"
+						>
+							{{ value }}
+						</label>
+						{%- assign activeClass = '' -%}
+					{%- endfor -%}
+				</div>
+			{%- endif -%}
+			
+		</fieldset>
+	
+	{%- unless plp_quickbuy or plp_quickshop -%}
+		{%- if optTitle == sizeOption -%}
+			<a href="#" class="size-chart-trigger" aria-controls="SizeChartModal" aria-label="Modal" aria-expanded="false">{{ 'products.product.size_chart_cta' | t }}</a>
+		{%- endif -%}		
+	{%- endunless -%}
+	
+{%- endfor -%}
+

@@ -1,0 +1,40 @@
+---
+description: Local order missed delivery.
+---
+
+{% capture email_title %}Sorry we missed you {% endcapture %}
+{% capture email_body %}
+    Hi {{ customer.first_name }}, we weren’t able to deliver your order.
+{% endcapture %}
+
+<container class="local-order-missed-delivery">
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+			<p>To schedule another delivery, <a href="mailto:{{ shop.email }}">contact us</a>.</p>
+      {% if order_status_url %}
+        <table class="actions" width="100%">
+          <tr>
+              <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">View your order</a></td>
+            {% if shop.url %}
+              <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+            {% endif %}
+          </tr>
+        </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

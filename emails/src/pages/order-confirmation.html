@@ -1,0 +1,40 @@
+---
+description: Your order has been received.
+---
+
+{% capture email_intro %}Hi {{ customer.first_name }}{% endcapture %}
+{% capture email_title %}Thank you for your order.{% endcapture %}
+{% capture email_subheader %}We hope you enjoy your Cellcosmet products.{% endcapture %}
+{% capture email_body %}Your order {{ order_name }} is now being processed. We will send order tracking details as soon as your order has shipped. Please find your order details below.{% endcapture %}
+
+<container class="order-confirmation">
+  <row>
+    <columns>
+      <div class="email-intro">{{ email_intro }}</div>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <h3 class="email-subheader">{{ email_subheader }}</h3>
+      <div class="main-content">{{ email_body }}</div>
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      <h2 class="heading">ORDER DETAILS</h2>
+      <h3 class="order-header">To view the full order summary, <a href="{{ order_status_url }}" class="">click here</a></h3>
+      {{> product_list}}
+    </columns>
+  </row>
+
+  <row class="section customer-information">
+    <columns>
+      {{> customer_info}}
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <div class="footer-top-content"><h2 class="heading">Have Questions?</h2><p>We’re here to help. Contact our support team at <a href="mailto:customerservice.us@cellcosmet.com">customerservice.us@cellcosmet.com</a>. Please include your order # in all correspondence.</p><p>Thanks for shopping with Cellcosmet US</p></div>
+    </columns>
+  </row>
+
+</container>

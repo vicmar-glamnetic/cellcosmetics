@@ -1,0 +1,23 @@
+{% assign videoThumbnail = product.metafields["global"]["product-content-video-thumb"] %}
+{% assign videoTitle = product.metafields["global"]["product-content-video-title"] %}
+{% assign videoDescription = product.metafields["global"]["product-content-video-descript"] %}
+{% assign videoUrl = product.metafields["global"]["product-content-video"] %}
+
+{%- if videoUrl -%}
+<div class="product-content-video">
+    <h4 class="title">{{ videoTitle }}</h4>
+    <div class="description">{{ videoDescription }}</div>
+    <div class="block-container">
+        <span class="background-image video-thumbnail" role="img" aria-label="" style="background-image:url('{{ videoThumbnail }}');"></span>
+        <img src="{{ videoThumbnail }}" alt="{{ videoTitle }}" />
+        <div class="video-wrapper bg-video"
+            data-video-type=""
+            data-video-id=""
+            data-video-src="{{ videoUrl }}">
+            <div class="content-wrapper">
+                <button class="video-ctl paused"></button>
+            </div>
+        </div>
+    </div>
+</div>    
+{%- endif -%}

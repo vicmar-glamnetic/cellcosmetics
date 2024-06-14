@@ -1,0 +1,54 @@
+@import '../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+.cookie-banner {
+    p {
+        @include body-font-2;
+        color: $grayscale800;
+        a {
+            text-decoration: underline;
+        }
+    }
+    .btn {
+        @include cta-2;
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+
+.cookie-banner {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .btn {
+        margin-top: 16px;
+        width: 118px;
+    }
+}
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    .cookie-banner {
+        padding: 20px 24px;
+    }
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    .cookie-banner {
+        padding: 32px;
+        max-width: 460px !important;
+        left: 32px !important;
+        bottom: 32px !important;
+    }
+};

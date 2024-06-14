@@ -1,0 +1,44 @@
+---
+description: Return requested
+---
+{% if order.customer_order_url %}
+  {%- assign order_details_url = order.customer_order_url -%}
+{% else %}
+  {%- assign order_details_url = order.order_status_url -%}
+{% endif %}
+{% capture email_title %}Your return request was sent{% endcapture %}
+{% capture email_body %}Your return request was sent and is being reviewed. We'll email you once it's been completed.{% endcapture %}
+
+<container class="return-requested">
+
+  <row>
+    <columns>
+    <p></p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <h2>{{email_title}}</h2>
+      <p class="return-requested__body">{{email_body}}</p>
+
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ order_details_url }}" class="button__text">View Your Order</a></td>
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+    </columns>
+  </row>
+
+
+  <row class="section order-list">
+    <columns>
+      <h3 class="return-heading heading">Return summary</h3>
+      {{> return_product_list}}
+    </columns>
+  </row>
+
+</container>

@@ -1,0 +1,33 @@
+
+    {%- if promoindex == 1 -%}
+        {%- assign promo_image = collection.metafields["custom_fields"]["promo_box_1_image"] -%}
+        {%- assign promo_text = collection.metafields["custom_fields"]["promo_box_1_text"] -%}
+        {%- assign promo_url = collection.metafields["custom_fields"]["promo_box_1_url"] -%}
+    {%- elsif promoindex == 2 -%}
+        {%- assign promo_image = collection.metafields["custom_fields"]["promo_box_2_image"] -%}
+        {%- assign promo_text = collection.metafields["custom_fields"]["promo_box_2_text"] -%}
+        {%- assign promo_url = collection.metafields["custom_fields"]["promo_box_2_url"] -%}
+    {%- endif -%}
+
+    {%- if promoindex == 1 -%}
+        {%- if promo_image or promo_text -%}
+        <a class="item promo promo-{{ promoindex }}" {% if promo_url %}href="{{ promo_url }}"{% endif %} data-product-index="{{ forloop.index }}">
+            {% if promo_image %}{{ promo_image }}{% endif %}
+            <p class="promo-inner promo-link">
+                {{ promo_text }}
+            </p>
+        </a>    
+        {%- endif -%}
+    {%- endif -%}
+
+    {%- if promoindex == 2 -%}
+        {%- if promo_image or promo_text -%}
+        <a class="item promo double promo-{{ promoindex }}" {% if promo_url %}href="{{ promo_url }}"{% endif %} data-product-index="{{ forloop.index }}">
+            {% if promo_image %}{{ promo_image }}{% endif %}
+            <p class="promo-inner promo-link">
+                {{ promo_text }}
+            </p>
+        </a>    
+        {%- endif -%}
+    {%- endif -%}
+    

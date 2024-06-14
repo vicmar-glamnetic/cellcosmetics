@@ -1,0 +1,211 @@
+{% schema %}
+    {
+        "name": "Navigation",
+        "settings": [
+            {
+              "type": "text",
+              "id": "nav_divider",
+              "label": "Items / Navi Column",
+              "default": "2"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "image_block",
+                "name": "Navigation Image Block",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "id",
+                        "label": "Associated top level link id",
+                        "info": "Use top level handleized link title and the associated index, e.g. shop1. You can find this by inspecting top level link, use the value from data-trigger attribute."
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "text",
+                        "id": "cta",
+                        "label": "CTA"
+                    },
+                    {
+                        "type": "url",
+                        "id": "link",
+                        "label": "Link"
+                    }
+                ]
+            },
+            {
+                "type": "menu_block",
+                "name": "Menu Item Image Block",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "menu_image",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "menu_id",
+                        "label": "Associated top level link id",
+                        "info": "Use handleized link title. You can find this by inspecting link, use the value from data-item attribute."
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Navigation",
+                "category": "Header",
+                "settings": {
+    
+                }
+            }
+        ]
+    }
+    {% endschema %}
+    
+    {%- include 'vip-restriction' -%}
+    
+    <nav class="nav-bar" role="navigation">
+        <div class="inner-wrapper">
+            <ul class="hide-large-up">
+                <li class="site-country">
+                    {% assign flag_code = "US" %}{% comment %}default value{% endcomment %}
+                    {% for country in localization.available_countries %}
+                        {% if country.iso_code == localization.country.iso_code %}
+                            {% assign flag_code = localization.country.iso_code | downcase %}
+                        {% endif %}
+                    {% endfor %}
+                    <button class="block-title country-text">{{ flag_code | upcase }}<span class="hide flag-icon flag flag-{{flag_code}}"></span><span class="icon icon-chevron-down"></span></button>
+                </li>
+            </ul>
+            <div class="site-nav">
+                {% assign menu = linklists.main-menu %}
+                {% for link in menu.links %}
+    
+                {% assign imageNav = false %}
+                {% assign linkDataName = link.title | handleize %}
+                {% if linkDataName contains 'science' %}
+                    {% assign imageNav = true %}
+                {% endif %} 
+    
+                {%- capture targetId -%}
+                {{- forloop.index | prepend: link.title | handleize -}}
+                {%- endcapture -%}
+                
+                {% comment %}
+                    This snippet controls link restriction in main navigation section, which yield `isVipBlocked` flag.
+                    `link` will be passed as param, use `isVIP` flag to compose the condition along with link object.
+                {% endcomment %}
+                {% assign isVipBlocked = false %}
+                {%- if settings.vip_link_handles contains link.object.handle -%}
+                    {%- unless isVIP -%}
+                        {% assign isVipBlocked = true %}
+                    {%- endunless -%}
+                {%- endif -%}
+                
+                {%- unless isVipBlocked -%}
+                <div class="level-1 {% if link.levels > 0 %}has-children has-dropdown{% endif %}" {% if link.levels > 0 %}aria-haspopup="true"{% endif %} data-link-levels="{{ link.levels }}">
+                    <a class="nav-link" href="{{ link.url }}" {% if link.levels > 0 %}data-trigger="{{ targetId }}{% endif %}"><span>{{ link.title | escape }}</span></a>
+                    {% if link.levels > 0 %}
+                    <div class="dropdown-wrapper">
+                    <ul class="children dropdown {% unless link.levels > 2 %}column-layout{%- endunless -%} {% if imageNav %} image-nav{%- endif -%}" data-target="{{ targetId }}">
+                        <li class="back-to"><a class="back-arrow"></a><span>{{ link.title | escape }}</span></li>
+                        {% if imageNav %}
+                            <div class="image-nav-wrapper">
+                                {% for sublink_1 in link.links %}
+                                {% assign menuTarget = sublink_1.title | handleize %}
+                                            {% for block in section.blocks %}
+                                                {% if block.type == 'menu_block' %}
+                                                    {%- if block.settings.menu_id == menuTarget -%}
+                                                    {% for sublink_2 in sublink_1.links %}
+                                                    {% if block.settings.title == sublink_2.title %}
+                                                    <li class="level-2" data-item="{{ sublink_2.title | handleize }}">
+                                                        <a href="{{ sublink_2.url }}" class="nav-link">
+                                                            <span class="image-container">
+                                                                <img class="nav-image" src="{{ block.settings.menu_image | img_url: '800x' }}" alt="{{ block.settings.menu_title }}" />
+                                                            </span>
+                                                            <span class="title-link">{{ sublink_2.title | escape }}</span>
+                                                        </a>
+                                                    </li>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {%- endif -%}
+                                                {% endif %}
+                                            {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                        {% assign counter = 1 %}
+                        {% for sublink_1 in link.links %}
+                            {% assign mod = forloop.index | modulo:section.settings.nav_divider %}
+                            {% assign shopAll = sublink_1.title | escape | downcase %}
+                            <li class="level-2 column-{{ counter }} {% if shopAll contains "new" %} two-links{% else %} one-link {% endif %} {% if sublink_1.levels > 0 %}has-children expandable{% endif %}" data-column="{{ counter }}">
+                            {% if shopAll contains "new" %}
+                                <a class="nav-link" href="{{ link.url }}" ><span>Shop All</span></a>
+                            {% endif %}
+                            <a class="nav-link" href="{{ sublink_1.url }}" ><span>{{ sublink_1.title | escape }}</span></a>
+                                {% if sublink_1.levels > 0 %}
+                                <ul class="children">
+                                    {% for sublink_2 in sublink_1.links %}
+                                    <li class="level-3">
+                                        <a class="nav-link" href="{{ sublink_2.url }}" ><span>{{ sublink_2.title | escape }}</span></a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </li>
+                            {% if mod == 0 %}
+                                {% assign counter = counter | plus: 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% for block in section.blocks %}
+                        {%- if block.settings.id == targetId -%}
+                        <li class="lv2-image {% if targetId == 'our-science3' %}one-image{% endif %}">
+                            <a href="{{ block.settings.link }}">
+                            <div class="nav-image-container">
+                                {%- include 'responsive-image',
+                                    image: block.settings.image,
+                                    imageSmall: block.settings.image,
+                                    alt: block.settings.title,
+                                    size: '720x',
+                                    sizeMedium: '720x',
+                                    sizeSmall: '720x',
+                                    heightFix: true,
+                                -%}
+                            </div>
+                            {% if block.settings.title != blank %}
+                                <span class="nav-image-title">{{ block.settings.title }}</span>
+                            {% endif %}
+                            {% if block.settings.cta != blank %}
+                                <span class="nav-image-cta">{{ block.settings.cta }}</span>
+                            {% endif %}
+                            </a>
+                        </li>
+                        {%- endif -%}
+                        {% endfor %}
+                    </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                {%- endunless -%}
+                
+                {% endfor %}
+            </div>
+        </div>
+    </nav>
+    

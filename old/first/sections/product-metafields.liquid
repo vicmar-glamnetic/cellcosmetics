@@ -1,0 +1,51 @@
+{% schema %}
+{
+    "name": "Product metafields",
+    "settings": [
+        {
+            "type": "select",
+            "options": [
+                {
+                    "value": "tab",
+                    "label": "Tab"
+                },
+                {
+                    "value": "accordion",
+                    "label": "Accordion"
+                }
+            ],
+            "id": "metafields_layout",
+            "label": "Metafields Layout"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_reviews",
+            "label": "Enable reviews"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_static",
+            "label": "Enable static"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Product metafields",
+            "settings": {}
+        }
+    ],
+    "templates": [
+        "product"
+    ]
+}
+{% endschema %}
+
+<div id="metafields-tabs" class="product-extra">
+    {%- include 'product-content-video' -%}
+    {%- include 'product-metafield',
+        product: product,
+        layout: section.settings.metafields_layout,
+        with_reviews: section.settings.enable_reviews,
+        with_static: section.settings.enable_static
+    -%}
+</div>

@@ -1,0 +1,85 @@
+
+    <style>
+        /*Default Global Colors*/
+        :root {
+          --cfm-font-family: 'HelveticaNeueBd'; /*Add your font family*/
+          --cfm-main-bg-color: #FFFFFF; /* V2 Add Add your Main side drawer background color code */
+          --cfm-main-text-color: #000000; /* Add your Main side drawer text color code*/
+          --cfm-component-bg-color: #FFFFFF; /* Add your Main side drawer  Component heading Background color code*/
+          --cfm-component-text-color: #000000; /* Add your Main side drawer  Component heading text color code*/
+          --cfm-ingredient-text-color: #000000; /* V2 Add your Ingredient Information Modal Text color code */
+          --cfm-main-button-text-color:  #000000; /* V2 Customize your View Ingredient List Link Text Color */
+          --cfm-side-drawer-sliding-direction: left;  /* V2 Customize your Ingredient Side Drawer Sliding Direction - Options available are left & right */
+        }
+
+        .ingredient-structure-container{
+          margin-top:15px;
+          border: 1px solid #000;
+        }
+
+        .button-container{
+          display: flex;
+          flex-direction: row;
+          padding: 15px 20px;
+          background-color:#FFFFFF;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .ingredient-cta{
+          font-size: 12px !important;
+        }
+
+        .additional-details-contianer-cfm{
+          display: none !important;
+        }
+        .cfm-helpful{
+          display: none !important;
+        }
+        #cfm-side-drawer{
+          z-index: 9999 !important;
+        }
+
+      /* Include this code above to turn the link into a button */
+    </style>
+
+      <script>
+        //replace the shopify validation token here
+        const validationToken =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTBiMzAzZDgxOTBhODAwMjIxNTlkMDciLCJzdG9yZVVybCI6Imh0dHBzOi8vY2VsbGNvc21ldC1jZWxsbWVuLnVzL3Byb2R1Y3RzLyIsImlhdCI6MTY5NTkwODg0OX0.B2IPKcHqJoqHbvdnhv4zG3_v2Y_JbsHGTwxG_Wsj-MI';
+        //replace the Client name here
+        const clientName = 'cellcosmet';
+        //Add Custom Product Attribute Heading Text
+        const productAttributesHeadingText = 'Attributes';
+        //Add Definition Heading Text
+        const definitionHeadingText = 'Definition:';
+        //Add Custom Notes Heading Text
+        const customNoteHeadingText = 'NOTE FROM BRAND';
+        //Add Custom Functions Heading Text
+        const functionsHeadingText = 'Purpose:';
+        //Add Custom Product Ingredient Attribute Heading Text
+        const productIngredientAttributesHeadingText = 'Qualities:';
+        //Add Custom Additional Details Heading Text
+        const additionalDetailsHeadingText = 'Additional Notes';
+      </script>
+
+
+      <!--CFM styles and scripts-->
+      <link
+        rel="stylesheet"
+        href="https://snippet-st1.clearforme.com/v2/style.css"
+      />
+      <script src="https://snippet-st1.clearforme.com/v2/script.js"></script>
+      <!--CFM Structure-->
+      {% assign current_variant = product.selected_or_first_available_variant %}
+      <span id="cfm-sku" class="cfm-sku">{{ current_variant.sku }}</span>
+
+
+      <div
+        id="ingredient-structure-container"
+        class="ingredient-structure-container"
+      >
+        <div class="button-container" onclick="handleButtonClick()">
+          <button class="ingredient-cta">INGREDIENT LIST</button>
+        </div>
+      </div>

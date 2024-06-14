@@ -1,0 +1,131 @@
+@import '../components/fonts';
+
+//
+//  Fonts
+//  _____________________________________________
+
+.recently-viewed {
+    h2 {
+        @include title-font-1;
+    }
+
+    .product-name { 
+        @include body-font-2;
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+
+.recently-viewed {
+    width: 100%;
+    margin-bottom: 55px;
+
+    h2 {
+        margin-bottom: 38px;
+        text-align: center;
+    }
+    
+    .items {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 50px;
+
+        .item {
+            flex: 0 1 320px;
+            padding: 0 3px;
+        }
+    }
+
+    .product-grid-item {
+        @include transition(all $slow);
+        @extend .animated, .fadeIn !optional;
+
+        .product-image-wrapper {
+            .product-link {
+                position: relative;
+                display: block;
+                @include percentage-height($productImageRatioPercentage);
+
+                .product-image {
+                    position: absolute;
+                    width: 100%;
+                    padding-top: $productImageRatioPercentage;
+                    @include transition(opacity $slow);
+
+                    &.alt {
+                        @include opacity(0);
+
+                        img {
+                            @include transition(opacity $slow);
+                            &:not(.loaded) {
+                                @include opacity(0);
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+                    .alt {
+                        @include opacity(1);
+                    }
+                }
+            }
+
+            .product-badge {
+                display: none;
+            }
+        }
+
+        .product-info-wrapper {
+            padding: 13px;
+            position: relative;
+            text-align: center;
+
+            .price-box {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+//
+// Small Screens Only
+//  _____________________________________________
+@include query-small {
+
+};
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    .recently-viewed {
+        .items {
+            padding: 0 33px;
+
+            .item {
+                flex: 0 0 212px;
+            }
+        }
+    }
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+    
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    .recently-viewed {
+        .items {
+            justify-content: center;
+        }
+    }
+};

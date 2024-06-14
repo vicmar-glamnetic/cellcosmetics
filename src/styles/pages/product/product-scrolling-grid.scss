@@ -1,0 +1,68 @@
+//
+//  Typography
+//  _____________________________________________
+
+//
+//  Common
+//  _____________________________________________
+
+
+
+//
+//  Small + Medium screen sizes - Prev: Tablet and Mobile
+//  _____________________________________________
+@include query-medium-down {
+    
+};//query-medium-down
+
+
+//
+//  Large screen sizes - Prev: Desktop
+//  _____________________________________________
+@include query-large-up {
+    $selectedHeaderHeight: $headerLargeScreenHeight*2; // Depends on the header style you choose, it can be X1 or X2
+    
+    .product-detail-container.scrolling-grid {
+        // General PDP layout
+        display: flex;
+        flex-wrap: wrap;
+        .product-media {
+            width: 100%;
+            overflow: hidden;
+            &.scrolling {
+                .product-media-thumbnails {
+                    .images-wrapper {
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                    }
+                    .image-thumbnail {
+                        width: 50%;
+                        height: calc(100vh - #{$selectedHeaderHeight});
+                        min-height: 900px;
+                        border: 0;
+                        img {
+                            display: none;
+                        }
+                        .background-image {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+        .product-core {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            .product-core-inner {
+                max-width: 440px;
+                padding: 20px 40px;
+                background: white;
+            }
+        }
+        .product-extra {
+            width: 100%;
+        }
+    }
+};//query-large-up

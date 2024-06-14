@@ -1,0 +1,45 @@
+---
+description: View your order.
+---
+
+{% if fulfillment.item_count == item_count %}   {% capture shipment_name %}Your order has been{% endcapture %}
+{% elsif fulfillment.item_count > 1 %}   {% if fulfillment_status == 'fulfilled' %}
+    {% capture shipment_name %}The last items in your order have been{% endcapture %}
+  {% else %}
+    {% capture shipment_name %}Some items in your order have been{% endcapture %}
+  {% endif %}
+{% else %}   {% if fulfillment_status == 'fulfilled' %}
+    {% capture shipment_name %}The last item in your order has been{% endcapture %}
+  {% else %}
+    {% capture shipment_name %}One item in your order has been{% endcapture %}
+  {% endif %}
+{% endif %}
+
+{% capture email_title %}Your Cellcosmet Order Has Been Delivered!{% endcapture %}
+{% capture email_body %}<p>We hope you enjoy your Cellcosmet purchase!</p></p>If for any reason you cannot locate your order we recommend you first taking a look around your home to see if the carrier has hidden your package. If you still cannot locate it, <a href="{{{{raw}}}}{{ shop.url }}{{{{/raw}}}}/pages/contact" style="text-decoration: underline;">please reach out to us</a>.</p>{% endcapture %}
+
+<container class="shipment-delivered">
+  <row>
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      {% if order_status_url %}
+        <table class="actions" width="100%">
+          <tr>
+            <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">Track Your Order</a></td>
+          </tr>
+        </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      <h2 class="heading">IN YOUR SHIPMENT</h2>
+      <h3 class="order-header">To view the full order summary, <a href="{{ order_status_url }}" class="">click here</a></h3>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

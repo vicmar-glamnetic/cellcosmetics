@@ -1,0 +1,121 @@
+{% schema %}
+{
+    "name": "Multisection Module 1",
+    "max_blocks": 4,
+    "blocks": [
+        {
+            "type": "slide",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "type": "text",
+            "id": "subheadline",
+            "label": "Subheadline Text"
+        },
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline Text"
+        },
+        {
+            "type": "textarea",
+            "id": "description",
+            "label": "Body Text"
+        },
+        {
+            "type": "text",
+            "id": "cta",
+            "label": "CTA Text"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "CTA Link"
+        },
+        {
+            "type": "radio",
+            "options": [
+                { "value": "style-1", "label": "Style 1 - Full Bleed" },
+                { "value": "style-2", "label": "Style 2 - Padded" }
+            ],
+            "default": "style-1",
+            "id": "style",
+            "label": "Module Style"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color"
+        },
+        {
+            "type": "checkbox",
+            "id": "flip_content",
+            "default": false,
+            "label": "Flip Content",
+            "info": "Flip positions of the module components"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Multisection Module 1",
+            "category": "Additional Content",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+
+    <section class="multisection-module multisection-module-1 {{ section.settings.style }} {% if section.settings.flip_content%}flipped{% endif %}" style="background-color: {{section.settings.bg_color}}">
+
+        
+            <div class="block-container">
+
+                <div class="image-block {% if section.blocks.size > 1 %}slick{% endif %}">
+                    {% for block in section.blocks %}
+                    <div class="image-slide">
+                    {%- include 'responsive-image-lazy',
+                        image: block.settings.image,
+                        imageSmall: block.settings.image,
+                        alt: block.settings.image.alt,
+                        size: '600x',
+                        sizeMedium: '600x',
+                        sizeSmall: '600x',
+                        heightFix: true
+                    -%}
+                    </div>
+                    {% endfor %}
+                </div>
+                 
+                <div class="content-block">
+                    {% if section.settings.subheadline != blank %}
+                        <h4 class="subheadline body-font-5">{{ section.settings.subheadline }}</h4>
+                    {% endif %}
+                    {% if section.settings.headline != blank %}
+                        <h3 class="headline title-font-4-light">{{ section.settings.headline }}</h3>
+                    {% endif %}
+                    {% if section.settings.description != blank %}
+                        <p class="description body-font-1">{{ section.settings.description }}</p>
+                    {% endif %}
+                    {% if section.settings.cta != blank %}
+                        <div class="cta-wrap">
+                            <a href="{{ section.settings.link }}" class="cta-3"><span>{{ section.settings.cta }}</span></a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+
+    </section>

@@ -1,0 +1,590 @@
+// Author: Pat McNamara
+// Description: Shopify Email Boilerplate
+// 1. Fonts
+// 2. Layout
+// 3. Default Styles
+// 4. Main Sections
+// 5. Elements
+// 6. Helpers
+// 7. Email Specific Styles
+
+// 1. FONTS
+/////////////////////////////////////////////////
+/* Upload font to Shopify Admin Files, grab the link and paste them in the URL */
+@font-face {
+    font-family: $site-font;
+    src: url("https://cdn.shopify.com/s/files/1/0094/3682/3612/files/AvenirLTStd-Light.otf?v=1665843618") format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: $site-font-bold;
+    src: url("https://cdn.shopify.com/s/files/1/0094/3682/3612/files/AvenirLTStd-Black.otf?v=1665843734") format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: $site-font-medium;
+    src: url("https://cdn.shopify.com/s/files/1/0094/3682/3612/files/AvenirLTStd-Medium.otf?v=1665843618") format('opentype');
+    font-weight: medium;
+    font-style: normal;
+}
+
+// 2. LAYOUT
+/////////////////////////////////////////////////
+body {
+    line-height: $global-line-height;
+    font-size: 14px;
+}
+.wrapper{
+    margin: 30px 0;
+}
+.container{
+    
+}
+.row{
+    
+}
+.columns{
+    
+}
+
+// 3. DEFAULT STYLES
+/////////////////////////////////////////////////
+table, tr, td, th{
+    box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: $site-font-medium;
+}
+h2 {
+    margin-bottom: 10px;
+}
+h3 {
+    margin-bottom: 25px;
+}
+h4 {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+p {
+    margin: 0;
+}
+p + p {
+    margin-top: 15px;
+}
+span, strong, del, a, p {
+    
+}
+strong {
+    font-weight: normal;
+}
+small {
+    font-size: 10px;
+}
+a, a:hover, a:active, a:visited {
+    text-decoration: none;
+    color: $primary-color;
+}
+p a, a[href^="mailto"]{
+    text-decoration: underline;
+    color: $secondary-color;
+}
+
+// 4. MAIN SECTIONS
+/////////////////////////////////////////////////
+.header {
+    text-align: center;
+    .menu{
+        .menu-item{
+            padding: 10px 36px;
+            text-transform: uppercase;
+            a{
+                font-size: $small-font-size;
+            }
+        }
+    }
+    .menu-row{
+        margin-bottom: 3px;
+        .columns{
+            padding-bottom: 0;
+        }
+    }
+}
+.emailImage{
+    height: auto !important;
+    max-width: $global-width !important;
+    width: 100% !important;
+}
+.header-image{
+    .columns{
+        padding-bottom: 0;
+    }
+    img{
+        margin: 0 auto !important;
+        max-width: 100%;
+        display: block;
+    }
+}
+.logo{
+    text-align: center !important;
+    border-bottom: $border;
+    text-align: center;
+    th{
+        text-align: center;
+    }
+    .columns{
+        padding: $global-gutter;
+    }
+    img{
+        margin: 0 auto !important;
+        width: 200px !important;
+    }
+}
+.shop-name__text{
+    display: block;
+    text-align: center !important;
+    padding: $global-padding 0 10px;
+}
+.content{
+    .container{
+
+    }
+}
+.email-intro{
+    padding: 15px 0 0;
+}
+.email-title{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: $site-font-bold;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
+.email-subheader, .order-header{
+    font-size: 16px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+    a{
+        text-decoration: underline;
+    }
+}
+.main-content{
+    font-family: $site-font;
+    font-size: 16px;
+    p{
+        margin-bottom: 15px;
+        font-family: $site-font;
+    }
+    a{
+        font-size: inherit;
+        font-family: $site-font;
+    }
+}
+.actions {
+    margin-top: 35px;
+    &.center{
+        width: auto !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .button__cell {
+        width: 50%;
+        background: $grayscale-800;
+        &.first{
+            padding-right: calc($global-gutter / 2);
+        }
+        &.last{
+            padding-left: calc($global-gutter / 2);
+            background: $white;
+            a {
+                color: $grayscale-700;
+                border-color: $grayscale-700;
+            }
+        }
+        &.only{
+            padding: 0;
+        }
+        a{
+            color: $white;
+            display: block;
+            text-align: center;
+            border-radius: 0;
+            border: 1px solid transparent;
+            padding: 10px;
+            text-transform: uppercase;
+            line-height: 24px;
+            font-weight: 700;
+            letter-spacing: 1.12px;
+        }
+        // &.secondary{
+        //     a{
+        //         background-color: $primary-color;
+        //     }
+        // }
+    }
+    .button__text{
+        font-size: 12px;
+    }
+}
+.footer-top-content{
+    .heading{
+        font-size: 18px;
+        font-weight: bold;
+        font-family: $site-font-bold;
+    }
+}
+.footer-bottom-content{
+    text-align: center;
+    padding-top: 15px;
+    font-size: 14px !important;
+}
+.footer {
+    border-top: $border;
+    .footer-top {
+        // border-top: $border;
+        border-bottom: none;
+        font-size: $small-font-size;
+        .footer-top-content{
+            padding: $global-gutter;
+            p{
+                font-size: $small-font-size;
+                margin: 0;
+            }
+        }
+    }
+    .footer-bottom{
+        // border-top: $border;
+        .menu{
+            margin-top: 9px;
+            margin-bottom: 9px;
+            .menu-item{
+                img{
+                    max-width: 32px;
+                }
+            }
+        }
+    }
+}
+.disclaimer__subtext {
+    padding: 14px 0;
+    a {
+
+    }
+}
+.spacer {
+    min-width: $global-width;
+    height: 0;
+}
+
+// 5. ELEMENTS
+/////////////////////////////////////////////////
+.section {
+    /*border-top: $border;*/
+}
+.section__cell {
+    padding: 0 0 40px 0;
+}
+.section .section__cell .container:first-child tr:first-child td{
+    padding-top: 40px;
+    border-top: $border;
+}
+.order-list .section__cell .container:first-child tr:first-child td{
+    padding-top: 0;
+}
+.content__cell {
+    padding-bottom: 40px;
+}
+.content__cell h1, .content__cell h2{
+  margin-top: 18px;
+    margin-bottom: 30px;
+}
+.text-icon-row td {
+    padding-bottom: 5px;
+}
+.text-icon {
+    padding-right: 8px;
+}
+.text-icon__image {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.order-number__text{
+    font-size: $small-font-size;
+    margin-top: $global-padding;
+}
+.or {
+    color: #999;
+    display: inline-block;
+    margin-right: 10px;
+    @media (max-width: $global-breakpoint) {
+        margin-right: 0 !important;
+    }
+}
+.apple-wallet-button {
+    display: block;
+    margin-top: 15px;
+    @media (max-width: $global-breakpoint) {
+        text-align: center;
+    }
+}
+.customer-information{
+    .heading{
+        font-size: 18px;
+        font-weight: bold;
+        font-family: $site-font-bold;
+    }
+    .customer-info__item {
+        padding-bottom: 10px;
+        width: 50%;
+        float: left;
+        h4{
+            font-weight: normal;
+            margin-bottom: 15px;
+            font-size: 14px;
+            span{
+                padding-bottom: 3px;
+                border-bottom: 1px solid $primary-color;
+            }
+            }
+        p{
+            font-size: $small-font-size;
+            margin: 4px 0;
+            line-height: 1.6;
+            text-decoration: none;
+        }
+    }
+    .customer-info__item--last {
+        padding-bottom: 0;
+    }
+    .customer-info__item-credit {
+        height: 24px;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        vertical-align: middle;
+    }
+}
+.order-list{
+    border-top: $border;
+    .heading{
+        margin: 10px 0 0;
+        font-family: $site-font-bold;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .return-heading{
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}
+.order-list .section__cell, .product-list .section__cell{
+    padding-bottom: 15px;
+}
+.order-list, .order-list table, .product-list, .product-list table{
+    
+}
+.order-list__item {
+    width: 100%;
+}
+.order-list__item+.order-list__item {
+    border-top: $border;
+}
+.order-list__item td{
+    vertical-align: top;
+}
+.order-list__item__cell{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.order-list__product-image {
+    margin-right: 15px;
+    border: none;
+    border-radius: 0;
+    display: inline-block;
+    min-width: 150px;
+}
+.order-list__product-description-cell {
+    width: 100%;
+}
+.order-list__item-title {
+    font-size: 14px;
+    line-height: 1.4;
+}
+.order-list__item-variant, .order-list__item-property {
+    display: block;
+    font-size: 12px;
+    margin-top: 15px;
+}
+.order-list__item-original-price {
+    display: none;
+    text-align: right;
+    font-size: $small-font-size;
+}
+.order-list__item-price {
+    text-align: right;
+    margin-left: 15px;
+    font-size: 14px;
+}
+.order-list__item-qty{
+    display: block;
+    margin-top: 15px;
+    font-size: 12px;
+}
+.order-list__price-cell {
+    white-space: nowrap;
+}
+.subtotal-lines {
+    border-top: $border;
+    width: 100% !important;
+    display: table !important;
+}
+.subtotal-lines tr td{
+    /*width: 50%;*/
+}
+.subtotal-line{
+    display: table-row;
+    width: 100%;
+}
+.subtotal-lines tr td:last-child{
+    text-align: right;
+}
+.full-width{
+    width: 100%;
+}
+.subtotal-table {
+    margin-top: $global-padding;
+    width: 100% !important;
+    display: table !important;
+}
+.subtotal-line td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.subtotal-table--total {
+    border-top: $border;
+    .subtotal-line__title, .subtotal-line__value{
+        font-size: 14px;
+        font-family: $site-font-bold;
+    }
+}
+.subtotal-line__value {
+    text-align: right;
+}
+.subtotal-line__title, .subtotal-line__value{
+    padding-top: 14px;
+    padding-bottom: 14px;
+    display: table-cell;
+    font-size: 12px;
+    p {
+        font-size: 12px;
+        margin-bottom: 0;
+    }
+}
+.subtotal-line__title, .subtotal-table--total .subtotal-line__title{
+    padding-left: 165px;
+}
+.subtotal-table--total td {
+    padding: $global-padding 0;
+}
+.subtotal-table--payment-methods {
+    border-top: $border;
+}
+.subtotal-table--payment-methods p,
+.subtotal-table--payment-methods strong {
+    color: #999;
+    font-size: 14px;
+}
+.subtotal-table__small-space {
+    height: 10px;
+}
+.subtotal-table__line {
+    border-bottom: $border;
+    height: 1px;
+    padding: 0;
+}
+.subtotal-spacer {
+    display: none;
+}
+.refund-table{
+    margin-top: 0;
+}
+.text-icon{
+    width: 28px;
+    line-height: 1;
+    vertical-align: middle;
+}
+.category_images{
+    text-align: center;
+    th{
+        text-align: center;
+    }
+    .category{
+        &.first{
+            padding-right: 10px;
+        }
+        &.last{
+            padding-left: 10px;
+        }
+    }
+    div{
+        a{
+            padding-bottom: 18px;
+        }
+    }
+    a{
+        text-transform: uppercase;
+        font-size: 14px;
+        display: block;
+        text-align: center;
+    }
+}
+
+// 6. HELPERS
+/////////////////////////////////////////////////
+.text-center{
+    text-align: center;
+}
+
+// 7. EMAIL SPECIFIC STYLES
+/////////////////////////////////////////////////
+.order-confirmation{
+    .subtotal-table--total{
+        border-bottom: $border;
+    }
+}
+//emails with no small title at top of body
+.buy-online, .abandoned-cart, .gift-card-created, .customer-account-invite, .contact-customer{
+    .actions{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .email-title{
+        padding: 20px 0 15px;
+    }
+}
+.customer-account-welcome, .customer-account-password-reset{
+    .email-title{
+        padding: 30px 0 30px;
+    }
+    .actions{
+        margin: 30px auto 30px;
+    }
+}
+.contact-customer{
+    .main-content{
+        padding-top: 35px;
+    }
+}
+//emails with no subtotals, only product list
+.abandoned-cart, .shipping-confirmation, .shipping-update, .shipment-out-for-delivery, .shipment-delivered{
+    .order-list__item-price{
+        display: none;
+    }
+    .subtotal-lines{
+        display: none !important;
+    }
+}

@@ -1,0 +1,103 @@
+<% var response = content.response %>
+<% var productSuggestions = content.productSuggestions %>
+<% var collectionSuggestions = content.collectionSuggestions %>
+<% var pageSuggestions = content.pageSuggestions %>
+<% var articleSuggestions = content.articleSuggestions %>
+<% var querySuggestions = content.querySuggestions %>
+<% var searchPageResults = content.searchPageResults %>
+
+<div id="predictive-search-results" role="listbox">
+	<div id="predictive-search-results-groups-wrapper" class="predictive-search__results-groups-wrapper">
+
+		<% if (productSuggestions && productSuggestions.length >= 1) { %>
+		<div class="predictive-search-products">
+			<h3 id="predictive-search-products" class="predictive-search__heading">Related Products</h3>
+			<ul id="predictive-search-results-products-list" class="predictive-search__results-list" role="group" aria-labelledby="predictive-search-products">
+				<% $(productSuggestions).each(function() { %>
+				    <li id="predictive-search-option-product" class="predictive-search__list-item" role="option" aria-selected="false">
+				    	<a href="<%= this.url %>" class="predictive-search__item link link--text" tabindex="-1">
+				    		<div class="predictive-search__item-content">
+				    			<img class="predictive-search__image" src="<%=this.featured_image.url %>" alt="<%=this.featured_image.alt %>" width="50" height="50"/>
+				    		</div>
+				    		<div class="predictive-search__item-content">
+				    			<p class="predictive-search__item-heading predictive-search__item-product-result"><%= this.title %></p>
+				    			<p class="predictive-search__item-product-result price"><%= this.price %></p>
+				    		</div>
+						</a>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<% } %>
+
+		<% if (collectionSuggestions && collectionSuggestions.length >= 1) { %>
+		<div class="predictive-search-collections">
+			<h3 id="predictive-search-collections" class="predictive-search__heading">Collections</h3>
+			<ul id="predictive-search-results-collections-list" class="predictive-search__results-list" role="group" aria-labelledby="predictive-search-collections">
+				<% $(collectionSuggestions).each(function() { %>
+					<li id="predictive-search-option-collection" class="predictive-search__list-item" role="option" aria-selected="false">
+						<a href="<%= this.url %>" class="predictive-search__item link link--text" tabindex="-1">
+							<div class="predictive-search__item-content">
+								<p class="predictive-search__item-heading predictive-search__item-collection-result"><%= this.title %></p>
+							</div>
+						</a>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<% } %>
+
+		<% if (pageSuggestions && pageSuggestions.length >= 1) { %>
+		<div class="predictive-search-pages">
+			<h3 id="predictive-search-pages" class="predictive-search__heading">Pages</h3>
+			<ul id="predictive-search-results-pages-list" class="predictive-search__results-list" role="group" aria-labelledby="predictive-search-pages">
+				<% $(pageSuggestions).each(function() { %>
+					<li id="predictive-search-option-page" class="predictive-search__list-item" role="option" aria-selected="false">
+						<a href="<%= this.url %>" class="predictive-search__item link link--text" tabindex="-1">
+							<div class="predictive-search__item-content">
+								<p class="predictive-search__item-heading predictive-search__item-page-result"><%= this.title %></p>
+							</div>
+						</a>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<% } %>
+
+		<% if (articleSuggestions && articleSuggestions.length >= 1) { %>
+		<div class="predictive-search-articles">
+			<h3 id="predictive-search-articles" class="predictive-search__heading">Articles</h3>
+			<ul id="predictive-search-results-articles-list" class="predictive-search__results-list" role="group" aria-labelledby="predictive-search-articles">
+				<% $(articleSuggestions).each(function() { %>
+					<li id="predictive-search-option-article" class="predictive-search__list-item" role="option" aria-selected="false">
+						<a href="<%= this.url %>" class="predictive-search__item link link--text" tabindex="-1">
+							<div class="predictive-search__item-content">
+								<p class="predictive-search__item-heading predictive-search__item-article-result"><%= this.title %></p>
+							</div>
+						</a>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<% } %>
+
+		<% if (querySuggestions && querySuggestions.length >= 1) { %>
+		<div class="predictive-search-queries">
+			<h3 id="predictive-search-queries" class="predictive-search__heading">Queries</h3>
+			<ul id="predictive-search-results-queries-list" class="predictive-search__results-list" role="group" aria-labelledby="predictive-search-queries">
+				<% $(querySuggestions).each(function() { %>
+					<li id="predictive-search-option-query" class="predictive-search__list-item" role="option" aria-selected="false">
+						<a href="<%= this.url %>" class="predictive-search__item link link--text" tabindex="-1">
+							<div class="predictive-search__item-content">
+								<p class="predictive-search__item-heading predictive-search__item-query-result"><%= this.text %></p>
+							</div>
+						</a>
+					</li>
+				<% }) %>
+			</ul>
+		</div>
+		<% } %>
+
+	</div>
+</div>
+		   

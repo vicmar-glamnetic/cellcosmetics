@@ -1,0 +1,76 @@
+{% assign all_filters = '' %}
+{% if settings.collection_color_filters != blank %}
+    {% assign all_filters = all_filters | append: 'Color|' | append: settings.collection_color_filters | append: '||' %}
+{% endif %}
+{% if settings.collection_size_filters != blank %}
+    {% assign all_filters = all_filters | append: 'Size|' | append: settings.collection_size_filters | append: '||' %}
+{% endif %}
+
+{% assign all_filters = all_filters | split: '||' %}
+<div class="collection-nav-block filters tag-filtering">
+    <button type="button" class="nav-title" data-title="{{ 'collections.filter.title' | t }}">{{ 'collections.filter.title' | t }}</button>
+    <button class="clear-all clear-all-filters filter-swatch {% unless current_tags %}hide hidden{% endunless %}" data-link="">{{ 'collections.filter.clear_all' | t }}</button>
+    <div class="nav-content">
+        <div class="nav-list-container">
+        
+            <div class="filter collection {% if layout == 'one-column' %}nav-dropdown{% else %}nav-accordion{% endif %}">
+                <button type="button" class="filter-title {% if layout == 'one-column' %}nav-dropdown-title{% else %}nav-accordion-title{% endif %}">Style</button>
+                <ul class="filter-swatches {% if layout == 'one-column' %}nav-dropdown-content{% else %}nav-accordion-content{% endif %}" data-select="filter-collection">
+                    loading...
+                </ul>
+            </div>
+        
+        {% for filter in all_filters %}
+
+            {% assign split = filter | split: '|' %}
+            {% assign title = split.first %}
+            {% assign allowedFilters = split.last | split: ',' %}
+            
+            {% for tag in allowedFilters %}
+                {% if collection.all_tags contains tag %}
+                    {% assign filterCount = forloop.index %}
+                {% endif %}
+            {% endfor %}
+
+            {% if title != 'handle' and filterCount > 1 %}
+                <div class="filter {% if layout == 'one-column' %}nav-dropdown{% else %}nav-accordion{% endif %}">
+                    {% assign filterSwatchHtml = '' %}
+                    {% assign titleHandle = title | downcase | append: ':' %}
+                    <button type="button" class="filter-title {% if layout == 'one-column' %}nav-dropdown-title{% else %}nav-accordion-title{% endif %}">{{ title | capitalize }}</button>
+
+                    <select class="filter-select coll-filter hide" id="filter-{{ title | handle }}">
+                        <option value="">View All</option>
+                        {%- for tag in allowedFilters -%}
+                            {% assign tagTitle = tag | remove: titleHandle %}
+                            
+                            {% if current_tags contains tag %}
+                                <option value="{{ tag | handle }}" selected>{{ tagTitle }}</option>
+                            {% elsif collection.tags contains tag %}
+                                <option value="{{ tag | handle }}">{{ tagTitle }}</option>
+                            {% else %}
+                                <option value="{{ tag | handle }}" disabled>{{ tagTitle }}</option>
+                            {% endif %}
+                            
+                            {%- capture filterSwatch -%}
+                            {% if current_tags contains tag %}
+                                <button type="button" class="filter-swatch active" data-link="{{ tag | handle }}"><span>{{ tagTitle }}</span></button>
+                            {% elsif collection.tags contains tag %}
+                                <button type="button" class="filter-swatch" data-link="{{ tag | handle }}"><span>{{ tagTitle }}</span></button>
+                            {% else %}
+                                <button type="button" class="filter-swatch disabled" data-link="{{ tag | handle }}"><span>{{ tagTitle }}</span></button>
+                            {% endif %}
+                            {%- endcapture -%}
+                            {% assign filterSwatchHtml = filterSwatchHtml | append: filterSwatch %}
+                        {%- endfor -%}
+                    </select>
+                    
+                    <div class="filter-swatches {% if layout == 'one-column' %}nav-dropdown-content{% else %}nav-accordion-content{% endif %}" data-select="filter-{{title | handle}}">
+                        <button type="button" class="filter-swatch view-all" data-link=""><span>View All</span></button>
+                        {{ filterSwatchHtml }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>

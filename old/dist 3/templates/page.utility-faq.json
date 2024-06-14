@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "faq": {
+            "type": "utility-section-main"
+        }
+    },
+    "order": [
+        "faq"
+    ]
+}

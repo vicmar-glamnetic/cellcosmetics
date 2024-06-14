@@ -1,0 +1,24 @@
+{% comment %}
+Collection Filters
+{% endcomment %}
+{% assign catMenu = linklists.category-menu %}
+{%- if catMenu -%}
+<div class="collection-nav-block category {% if layout == 'one-column' %}nav-dropdown{% endif %}">
+    <div class="nav-title {% if layout == 'one-column' %}nav-dropdown-title{% endif %}">{{ 'collections.filter.category' | t }}</div>
+    <div class="nav-content {% if layout == 'one-column' %}nav-dropdown-content{% endif %}">
+        <ul class="nav-list-container">
+        {%- for link in catMenu.links -%}
+            <li class="{%- if link.url == collection.url -%}active{%- endif -%}">
+                <a class="nav-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+            </li>
+        {%- endfor -%}
+        </ul>
+    </div>
+</div>    
+{%- endif -%}
+
+{%- if settings.filtering_type == 'storefront-filtering' -%}
+    {%- include 'collection-filtering-storefront' -%}
+{%- elsif settings.filtering_type == 'tag-filtering' -%}
+    {%- include 'collection-filtering-tag' -%}
+{%- endif -%}

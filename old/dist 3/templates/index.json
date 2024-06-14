@@ -1,0 +1,43 @@
+{
+    "wrapper": "div.homepage",
+    "sections": {
+      "homepage-module-a": {
+        "type": "homepage-module-a",
+        "settings": {
+        }
+      },
+      "homepage-module-b": {
+        "type": "homepage-module-b",
+        "settings": {
+        }
+      },
+      "homepage-module-c": {
+        "type": "homepage-module-c",
+        "settings": {
+        }
+      },
+      "homepage-module-d": {
+        "type": "homepage-module-d",
+        "settings": {
+        }
+      },
+      "homepage-module-e": {
+        "type": "homepage-module-e",
+        "settings": {
+        }
+      },
+      "homepage-module-f": {
+        "type": "homepage-module-e",
+        "settings": {
+        }
+      }
+    },
+    "order": [
+      "homepage-module-a",
+      "homepage-module-b",
+      "homepage-module-c",
+      "homepage-module-d",
+      "homepage-module-e",
+      "homepage-module-f"
+    ]
+  }

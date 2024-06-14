@@ -1,0 +1,49 @@
+---
+description: Your order has been cancelled.
+---
+
+{% capture email_title %}Your order has been cancelled{% endcapture %}
+{%- capture email_body -%}
+  Order {{ name }} was cancelled
+  {% case cancel_reason %}
+  {% when 'customer' %}
+    at your request
+  {% when 'inventory' %}
+    because we did not have enough stock to fulfill your order
+  {% when 'fraud' %}
+    because we suspect it is fraudulent
+  {% when 'other' %}
+    due to unforeseen circumstances
+  {% endcase %}
+
+  {%- if financial_status == 'voided' -%}
+    and your payment has been voided
+  {%- elsif financial_status == 'refunded' -%}
+    and your payment has been refunded
+  {%- endif -%}
+.
+{%- endcapture -%}
+
+<container class="order-cancelled">
+
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      <h3 class="heading">Refunded items</h3>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

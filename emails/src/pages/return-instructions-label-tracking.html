@@ -1,0 +1,117 @@
+---
+description: Complete your return
+---
+
+{% capture email_title %}Complete your return{% endcapture %}
+{% capture email_body %}{% endcapture %}
+
+<container class="return-instructions">
+
+  <row>
+    <columns>
+    <p></p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+
+      {% for return_delivery in return.deliveries %}
+      {% if return_delivery.type == 'shopify_label' %}
+        <h2>Your return shipping label is ready</h2>
+        <p class="return-creation__subtitle">Print your return shipping label and attach it to the package containing your return items</p>
+        <table class="row actions">
+          <tr>
+            <td class="empty-line">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="actions__cell">
+              <table class="button main-action-cell">
+                <tr>
+                  <td class="button__cell"><a href="{{ return_delivery.return_label.public_file_url }}" class="button__text">Print return label</a></td>
+                </tr>
+              </table>
+              <table class="link secondary-action-cell">
+                <tr>
+                  <td class="link__cell">or <a target="_blank" href="{{ order.order_status_url }}">View your order</a></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      {% elsif return_delivery.type == 'manual' %}
+        <h2>Complete your return</h2>
+        <p class="return-creation__subtitle">
+          <b class="return-creation__subtitle-bold">We’ve sent you a return shipping label, or you will receive one soon.</b>
+          Once you receive your return shipping label, get your returned items and follow the instructions to complete your return.
+        </p>
+      {% endif %}
+    {% endfor %}
+
+    </columns>
+  </row>
+
+
+  <row>
+    <columns>
+      <table class="row section">
+        <tr>
+          <td class="section__cell">
+              <table class="">
+                <tr>
+                  <td>
+                    <h3>Instructions</h3>
+                  </td>
+                </tr>
+              </table>
+              <table class="">
+                <tr>
+                  <td>
+                    {% for return_delivery in return.deliveries %}
+                      <ol>
+                        <li class="return-label__instruction-step">Pack the items you're returning.</li>
+      
+                        {% if return_delivery.type == 'shopify_label' %}
+                          <li class="return-label__instruction-step">Print your return shipping label and attach it to the package. Cover or remove any old shipping labels.</li>
+                          <li class="return-label__instruction-step">
+                            {% if return_delivery.carrier_name %}
+                              Give the package to {{ return_delivery.carrier_name }}.
+                            {% else %}
+                              Give the package to the carrier identified on the label.
+                            {% endif %}
+                          </li>
+                        {% elsif return_delivery.type == 'manual' %}
+                          <li class="return-label__instruction-step">Print your return shipping label. If you haven’t received it yet, we’ll send it to you soon.</li>
+                          <li class="return-label__instruction-step">Attach the label to the package. Cover or remove any old shipping labels.</li>
+                          <li class="return-label__instruction-step">
+                            {% if return_delivery.carrier_name %}
+                              Give the package to {{ return_delivery.carrier_name }}.
+                            {% else %}
+                              Give the package to the carrier identified on the label.
+                            {% endif %}
+                          </li>
+                          <li class="return-label__instruction-step">
+                          Track your return using <a target="_blank" href="{{ return_delivery.tracking_url) }}">your tracking number</a> to make sure we get it.
+                          </li>
+                        {% endif %}
+      
+                      </ol>
+                    {% endfor %}
+                  </td>
+                </tr>
+              </table>
+          </td>
+        </tr>
+      </table>
+
+    </columns>
+  </row>  
+
+  <row class="section order-list">
+    <columns>
+      <h3 class="return-heading heading">Returned items</h3>
+      {{> return_product_list}}
+    </columns>
+  </row>
+
+</container>

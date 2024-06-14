@@ -1,0 +1,25 @@
+---
+description: Payment Error.
+---
+
+{% capture email_title %} Your payment couldn’t be processed {% endcapture %}
+{% capture email_body %}
+You added items to your shopping cart but the payment couldn’t be processed. You haven’t been charged. You can still return to your cart to complete your purchase. If you have any questions about your order, please contact <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>.
+{% endcapture %}
+
+<container class="payment-error">
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ url }}" class="button__text">Return to cart</a></td>
+          {% if shop.url %}
+          <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+    </columns>
+  </row>
+</container>

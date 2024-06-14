@@ -1,0 +1,32 @@
+<row class="logo">
+  <columns class="text-center float-center">
+    {%- if shop.email_logo_url %}
+      <a href="{{{{raw}}}}{{ shop.url }}{{{{/raw}}}}">
+        <img class="text-center float-center" src="{{{{raw}}}}{{ shop.email_logo_url }}{{{{/raw}}}}" alt="{{{{raw}}}}{{ shop.name }}{{{{/raw}}}}" width="{{{{raw}}}}{{ shop.email_logo_width }}{{{{/raw}}}}" style="width:{{{{raw}}}}{{ shop.email_logo_width }}{{{{/raw}}}}px;">
+      </a>
+    {%- else %}
+      <h1 class="shop-name__text">
+        <a href="{{{{raw}}}}{{ shop.url }}{{{{/raw}}}}">{{{{raw}}}}{{ shop.name }}{{{{/raw}}}}</a>
+      </h1>
+    {%- endif %}
+  </columns>
+</row>
+
+<!-- Header menu and image aren't used often. Uncoment for use. -Dell -->
+<!-- <row class="menu-row collapse">
+  <columns>
+    <center data-parsed="">
+      <menu align="center" class="menu text-center float-center">
+        <item class="menu-item float-center" href="{{{{raw}}}}{{ shop.url }}/collections/eyes{{{{/raw}}}}">Eyes</item>
+        <item class="menu-item float-center" href="{{{{raw}}}}{{ shop.url }}/collections/lips{{{{/raw}}}}">Lips</item>
+        <item class="menu-item float-center" href="{{{{raw}}}}{{ shop.url }}/collections/face{{{{/raw}}}}">Face</item>
+      </menu>
+    </center>
+  </columns>
+</row>
+
+<row class="header-image collapse">
+  <columns>
+    <img class="emailImage" src="https://cdn.shopify.com/s/files/1/2277/8081/files/order-confirmation-header.png?1367079964753111032" alt="" width="578" style="width: 100%; max-width: 578px;">
+  </columns>
+</row> -->

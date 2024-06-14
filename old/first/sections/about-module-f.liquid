@@ -1,0 +1,69 @@
+{% schema %}
+{
+    "name": "About Module F",
+    "max_blocks": 8,
+    "settings": [
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline Text"
+        },
+        {
+            "type": "text",
+            "id": "subheadline",
+            "label": "Sub-Headline Text"
+        },
+        {
+            "type": "text",
+            "id": "cta",
+            "label": "CTA Text"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "CTA Link"
+        },
+        {
+            "type": "radio",
+            "options": [
+                { "value": "style-light", "label": "Light" },
+                { "value": "style-dark", "label": "Dark" }
+            ],
+            "default": "style-dark",
+            "id": "text_color",
+            "label": "Font Color"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "product",
+            "name": "Style 1 Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "About Module F",
+            "settings": {}
+        }
+    ]
+}
+{% endschema %}
+
+<section class="about-module about-module-f {{ section.settings.text_color }}" style="background-color: {{section.settings.bg_color}}">
+
+    {% assign sliderStyle = "style-1" %}
+    {% include 'slider', sliderStyle: sliderStyle %}
+    
+</section>

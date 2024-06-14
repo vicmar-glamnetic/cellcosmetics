@@ -1,0 +1,229 @@
+@import '../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+.subscribe-modal {
+    .error-msg {
+        @include body-font-6;
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+#SubscribeModal {
+    .drawer-close {
+        display: none;
+    }
+}
+
+.subscribe-modal {
+    width: 100%;
+    
+    .klaviyo_messages {
+        display: none;
+    }
+    
+    .form-container {
+        
+        .sub-promo {
+            margin: 0;
+        }
+        
+        #mc_embed_signup, #kv_embed_signup {
+            position: static;
+            
+            form {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+                @include clear-box;
+                @include transition(all $slow);
+            }
+            
+            input {
+                width: 100%;
+                padding: 0;
+                border-bottom: 1px solid;
+                line-height: 26px;
+                @include transition(all $slow);
+            }
+            
+            button {
+                @include icon-btn($icon-arrow-right2, $black, 20px);
+            }
+            
+            &.submitted {
+                form {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+                .global-message {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+        
+        .global-message {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            position: relative;
+            opacity: 0;
+            visibility: hidden;
+            @include transition(all $slow);
+            &:after {
+                @include icon-fonts($icon-close, $black, 20px);
+                position: absolute;
+                top: 50%;
+                right: 0;
+                @include transform(translateY(-50%));
+            }
+            a {
+                padding-bottom: 3px;
+                border-bottom: 1px solid;
+            }
+        }
+        
+        .close {
+            display: block;
+            @include icon-btn($icon-close, $black, 20px);
+        }
+    }
+}
+
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    .subscribe-modal {
+        padding: 30px 20px;
+        .form-container {
+            
+            .sub-promo {
+                margin-bottom: 20px;
+            }
+            input {
+                font-size: 16px; // Prevent Zooming
+            }
+            button {
+                display: none;
+            }
+            .group {
+                margin-bottom: 5px;
+                .error-msg {
+                    width: auto;
+                    top: auto;
+                    right: 0;
+                    left: auto;
+                    bottom: 2px;
+                }
+            }
+            .global-message {
+                
+                &:after {
+
+                }
+            }
+        }
+        
+        .close {
+            top: 20px;
+            right: 20px;
+            position: absolute;
+        }
+    }
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+    .subscribe-modal {
+        .form-container {
+            .group {
+                &.group-fname {
+                    width: 40%;
+                    float: left;
+                }
+                &.group-lname {
+                    width: 40%;
+                    float: right;
+                    clear: right;
+                }
+                &.group-email {
+                    clear: both;
+                }
+            }
+        }
+    }
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    .subscribe-modal {
+
+        .form-container {
+            min-height: 87px;
+            padding: 0 30px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            
+            .sub-promo {
+                margin-right: 28px;
+            }
+            input {
+                
+            }
+            button {
+                display: inline-block;
+                vertical-align: middle;
+                &:before {
+                    line-height: 27px;
+                }
+            }
+            .group {
+                align-self: center;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 10px;
+                &.group-email {
+                    min-width: 240px; // Large Screens
+                }
+            }
+            .global-message {
+                @include displayFlex;
+                @include prefixer('flex-direction','column');
+                @include prefixer('justify-content','center');
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                text-align: center;
+                padding: 0 30px;
+                background: $white;
+                z-index: 10;
+                &:after {
+                    right: 30px;
+                }
+            }
+        }
+        
+        .close {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            @include transform(translateY(-50%));
+        }
+    }
+};

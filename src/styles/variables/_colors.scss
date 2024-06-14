@@ -1,0 +1,76 @@
+// Theme colors
+$black: #000000;
+$white: #ffffff;
+$metal: #B0B0B3;
+$lightGrey: #D9D9D9;
+$lightGrey2: #9C9392;
+$lightGrey3: #EBECED;
+$mediumGrey: #333333;
+$grey: #333333;
+$darkGrey: #3A3231;
+$red: #DD1D1D;
+$redRGB: rgb(173,49,27);
+$blue: #213979;
+$green: #4CAD6A;
+$styleLight: $white;
+$styleDark: $black;
+$cellcosmetGray: #4D4F4C;
+$cellcosmetRed: #A80A14;
+$grayscale800: #191A19;
+$grayscale700: #333432;
+$grayscale600: #4D4F4C;
+$grayscale500: #656864;
+$grayscale400: #7F827D;
+$grayscale300: #B2B4B1;
+$grayscale200: #E5E6E5;
+$grayscale100: #F2F2F2;
+$greyBackground: #F9F9F9;
+
+
+// Functional block background colors
+$color-body-bg: $white;
+$color-body-font: $black;
+$color-disabled: $lightGrey;
+$color-disabled-bg: $lightGrey;
+$color-disabled-border: $lightGrey;
+$color-error: $red;
+$color-error-bg: #000;
+$color-error-border: $red;
+$color-success: #0A801F;
+$color-success-bg: #000;
+$color-success-border: #0A801F;
+$color-border: $lightGrey;
+
+// CTA colors
+$color-cta1: $grayscale700;
+$color-cta1-bg: $white;
+$color-cta1-border: $white;
+$color-cta1-active: $white;
+$color-cta1-bg-active: $grayscale700;
+$color-cta1-border-active: $grayscale700;
+
+$color-cta2: $white;
+$color-cta2-bg: $grayscale800;
+$color-cta2-border: $grayscale800;
+$color-cta2-active: $grayscale800;
+$color-cta2-bg-active: $white;
+$color-cta2-border-active: $grayscale800;
+
+// Header colors
+$promoText: $white;
+$promoBackground: $cellcosmetRed;
+
+    // Light
+    $headerDarkText: true;
+    $headerSmallScreenText: $black;
+    $headerSmallScreenBackground: $white;
+    $headerLargeScreenText: $black;
+    $headerLargeScreenBackground: $white;
+
+    // Dark
+    // $headerDarkText: false;
+    // $headerSmallScreenText: $white;
+    // $headerSmallScreenBackground: $black;
+    // $headerLargeScreenText: $white;
+    // $headerLargeScreenBackground: rgba(0,0,0,0.9);
+

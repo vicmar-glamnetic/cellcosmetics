@@ -1,0 +1,81 @@
+{% schema %}
+{
+    "name": "Global Recommended Blocks",
+    "max_blocks": 3,
+    "settings": [
+        {
+          "type": "text",
+          "id": "recommended_title",
+          "label": "Title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "image_block",
+            "name": "Recommended Block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "cta_text",
+                    "label": "CTA Text"
+                },
+                {
+                    "type": "url",
+                    "id": "cta_link",
+                    "label": "CTA Link"
+                },
+                {
+                    "type": "radio",
+                    "options": [
+                        { "value": "style-light", "label": "Text Light" },
+                        { "value": "style-dark", "label": "Text Dark" }
+                    ],
+                    "default": "style-light",
+                    "id": "text_color",
+                    "label": "Text Color"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Global Recommended Blocks",
+            "category": "Custom Content",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+{%- capture global-recommended -%}
+<div class="global-recommended-blocks">
+    <div class="title">{{ section.settings.recommended_title }}</div>
+    {%- if section.blocks -%}
+    <div class="blocks-wrapper">
+        <div class="block-items">
+            {% for block in section.blocks %}
+            <div class="block item {{ block.settings.text_color }}">
+                <img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ block.settings.image.alt }}" >
+                <a href="{{ block.settings.cta_link }}" class="cta">{{ block.settings.cta_text }}</a>
+            </div>
+            {% endfor %}   
+        </div>
+    </div>
+    {%- endif -%}
+</div>
+{%- endcapture -%}
+
+{%- if search -%}
+    {%- if search.performed and search.results_count != 0 -%}
+    {{ global-recommended }}
+    {%- endif -%}
+{%- else -%}
+    {{ global-recommended }}
+{%- endif -%}

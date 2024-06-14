@@ -1,0 +1,278 @@
+@import '../components/fonts';
+
+//
+//  Common
+//  _____________________________________________
+
+
+//
+// Small Screens Only
+//  _____________________________________________
+@include query-small {
+
+};
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    #MobileNav {
+        // Set false to use accordion for all nav levels on Mobile, set true to use the slide-in-menu for level 2.
+        $useSlideInMenuForLevel2: false;
+        $mobileUtilityHeight: 120px;
+        border-top: 1px solid $grayscale300;
+        border-right: 1px solid $grayscale300;
+        padding: 0;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: auto;
+        
+        .nav-bar {
+            .inner-wrapper {
+                .level-1 {
+                    &:nth-of-type(3), &:nth-of-type(4) {
+                        >.children {
+                            display: none;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        .level-1:nth-last-child(2) {
+            >.nav-link:first-of-type {
+                display: none;
+            }
+            >ul.children {
+                display: block !important;
+                opacity: 1 !important;
+            }
+        }
+
+        .drawer-close {
+            display: none;
+        }
+        
+        &.opened {
+
+        }
+        
+        .back-to {
+            display: none !important;
+        }
+        .site-nav {
+            > .level-1:not(:first-of-type), > .level-2  {
+                padding: 10px 0;
+            }
+        }
+        .level-1:first-of-type {
+            .level-2 {
+                padding: 10px 0;
+                &.has-children {
+                    &.expandable {
+                        border-bottom: 1px solid $grayscale300;
+                        //border-top: 1px solid $grayscale300;
+                        &:nth-of-type(even) {
+                            border-top: none;
+                        }
+                    }
+                }
+                &.two-links {
+                    & > .nav-link:last-of-type {
+                        padding: 6px 0 2px;
+                    }
+                }
+            }
+        }
+        .level-1:first-of-type .level-2.two-links {
+            border-bottom: 1px solid $grayscale300;
+
+            .nav-link:first-of-type {
+                border-bottom: 1px solid $grayscale300;
+                padding-bottom: 10px;
+            }
+            .nav-link:last-of-type {
+                padding-top: 10px;
+            }
+        }
+
+        .level-1:not(:first-of-type) {
+            
+            border-bottom: 1px solid $grayscale300;
+            //border-top: 1px solid $grayscale300;
+            
+        }
+        .level-1:nth-last-of-type(2) {
+            border-top: none;
+        }
+        .level-1, .level-2  {
+            & > .nav-link {
+                line-height: calc(#{$headerSmallScreenItemHeight} - 1px);
+                // border-top: 1px solid $lightGrey;
+            }
+            &:last-child {
+                // border-bottom: 1px solid $lightGrey;
+            }
+            &.has-children {
+                & > .nav-link {
+                    &:after {
+                        content: ">";
+                        display: block;
+                        float: right;
+                        position: relative;
+                        color: inherit;
+                        line-height: inherit;
+                        padding-right: 20px;
+                    }
+                }
+                &.expandable {
+                    .children {
+                        display: none;
+                        @include opacity(0);
+                        @include transition(opacity $fast);
+                    }
+                    & > .nav-link {
+                        &:after {
+                            content: "+";
+                        }
+                    }
+                    &.active {
+                        .children {
+                            @include opacity(1);
+                        }
+                        & > .nav-link {
+                            &:after {
+                                content: "-";
+                            }
+                        }
+                    }
+                }
+            }
+            & > .nav-link {
+                position: relative;
+                display: block;
+                padding-left: 23px;
+            }
+            .level-3 {
+                padding-left: 23px;
+                line-height: calc(#{$headerSmallScreenItemHeight} - 1px);
+            }
+        }
+        
+        .mobile-search-container {
+            form {
+                display: block;
+                position: relative;
+                
+                input[type=search] {
+                    width: 100%;
+                    border-bottom: 0;
+                    padding-left: $headerSmallScreenItemHeight;
+                    line-height: calc(#{$headerSmallScreenItemHeight} - 1px);
+                }
+                button {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    text-align: center;
+                    width: $headerSmallScreenItemHeight;
+                    height: $headerSmallScreenItemHeight;
+                    @include icon-fonts-before($icon-search-solid, inherit, 14px);
+                }
+            }
+        }
+        
+        nav {
+            position: relative;
+            overflow: visible;
+            opacity: 1;
+            flex-grow: 1;
+            .inner-wrapper {
+                @include transform(translateX(0%));
+                @include transition(all $slow);
+            }
+        }
+        
+        .header-utilities {
+            padding-bottom: 30px;
+            width: 100%;
+            opacity: 1;
+            @include transform(translateX(0%));
+            @include transition(all $slow);
+            .block-title {
+                line-height: calc(#{$headerSmallScreenItemHeight} - 1px);
+            }
+        }
+        
+        // Start: For level2 slide in sub-menu
+        @if $useSlideInMenuForLevel2 == true {
+            .slide-in-menu {
+                visibility: hidden;
+                opacity: 0;
+                position: absolute;
+                width: 100%;
+                top: 0;
+                left: 0;
+                background: $white;
+                z-index: 1;
+                overflow: scroll;
+                height: 100%;
+                @include transform(translateX(100%));
+                @include transition(all $slow);
+            }
+            .children.dropdown {
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                visibility: hidden;
+                opacity: 0;
+                @include transition(all $slow);
+                &.active {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+            &.slide-menu-opened {
+                nav {
+                    .inner-wrapper {
+                        opacity: 0;
+                        @include transform(translateX(-100%));
+                    }
+                }
+                .slide-in-menu {
+                    opacity: 1;
+                    visibility: visible;
+                    @include transform(translateX(0%));
+                }
+            }
+        }
+        // End: For level2 slide in sub-menu
+    }
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+    
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    
+};
+
+//
+//  Small Desktop
+//  _____________________________________________
+@include query-large {
+    
+};

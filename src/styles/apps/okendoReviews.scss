@@ -1,0 +1,241 @@
+@import '../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+.okeReviews.oke-sr {
+    // Star Rating
+    .oke-sr-count {
+        @include body-font-3-emphasis;
+        .oke-sr-count-number {
+            color: $cellcosmetRed;
+        }
+        .oke-sr-total-text {
+            text-decoration: underline;
+            color: $grayscale400;
+        }
+    }
+}
+.okeReviews[data-oke-container] {
+    // Reviews widget
+    p {
+        letter-spacing: normal;
+    }
+    &.okeReviews.oke-w, .oke-modal {
+        * {
+            font-weight: normal !important;
+        }
+        .oke-w-header-content {
+            .oke-w-header-content-block:first-child {
+                &::before {
+                    content: "Customer Reviews";
+                    @include title-font-4;
+                }
+            }
+        }
+        .oke-w-reviews-writeReview {
+            .oke-button { // "Write a Review" button
+                @include cta-2;
+                &::before {
+                    content: none; // Pencil icon
+                }
+            }
+        }
+        .oke-w-review, .oke-w-reviewSimple { // Individual customer review
+            .oke-w-reviewer-name {
+                @include body-font-4;
+            }
+            .oke-reviewContent-title {
+                @include title-font-5;
+            }
+        }
+        .oke-showMore {
+            .oke-button {
+                @include cta-2;
+            }
+        }
+    }
+}
+//
+//  Common
+//  _____________________________________________
+.okeReviews.oke-sr {
+    // Star Rating
+    .oke-sr-stars {
+        margin-right: 4px;
+    }
+    .oke-sr-count {
+        .oke-sr-label-text { 
+            display: none;
+        }
+        .oke-sr-total-text {
+            display: inline-block;
+            margin-left: 8px;
+        }
+    }
+}
+.okeReviews[data-oke-container] {
+    // Reviews widget
+    &.okeReviews.oke-w, .oke-modal {
+        .oke-w-header {
+            border-bottom: 1px solid $grayscale300;
+            margin-bottom: 16px;
+        }
+        .oke-w-reviews-sort { // Sort controls
+            display: none !important;
+        }
+        .oke-w-review, .oke-w-reviewSimple { // Individual customer review
+            .oke-w-review-side {
+                border: none;
+            }
+            .oke-w-review-helpful, .oke-w-reviewSimple-helpful { // "Was this review helpful?"
+                display: none;
+            }
+            .oke-w-review-recommendation { // "I recommend this product"
+                display: none;
+            }
+            .oke-w-reviewer-verified {
+                display: flex;
+                .oke-w-reviewer-verified-icon {
+                    order: -1;
+                    margin-right: 4px;
+                }
+            }
+            .oke-w-reviewer-avatar {
+                display: none;
+            }
+            .oke-media-image {
+                z-index: 1;
+            }
+        }
+    }
+}
+
+//
+//  Small screen sizes - Prev: Mobile only
+//  _____________________________________________
+@include query-small {
+
+};//query-small
+
+//
+//  Small + Medium screen sizes - Prev: Tablet and Mobile
+//  _____________________________________________
+@include query-medium-down {
+    div.okeReviews[data-oke-container].oke-w { // Reviews container
+        padding: 20px 20px 0 !important;
+    }
+	.okeReviews[data-oke-container] {
+		.oke-is-small {
+			.oke-w-header-content-module {
+				text-align: left;
+				justify-content: flex-start;
+			}
+			.oke-w-header-content {
+				.oke-w-header-content-block:first-child {
+					&::before {
+						font-size: 24px;
+					}
+				}
+			}
+			.oke-w-reviews-list-item {
+				.oke-w-review-main {
+					padding: 0;
+				}
+				.oke-reviewContent-body {
+					@include body-font-3-emphasis;
+					letter-spacing: normal;
+				}
+			}
+			.oke-w-reviews-filters {
+				order: unset !important;
+				margin-bottom: 20px;
+				.oke-w-filter-title {
+					@include body-font-6;
+				}
+			}
+			.oke-w-reviews-writeReview {
+                margin-top: 10px;
+				margin-bottom: 0;
+			}
+			.oke-w-reviews-head {
+				margin-bottom: 20px;
+			}
+			.oke-w-reviews-count {
+				@include title-font-6;
+			}
+		}
+	}
+};//query-medium-down
+
+//
+//  Medium screen sizes - Prev: Tablet Only
+//  _____________________________________________
+@include query-medium {
+    
+};//query-medium
+
+//
+//  Medium + Large screen sizes - Prev: Tablet and Desktop
+//  _____________________________________________
+@include query-medium-up {
+
+};//query-medium-up
+
+//
+//  Large screen sizes - Prev: Desktop
+//  _____________________________________________
+@include query-large-up {
+	div.okeReviews[data-oke-container].oke-w { // Reviews container
+        padding: 50px 96px 0 !important;
+	}
+	.okeReviews.oke-w {
+		.oke-w-reviews-controls { // Sort controls
+			display: none !important;
+		}
+		.oke-w-header {
+			&, .oke-w-header-content-block {
+				margin-bottom: 40px;
+			}
+		}
+		.oke-w-reviews-list-item {
+			padding-left: 8% !important;
+			padding-right: 8% !important;
+			.oke-reviewContent-body {
+				@include body-font-2-emphasis;
+				letter-spacing: normal;
+			}
+		}
+		.oke-w-review { // Individual customer review
+			.oke-w-reviewer-name {
+				font-size: 18px;
+			}
+		}
+		.oke-showMore {
+			text-align: left !important;
+            .oke-button {
+                margin: 0 !important;
+            }
+        }
+        .oke-w-reviews-head{
+            position: relative;
+        }
+        .oke-w-reviews-writeReview{
+            position: absolute;
+            // left: 50%;
+            // transform: translate(-50%);
+            right: 0;
+            top: 4px;
+        }
+	}
+    .okeReviews.oke-w .oke-w-reviews-head{
+        margin-top: 40px;
+    }
+};//query-large-up
+
+//
+//  XLarge down screen sizes - Prev: Small Desktop
+//  _____________________________________________
+@include query-large {
+    
+};//query-large

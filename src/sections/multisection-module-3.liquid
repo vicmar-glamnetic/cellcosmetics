@@ -1,0 +1,108 @@
+{% schema %}
+{
+    "name": "Multisection Module 3",
+    "max_blocks": 2,
+    "blocks": [
+        {
+            "type": "block",
+            "name": "Block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "video_url",
+                    "id": "video_url",
+                    "accept": ["youtube", "vimeo"],
+                    "label": "Video URL",
+                    "info": "Add either youtube or vimeo direct video"
+                },
+                {
+                    "type": "text",
+                    "id": "subheadline",
+                    "label": "Subheadline Text"
+                },
+                {
+                    "type": "text",
+                    "id": "headline",
+                    "label": "Headline Text"
+                },
+                {
+                    "type": "textarea",
+                    "id": "description",
+                    "label": "Body Text"
+                },
+                {
+                    "type": "text",
+                    "id": "cta",
+                    "label": "CTA Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "CTA Link"
+                }
+            ]
+        }
+    ],
+    "settings": [
+
+    ],
+    "presets": [
+        {
+            "name": "Multisection Module 3",
+            "category": "Additional Content",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+
+    <section class="multisection-module multisection-module-3">
+        {% for block in section.blocks %}
+        
+            <div class="block">
+                <div class="video-content-wrapper">
+                {% if block.settings.video_url != blank or block.settings.image != blank %}
+                    <div class="video-wrapper"
+                        data-video-type="{{- block.settings.video_url.type -}}"
+                        data-video-id="{{- block.settings.video_url.id -}}"
+                        data-video-src="{{- block.settings.video_url -}}">
+                        <div class="video-poster">
+                            <span class="absolute-image desktop-image lazy" role="img" aria-label="{{ block.settings.image.alt }}" style="background-image:url('{{ block.settings.image | img_url: '1x' }}');" data-bg="{{ block.settings.image | img_url: '1200x' }}"></span>
+                            <span class="absolute-image mobile-image lazy" role="img" aria-label="{{ block.settings.image.alt }}" style="background-image:url('{{ block.settings.image | img_url: '1x' }}');" data-bg="{{ block.settings.image | img_url: '768x' }}"></span>
+                        </div>
+                        {% if block.settings.video_url != blank %}
+                        <div id="{{- block.settings.video_url.id -}}" class="video-player"></div>
+                        <button class="video-ctl paused"></button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                </div>
+
+                <div class="text-block">
+                    {% if block.settings.subheadline != blank %}
+                        <h4 class="subheadline body-font-5">{{ block.settings.subheadline }}</h4>
+                    {% endif %}
+                    {% if block.settings.headline != blank %}
+                        <h3 class="headline title-font-4">{{ block.settings.headline }}</h3>
+                    {% endif %}
+                    {% if block.settings.description != blank %}
+                        <p class="description body-font-1">{{ block.settings.description }}</p>
+                    {% endif %}
+                    {% if block.settings.cta != blank %}
+                        <div class="cta-wrap">
+                            <a href="{{ block.settings.link }}" class="cta-3"><span>{{ block.settings.cta }}</span></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </section>

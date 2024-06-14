@@ -1,0 +1,56 @@
+// xSmall Screens
+$xSmallScreen: 376px;
+
+// Medium Screens
+$mediumScreen: 768px;
+
+// Large Screens
+$largeScreen: 1025px;
+$xLargeScreen: 1200px;
+$xxLargeScreen: 1440px;
+
+// Constraints
+$min: min-width;
+$max: max-width;
+
+// Margins and General Sizes
+$largeScreenMargin: 25px;
+$smallScreenMargin: 20px;
+$sectionGutter: 1px;
+$maxContentWidth: $xxLargeScreen;
+
+// Forms & Inputs sizes
+$input-wrapper-border: 0;
+$input-line-height: 28px;
+$input-line-height-mobile: 28px;
+$input-border-radius: 0;
+$input-check-radio-size: 17px;
+
+// Header sizes
+$logoSize: 100px;
+$promoBannerHeight: 58px;
+$promoBannerSmallScreenHeight: 66px;
+$headerLargeScreenHeight: 72px;
+$headerSmallScreenHeight: 66px;
+$headerSmallScreenItemHeight: 44px;
+$headerUtilityBlockGap: 10px;
+$footerTopSmallScreenHeight: 157px;
+$footerTopLargeScreenHeight: 208px;
+$miniCartItemsMax: 319px; // For desktop dropdown
+
+// Footer sizes
+$footerSlimLargeHeight: 55px;
+
+// Product sizes
+$productImageRatio: 2000/2000;
+$productImageRatioPercentage: $productImageRatio * 100 * 1%;
+$giftcardImageRatio: 340/538;
+$giftcardImageRatioPercentage: $giftcardImageRatio * 100 * 1%;
+$productThumbnailsMax: 4;
+$productThumbnailsPercentage: (1/$productThumbnailsMax) * 100 * 1%;
+$productMetafieldTabMax: 3;
+$productMetafieldTabMaxPercentage: (1/$productMetafieldTabMax) * 100 * 1%;
+$sizeChartColumnMax: 6;
+$sizeChartColumnMaxWidth: (1/$sizeChartColumnMax) * 100 * 1%;
+$sizeChartTabMax: 3;
+$sizeChartTabWidth: (1/$sizeChartTabMax) * 100 * 1%;

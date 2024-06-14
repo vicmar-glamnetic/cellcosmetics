@@ -1,0 +1,34 @@
+---
+description: Here is your gift card.
+---
+
+{% capture email_title %}Your gift card is now available! {% endcapture %}
+{% capture email_body %}Hi{% if gift_card.customer %} {{ gift_card.customer.first_name }}{% endif %}, here is your {{ gift_card.balance | money_without_trailing_zeros }} gift card. Treat yourself, or send it to someone else as a gift.{% endcapture %}
+
+<container class="gift-card-created">
+
+  <row>
+    <columns>
+      
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">
+        {% if custom_message != blank %}
+        <p>{{ custom_message }}</p>
+        {% elsif reserve_inventory_until %}
+        <p>{{ email_body }}</p>
+        {% endif %}
+      </div>
+      
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ gift_card.url }}" class="button__text">View Your Gift Card</a></td>
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+
+    </columns>
+  </row>
+
+</container>

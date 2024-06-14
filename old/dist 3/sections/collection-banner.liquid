@@ -1,0 +1,69 @@
+{% schema %}
+{
+    "name": "Collection Banner",
+    "settings": [
+        {
+            "type": "select",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "split",
+                    "label": "Split"
+                }
+            ],
+            "id": "layout",
+            "label": "Layout"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection Banner",
+            "settings": {}
+        }
+    ]
+}
+{% endschema %}
+
+{%- assign mobile_collection_banner = collection.metafields["custom_fields"]["collection_image_mobile"] -%}
+
+<div class="collection-banner {{ section.settings.layout }} {% if collection.image %}background-image style-{{- collection.image.alt -}}{% endif %}">
+    {%- if section.settings.layout == 'full' -%}
+        {% if mobile_collection_banner %}
+        {{ mobile_collection_banner }}
+        {% endif %}
+        <div class="text-block">
+            {%- include 'breadcrumb' -%}
+            {% unless request.path == '/collections/vendors' and collection.all_products_count == 0 -%}
+                <h1 class="collection-title">{{ collection.title }}</h1>
+            {%- endunless -%}
+            {% if collection.description != blank %}
+            <div class="collection-desc">
+                {{ collection.description }}
+            </div>
+            {% endif %}
+        </div>
+        {% if collection.image %}
+        <span class="collection-image background-image" role="img" aria-label="{{ collection.title }}" style="background-image:url('{{ collection.image | img_url: '1440x' }}');"></span>
+        {% endif %}
+    {%- else section.settings.layout == 'split' -%}
+        <div class="collection-banner-part">
+            {% if collection.image %}
+            <img class="collection-image" alt="{{ collection.title }}" src="{{ collection.image | img_url: '720x' }}">
+            <span class="collection-image background-image" role="img" aria-label="{{ collection.title }}" style="background-image:url('{{ collection.image | img_url: '720x' }}');"></span>
+            {% endif %}
+        </div>
+        <div class="collection-banner-part text-block">
+            {% unless request.path == '/collections/vendors' and collection.all_products_count == 0 -%}
+                <h1 class="collection-title">{{ collection.title }}</h1>
+            {%- endunless -%}
+            {% if collection.description != blank %}
+            <div class="collection-desc">
+                {{ collection.description }}
+            </div>
+            {% endif %}
+        </div>
+    {%- endif -%}
+</div>

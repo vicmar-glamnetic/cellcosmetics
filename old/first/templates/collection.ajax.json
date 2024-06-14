@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "collection-ajax": {
+            "type": "collection-ajax"
+        }
+    },
+    "order": [
+        "collection-ajax"
+    ]
+}

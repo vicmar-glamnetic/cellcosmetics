@@ -1,0 +1,158 @@
+//
+//  Typography
+//  _____________________________________________
+html {
+    padding: 0 !important;
+}
+html, body {
+    @include body-font-1;
+}
+
+//
+//  Common
+//  _____________________________________________
+#admin_bar_iframe {
+    display: none !important;
+}
+
+html, body {
+    // Sticky Footer
+    height: 100%;
+    @include displayFlex;
+    @include prefixer('flex-direction', 'column');
+    #MainContent {
+        @include prefixer('flex', '1 0 auto');
+        width: 100%;
+    }
+    &.zooming {
+        overflow: hidden;
+    }
+}
+
+body {
+    #global-overlay {
+        // Overlay
+        content: "";
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.2);
+        top: 0;
+        left: 0;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 999;
+        @include transition(all $slow);
+    }
+    &.show-overlay, &.drawer-opt {
+        #global-overlay {
+            // Overlay
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    &.cookie-not-accepted {
+        #global-overlay {
+            z-index: 1001 !important;
+        }
+    }
+}
+
+#MainContent {
+    @include transition(margin $fast);
+}
+
+//
+// Small Screens Only
+//  _____________________________________________
+@include query-small {
+
+};
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    body {
+        &.drawer-opt {
+            overflow: hidden;
+        }
+        &:not(.template-index) {
+            // Pages except homepage
+            #MainContent {
+                --header-height: #{$headerSmallScreenHeight};
+                margin-top: $headerSmallScreenHeight; // For one line header style-1 and style-2, no need to double the height
+            }
+            &.promo-banner-active {
+                #MainContent  {
+                    --header-height: #{$promoBannerHeight + $headerSmallScreenHeight};
+                    margin-top: $promoBannerHeight + $headerSmallScreenHeight; // For one line header style-1 and style-2, no need to double the height
+                }
+            }
+        }
+    }
+    // Headle main content margin based on promo banner's display status.
+    // Note, when header set to be transparent 
+    #MainContent {
+        --header-height: #{$headerSmallScreenHeight};
+        margin-top: $headerSmallScreenHeight;  // Use when header does not have transparent background
+        // margin-top: 0;
+    }
+    .promo-banner-active {
+        #MainContent  {
+            --header-height: #{$promoBannerHeight + $headerSmallScreenHeight};
+            margin-top: $promoBannerHeight + $headerSmallScreenHeight; // Use when header does not have transparent background
+            // margin-top: $promoBannerHeight;
+        }
+    }
+
+    /*.gorgias-chat-key-1spa6uy {
+        bottom: 120px !important;
+    }*/
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    body {
+        &.drawer-opt {
+            #global-overlay {
+                z-index: 1001;
+            }
+        }
+        &:not(.template-index) {
+            // Pages except homepage
+            #MainContent {
+                --header-height: #{$headerLargeScreenHeight * 2 + 20px};
+                margin-top: $headerLargeScreenHeight * 2 + 20px; // For one line header style-1 and style-2, no need to double the height
+            }
+            &.promo-banner-active {
+                #MainContent  {
+                    --header-height: #{$promoBannerHeight + $headerLargeScreenHeight * 2 + 20px};
+                    margin-top: $promoBannerHeight + $headerLargeScreenHeight * 2 + 20px; // For one line header style-1 and style-2, no need to double the height
+                }
+            }
+        }
+        &.template-index {
+            // Homepage
+            #MainContent {
+                --header-height: #{$headerLargeScreenHeight * 2 + 20px};
+                margin-top: $headerLargeScreenHeight * 2 + 20px;
+            }
+            &.promo-banner-active {
+                #MainContent  {
+                    --header-height: #{$promoBannerHeight + $headerLargeScreenHeight * 2 + 20px};
+                    margin-top: $promoBannerHeight + $headerLargeScreenHeight * 2 + 20px;
+                }
+            }
+        }
+    }
+};

@@ -1,0 +1,38 @@
+---
+description: View your order.
+---
+
+{% capture email_title %}Your shipping status has been updated {% endcapture %}
+{% capture email_body %}The following items have been updated with new shipping information.{% endcapture %}
+
+<container class="shipping-update">
+  <row>
+    <columns>
+      <p class="order-number__text">ORDER {{ order_name }}</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      <p>{{ email_emphasis }}</p>
+      <table class="actions" width="100%">
+        <tr>
+          {% if order_status_url %}
+            <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">View Your Order</a></td>
+          {% endif %}
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

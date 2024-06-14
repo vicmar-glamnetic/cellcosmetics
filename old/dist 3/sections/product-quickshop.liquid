@@ -1,0 +1,29 @@
+{%- layout none -%}
+<div class="ajax-wrapper">
+{%- comment -%}
+<!--
+This is the default product quickshop layout 
+-->
+{%- endcomment -%}
+
+{% comment %}
+    Product Detail Layout, take options 'quickshop'
+{% endcomment %}
+
+{%- include 'product-core-data', product: product -%}
+
+{%- assign pdp_layout = 'quickshop' -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+<div class="product-quickshop" itemscope itemtype="http://schema.org/Product">
+    <div class="product-detail-container {% if isGiftCard != false %}{{ isGiftCard }}{% endif %}" data-layout="{{ pdp_layout }}">
+
+        {%- include 'product-media', product: product, current_variant: current_variant, featured_image: featured_image, layout: pdp_layout -%}
+        
+        {%- include 'product-core', product: product, current_variant: current_variant, featured_image: featured_image, layout: pdp_layout -%}
+
+    </div>
+</div>
+
+</div>

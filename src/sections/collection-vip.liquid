@@ -1,0 +1,51 @@
+<script type="text/javascript">
+    Shopify.queryParams = {};
+    Shopify.collectionHandle = '{{ collection.handle }}';
+</script>
+{% assign plp_pagination = settings.collection_pagination %}
+
+{% comment %}
+    plp_layout: Collection Layout, take options 'one-column' or 'two-columns'
+    plp_banner_layout Collection banner Layout, take options 'full' or 'split'
+    plp_quickbuy: In grid quickshop, no ajax request.
+    plp_quickshop: In modal quickshop, done via ajax request.
+{% endcomment %}
+{%- assign plp_layout = 'two-columns' -%}
+{%- assign plp_quickbuy = false -%}
+{%- assign plp_quickshop = true -%}
+{%- if collection.metafields["global"]["collection-banner-style"] != blank -%}
+    {%- assign plp_banner_layout = collection.metafields["global"]["collection-banner-style"] -%}
+{%- else -%}
+    {%- assign plp_banner_layout = 'full' -%}
+{%- endif -%}
+
+{%- include 'vip-restriction' -%}
+{% assign isVipBlocked = false %}
+{%- if settings.vip_link_handles contains collection.handle -%}
+    {%- unless isVIP -%}
+        {% assign isVipBlocked = true %}
+    {%- endunless -%}
+{%- endif -%}
+
+{%- if isVipBlocked -%}
+    {%- include 'vip-restriction-blocker' -%}
+{%- else -%}
+    {% paginate collection.products by plp_pagination %}
+    <div class="product-collection {{ plp_layout }}" 
+        data-layout="{{ plp_layout }}" 
+        data-url="{{ collection.url }}"
+        data-quickbuy="{%- if plp_quickbuy -%}true{%- endif -%}" 
+        data-quickshop="{%- if plp_quickshop -%}true{%- endif -%}" >
+        {%- include 'collection-banner', layout: plp_banner_layout -%}
+        
+        {%- include 'collection-nav', layout: plp_layout -%}
+        
+        {%- include 'collection-grid', layout: plp_layout, list_image_size: '1400x' -%}
+        
+        {% if paginate.pages > 1 %}
+            {% include 'pagination' %}
+        {% endif %}
+    </div>
+    {% endpaginate %}    
+{%- endif -%}
+

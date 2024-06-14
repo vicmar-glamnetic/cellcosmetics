@@ -1,0 +1,136 @@
+@import '../../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+.quick-shop-trigger {
+    @include body-font-3;
+}
+.product-quickshop {
+    .view-full {
+        @include cta-font-2;
+    }
+}
+//
+//  Common
+//  _____________________________________________
+.item {
+    .quick-shop-trigger {
+        position: absolute;
+        width: 100%;
+        top: 100%;
+        text-align: center;
+        line-height: 25px;
+        color: $white;
+        background: $lightGrey2;
+        @include opacity(0);
+        @include transition(all $slow);
+    }
+    &:hover {
+        .quick-shop-trigger {
+            top: auto;
+            bottom: 0;
+            @include opacity(1);
+        }
+    }
+}
+.product-quickshop {
+    .product-detail-container {
+        flex-wrap: nowrap;
+    }
+
+    .product-core {
+        width: 60%;
+        position: relative;
+        .product-core-inner {
+            width: 100%;
+            max-width: 100%;
+            padding: 7%;
+        }
+        .product-core-block {
+
+        }
+        .view-full {
+            
+        }
+    }
+
+    .product-media {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        .background-image {
+
+        }
+        
+        .product-media-images {
+            display: block;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            &:after {
+                content: "";
+                width: 100%;
+                display: block;
+                padding-bottom: $productImageRatio * 100 * 1%;
+            }
+            .images-wrapper {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .background-image {
+                display: none;
+            }
+        }
+
+        .product-media-thumbnails {
+            .images-wrapper {
+                
+            }
+            .image-thumbnail {
+                border: 0;
+                width: $productThumbnailsPercentage;
+            }
+        }
+    }
+}
+
+
+//
+// Small Screens Only
+//  _____________________________________________
+@include query-small {
+
+};
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    .item {
+        .quick-shop-trigger {
+            display: none !important;
+        }
+    }
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+    
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    #QuickShopDrawerModal {
+        .product-quickshop {
+            max-width: 1024px;
+        }
+    }
+};

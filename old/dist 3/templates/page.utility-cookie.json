@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "cookie": {
+            "type": "utility-section-main"
+        }
+    },
+    "order": [
+        "cookie"
+    ]
+}

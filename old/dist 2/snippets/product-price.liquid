@@ -1,0 +1,20 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign hasSpecialPrice = false -%}
+{% if product.compare_at_price_max > product.price %}
+    {%- assign hasSpecialPrice = true -%}
+{% endif %}    
+<div class="price-box {% if hasSpecialPrice %} has-special{% endif %}">
+    <span class="h2 product-price" itemprop="price" content="{{- current_variant.price | divided_by: 100.00 -}}">
+        {%- if isGiftCard -%}
+        {{ product.price_min | money }} - {{ product.price_max | money }}
+        {%- else -%}
+        {{- current_variant.price | money -}}        
+        {%- endif -%}
+    </span>
+
+    {% if hasSpecialPrice %}
+    <span class="product-compare-price">
+        {{- current_variant.compare_at_price | money -}}
+    </span>
+    {% endif %}
+</div>

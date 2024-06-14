@@ -1,0 +1,78 @@
+@import '../components/fonts';
+
+//
+//  Typography
+//  _____________________________________________
+.store-locator-page{
+	h1{
+		@include title-font-4;
+	}
+}
+
+//
+//  Common
+//  _____________________________________________
+.store-locator-page{
+	margin: 0 auto;
+	padding: 20px; 
+	max-width: $xxLargeScreen;
+	h1{
+		padding-bottom: 40px;
+	}
+	#stockist-widget .stockist-list-result>div {
+		padding-left: 55px;
+	}
+	#stockist-widget .stockist-list-result .stockist-result-distance {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 15px;
+		left: 0;
+		width: 40px;
+		text-align: center;
+	}
+}
+
+//
+//  Small screen sizes - Prev: Mobile only
+//  _____________________________________________
+@include query-small {
+
+};//query-small
+
+//
+//  Small + Medium screen sizes - Prev: Tablet and Mobile
+//  _____________________________________________
+@include query-medium-down {
+    
+};//query-medium-down
+
+//
+//  Medium screen sizes - Prev: Tablet Only
+//  _____________________________________________
+@include query-medium {
+    
+};//query-medium
+
+//
+//  Medium + Large screen sizes - Prev: Tablet and Desktop
+//  _____________________________________________
+@include query-medium-up {
+
+};//query-medium-up
+
+//
+//  Large screen sizes - Prev: Desktop
+//  _____________________________________________
+@include query-large-up {
+	.store-locator-page {
+		padding: 60px 20px 80px;
+	}
+};//query-large-up
+
+//
+//  XLarge down screen sizes - Prev: Small Desktop
+//  _____________________________________________
+@include query-large {
+    
+};//query-large

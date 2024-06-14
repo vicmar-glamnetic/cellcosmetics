@@ -1,0 +1,32 @@
+<center>
+  <table class="container">
+    <tr>
+      <td>
+        <h2 class="heading">SHIPPED TO</h2>
+      </td>
+    </tr>
+  </table>
+
+  <table class="container">
+    <tr>
+      <td>
+        <table class="row">
+          <tr>
+            {% if requires_shipping and shipping_address %}
+            <td class="customer-info__item">
+              {{{{raw}}}}{{ shipping_address | format_address }}{{{{/raw}}}}
+              {% if requires_shipping and shipping_address %}
+              <div class="customer-info__item">
+                <p>{{{{raw}}}}{{ shipping_method.title }}{{{{/raw}}}}</p>
+              <div>
+              {% endif %}
+            </td>
+            {% endif %}
+          </tr>
+        </table>
+
+        
+      </td>
+    </tr>
+  </table>
+</center>

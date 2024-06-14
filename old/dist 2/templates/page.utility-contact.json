@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "contact": {
+            "type": "utility-contact-info"
+        }
+    },
+    "order": [
+        "contact"
+    ]
+}

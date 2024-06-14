@@ -1,0 +1,33 @@
+---
+description: Track your local shipment.
+---
+
+{% capture email_title %}Your Cellcosmet Order Is Out For Delivery{% endcapture %}
+{% capture email_body %}
+    To track your shipment and see the delivery status.
+{% endcapture %}
+
+<container class="local-out-for-delivery">
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      {% if order_status_url %}
+        <table class="actions" width="100%">
+          <tr>
+              <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">Track Your Order</a></td>
+          </tr>
+        </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      <h2 class="heading">IN YOUR SHIPMENT</h2>
+      <h3 class="order-header">To view the full order summary, <a href="{{ order_status_url }}" class="">click here</a></h3>
+      {{> product_list}}
+    </columns>
+  </row>
+
+</container>

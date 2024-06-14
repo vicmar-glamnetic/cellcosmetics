@@ -1,0 +1,179 @@
+<table class="row">
+  {% for line in line_items %}
+    <tr class="order-list__item">
+      <td class="order-list__item__cell">
+        <table>
+          <td>
+            {% if line.image %}
+              <a href="{{{{raw}}}}{{ shop.url }}{{{{/raw}}}}{{{{raw}}}}{{ line.url | within: collections.all }}{{{{/raw}}}}">
+                <img src="{{{{raw}}}}{{ line | img_url: 'compact' }}{{{{/raw}}}}" align="left" width="150" class="order-list__product-image"/>
+              </a>
+            {% endif %}
+          </td>
+          <td class="order-list__product-description-cell">
+            {% if line.product.title %}
+              {% assign line_title = line.product.title %}
+            {% else %}
+              {% assign line_title = line.title %}
+            {% endif %}
+
+            <span class="order-list__item-title"><a href="{{{{raw}}}}{{ shop.url }}{{{{/raw}}}}{{{{raw}}}}{{ line.url | within: collections.all }}{{{{/raw}}}}">{{{{raw}}}}{{ line_title }}{{{{/raw}}}}</a></span><br/>
+
+            {% unless line.variant.title == "Default Title" %}
+              {% for option in line.variant.options %}
+                <div class="order-list__item-variant">{{{{raw}}}}{{ line.product.options[forloop.index0] }}{{{{/raw}}}}: {{{{raw}}}}{{ option }}{{{{/raw}}}}</div>
+              {% endfor %}
+            {% endunless %}
+
+            {% assign propertySize = line.properties | size %}
+            {% if propertySize > 0 %}
+               {% for property in line.properties %}
+               {% unless property.first contains "_sourceProduct" or property.first contains "_qbkOfferId"  %}
+                 <span class="order-list__item-property">{{{{raw}}}}{{ property.first }}{{{{/raw}}}}: {{{{raw}}}}{{ property.last }}{{{{/raw}}}}</span>
+               {% endunless %}
+               {% endfor %}
+            {% endif %}
+
+            <span class="order-list__item-qty">Quantity: {{{{raw}}}}{{ line.quantity }}{{{{/raw}}}}</span>
+          </td>
+          <td class="order-list__price-cell">
+            {% if line.original_line_price != line.line_price %}
+              <del class="order-list__item-original-price">{{{{raw}}}}{{ line.original_line_price | money }}{{{{/raw}}}}</del>
+            {% endif %}
+            <p class="order-list__item-price">{{{{raw}}}}{{ line.line_price | money }}{{{{/raw}}}}</p>
+          </td>
+        </table>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+<table class="row subtotal-lines">
+  <tr>
+    <td class="subtotal-spacer"></td>
+    <td>
+      <table class="row subtotal-table">
+        <tr class="subtotal-line">
+          <td class="subtotal-line__title">
+            <p>
+              <span>Subtotal</span>
+            </p>
+          </td>
+          <td class="subtotal-line__value">
+            {{{{raw}}}}{{ subtotal_price | money }}{{{{/raw}}}}
+          </td>
+        </tr>
+
+        <tr class="subtotal-line">
+          <td class="subtotal-line__title">
+            <p>
+              <span>Shipping</span>
+            </p>
+          </td>
+          <td class="subtotal-line__value">
+            {{{{raw}}}}{{ shipping_price | money }}{{{{/raw}}}}
+          </td>
+        </tr>
+
+        {% if discounts %}
+          {% capture discount_title %}Discount {% if discounts.first.code %}({{{{raw}}}}{{ discounts.first.code }}{{{{/raw}}}}){% endif %}{% endcapture %}
+
+          <tr class="subtotal-line">
+            <td class="subtotal-line__title">
+              <p>
+                <span>{{{{raw}}}}{{ discount_title }}{{{{/raw}}}}</span>
+              </p>
+            </td>
+            <td class="subtotal-line__value">
+              {{{{raw}}}}{{ discounts_savings | money }}{{{{/raw}}}}
+            </td>
+          </tr>
+
+        {% endif %}
+
+        {% for line in tax_lines %}
+
+          <tr class="subtotal-line">
+            <td class="subtotal-line__title">
+              <p>
+                <span>{{{{raw}}}}{{ line.title }}{{{{/raw}}}}</span>
+              </p>
+            </td>
+            <td class="subtotal-line__value">
+              {{{{raw}}}}{{ line.price | money }}{{{{/raw}}}}
+            </td>
+          </tr>
+
+        {% endfor %}
+
+      </table>
+
+      <table class="row subtotal-table subtotal-table--total">
+        
+        <tr class="subtotal-line">
+          <td class="subtotal-line__title">Total</td>
+          <td class="subtotal-line__value">{{{{raw}}}}{{ total_price | money }}{{{{/raw}}}}</td>
+        </tr>
+
+      </table>
+
+      {% assign transaction_size = 0 %}
+      {% for transaction in transactions %}
+        {% unless transaction.kind == "capture" or transaction.kind == "void" %}
+          {% assign transaction_size = transaction_size | plus: 1 %}
+        {% endunless %}
+      {% endfor %}
+
+      {% if transaction_size > 1 %}
+        <table class="row ">
+          <tr><td colspan="2" class="subtotal-table__line"></td></tr>
+          <tr><td colspan="2" class="subtotal-table__small-space"></td></tr>
+
+          {% for transaction in transactions %}
+            {% if transaction.status == "success" and transaction.kind == "authorization" or transaction.kind == "sale" %}
+              {% if transaction.payment_details.credit_card_company %}
+                {% capture transaction_name %}{{{{raw}}}}{{ transaction.payment_details.credit_card_company }}{{{{/raw}}}} (ending in {{{{raw}}}}{{ transaction.payment_details.credit_card_last_four_digits }}{{{{/raw}}}}){% endcapture %}
+              {% else %}
+                {% capture transaction_name %}{{{{raw}}}}{{ transaction.gateway | replace: "_", " " | capitalize }}{{{{/raw}}}}{% endcapture %}
+              {% endif %}
+
+
+              <tr class="subtotal-line">
+                <td class="subtotal-line__title">
+                  <p>
+                    <span>{{{{raw}}}}{{transaction_name}}{{{{/raw}}}}</span>
+                  </p>
+                </td>
+                <td class="subtotal-line__value">
+                  {{{{raw}}}}{{ transaction.amount | money }}{{{{/raw}}}}
+                </td>
+              </tr>
+
+            {% endif %}
+            {% if transaction.kind == 'refund' %}
+              {% if transaction.payment_details.credit_card_company %}
+                {% assign refund_method_title = transaction.payment_details.credit_card_company %}
+              {% else %}
+                {% assign refund_method_title = transaction.gateway %}
+              {% endif %}
+
+              
+              <tr class="subtotal-line refund-table">
+                <td class="subtotal-line__title">
+                  <p>
+                    <span>Refund</span>
+                      <br>
+                      <small>{{{{raw}}}}{{ refund_method_title | capitalize }}{{{{/raw}}}}</small>
+                  </p>
+                </td>
+                <td class="subtotal-line__value">
+                  - {{{{raw}}}}{{ transaction.amount | money }}{{{{/raw}}}}
+                </td>
+              </tr>
+
+            {% endif %}
+          {% endfor %}
+        </table>
+      {% endif %}
+    </td>
+  </tr>
+</table>

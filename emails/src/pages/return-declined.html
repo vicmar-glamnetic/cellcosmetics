@@ -1,0 +1,53 @@
+---
+description: Return declined
+---
+
+{% if order.customer_order_url %}
+  {%- assign order_details_url = order.customer_order_url -%}
+{% else %}
+  {%- assign order_details_url = order.order_status_url -%}
+{% endif %}
+{% capture email_title %}Your return was declined{% endcapture %}
+
+<container class="return-declined">
+
+  <row>
+    <columns>
+    <p></p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <h2>{{email_title}}</h2>
+      {% if return.decline["note"] != blank %}
+        <p class="return-requested__body">{{ return.decline["note"] }}</p>
+      {% elsif return.decline["reason"] == 'return_period_ended' %}
+        <p class="return-requested__body">Your return request was declined because we only accept items that are returned within the time limit of our return policy.</p>
+      {% elsif return.decline["reason"] == 'final_sale' %}
+        <p class="return-requested__body">Your return request was declined because we don't accept returns of final sale items.</p>
+      {% elsif return.decline["reason"] == 'other' %}
+        <p class="return-requested__body">Your return request was declined because the item was not eligible to be returned.</p>
+      {% endif %}
+
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ order_details_url }}" class="button__text">View Your Order</a></td>
+          {% if shop.url %}
+            <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+
+    </columns>
+  </row>
+
+
+  <row class="section order-list">
+    <columns>
+      <h3 class="return-heading heading">Return summary</h3>
+      {{> return_product_list}}
+    </columns>
+  </row>
+
+</container>

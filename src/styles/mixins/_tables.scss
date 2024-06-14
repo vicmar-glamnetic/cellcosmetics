@@ -1,0 +1,140 @@
+@import './helper';
+
+@mixin table-style {
+    width: 100%;
+    text-align: left;
+    border-color: $black;
+    th {
+        @extend .body-utility-2;
+        text-transform: uppercase;
+    }
+    td {
+        @extend .body-font-3;
+        padding: 15px 0;
+        @include query-large-up {
+            padding-top: 18px;
+            padding-bottom: 18px;
+        }
+        .details {
+            font-weight: 700;
+            border-bottom: 1px solid;
+        }
+    }
+    .table-visually-hide {
+        visibility: hidden;
+        @include opacity(0);
+    }
+}
+@mixin table-total-style {
+    position: relative;
+    @extend .body-font-3;
+    .row {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        position: relative;
+        .column {
+            padding: 5px 0;
+            &:first-child {
+                width: 60%;
+                text-align: left;
+            }
+            &:last-child {
+                width: 40%;
+                text-align: right;
+            }
+        }
+        &.total {
+            margin-top: 10px;
+            .column {
+                padding: 10px 0;
+                border-top: 1px solid #B0B0B3;
+            }
+        }
+    }
+    @include query-large-up {
+        padding-right: 30px;
+    }
+}
+
+@mixin table-style-1 {
+    @include table-style;
+    tbody tr {
+        td {
+            border-top: 1px solid $black;
+        }
+    }
+    th {
+        padding: 2.5px 0;
+    }
+    @include query-large-up {
+        tr {
+            th, td {
+                &:first-child {
+                    padding-left: 20px;
+                }
+                &:last-child {
+                    padding-right: 20px;
+                }
+            }
+        }
+        th {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        // tbody tr {
+        //     &:nth-child(odd) {
+        //         background: $lightGrey;
+        //     }
+        // }
+    }
+}
+@mixin table-style-2 {
+    @include table-style;
+    th {
+        padding: 5px 0;
+    }
+    td {
+        flex-direction: column;
+        justify-content: center;
+    }
+    tr {
+        th, td {
+            &:last-child {
+                text-align: right;
+            }
+        }
+    }
+    .link-wrapper {
+        display: block;
+    }
+    tr {
+        td {
+            padding: 5px 0;
+            border-top: 1px solid $black;
+        }
+    }
+    @include query-large-up {
+        tr {
+            td {
+                padding: 20px 0;
+                &:first-child {
+                    padding: 0;
+                }
+            }
+            th, td {
+                &:first-child {
+                    padding-left: 20px;
+                }
+                &:last-child {
+                    padding-right: 20px;
+                }
+            }
+        }
+        // tbody tr {
+        //     &:nth-child(odd) {
+        //         background: $lightGrey;
+        //     }
+        // }
+    }
+}

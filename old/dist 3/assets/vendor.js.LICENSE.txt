@@ -1,0 +1,9 @@
+/*!
+ * jQuery
+ */
+
+/*! jQuery v3.6.0 | (c) OpenJS Foundation and other contributors | jquery.org/license */
+
+//    For example: `MIT`, `@license`, or `Copyright`.
+
+// even if the comment does not have directives such as `@license` or `/*!`.

@@ -1,0 +1,236 @@
+@import '../mixins/forms';
+
+// Input Element Cleanup and reset
+label {
+    @include body-font-6;
+}
+input,
+textarea,
+select {
+    border: 0;
+    border-radius: 0;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    &[disabled] {
+        cursor: default;
+    }
+    @include body-font-3;
+    @include query-large-up {
+        font-size: 16px !important;
+        line-height: 24px !important;
+    }
+}
+textarea {
+    min-height: 100px;
+    padding: 10px;
+}
+select {
+    @include prefix(appearance, none, webkit moz spec);
+    width: 100%;
+    text-overflow: '';
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    /*================ Hide the svg arrow in IE9 ================*/
+    .ie9 & {
+        background-image: none;
+    }
+}
+select::-ms-expand {
+    display: none;
+}
+
+
+// Form Element
+.input-wrapper:not(.input-wrapper-newsletter), .field__input-wrapper {
+    width: 100%;
+    position: relative;
+    text-align: left;
+    background: inherit;
+    
+    // Inline submit CTA
+    [type=submit] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: center;
+        line-height: $input-line-height-mobile;
+        width: $input-line-height-mobile;
+        @include icon-btn($icon-chevron-right, inherit, 20px);
+    }
+    
+    // General input style
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+        background: inherit !important;
+    }
+    input:not([type="checkbox"]), select, textarea {
+        &:not([type="radio"]) {
+            border-radius: $input-border-radius;
+            &:-internal-autofill-selected {
+                background: inherit !important;
+                color: inherit !important;
+            }
+        }
+    }
+    .error-msg {
+        display: block;
+        overflow: hidden;
+        visibility: hidden;
+        max-height: 0;
+        padding: 5px 2.5px 0;
+        @include body-font-3;
+        @include opacity(0);
+        @include transition(all $slow);
+    }
+    &.input-error {
+        &, & input {
+            color: $redRGB !important;
+            border-color: $redRGB !important;
+        }
+        .error-msg {
+            visibility: visible;
+            max-height: 100px;
+            @include opacity(1);
+        }
+    }
+    
+    // Text and Select
+    .fieldset-label {
+        padding: 0 5px;
+        margin-left: 16px;
+    }
+    
+    input, select {
+        width: 100%;
+        line-height: $input-line-height-mobile - $input-wrapper-border*2;
+        border: $input-wrapper-border solid;
+        @include placeholder-color(inherit);
+    }
+    
+    input:not([type="checkbox"]), textarea {
+        &:not([type="radio"]) {
+            & ~ label {
+                position: absolute;
+                background: inherit;
+                top: 0;
+                left: 16px;
+                padding: 0 5px;
+                z-index: 1;
+                display: none !important;
+            }
+        }
+    }
+
+    input:not([type="checkbox"]), input:not([type="radio"]), select {
+        border-bottom: 1px solid $black;
+    }
+    
+    &.select, &.field__input-wrapper--select, &.selector-wrapper {
+        label {
+            display: none;
+        }
+        &:after {
+            pointer-events: none;
+            display: block;
+            @include icon-fonts($icon-dropdown, 'inherit', 14px);
+            line-height: $input-line-height-mobile;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: $input-line-height-mobile;
+            text-align: center;
+        }
+    }
+    
+    // Textarea
+    textarea {
+        width: 100%;
+        border: 1px solid;
+        @include placeholder-color(inherit);
+    }
+    
+    // Checkbox
+    input[type="checkbox"] {
+        display: none;
+        & ~ label {
+            display: inline-block;
+            padding-left: $input-check-radio-size + 10px;
+            position: relative;
+            line-height: $input-check-radio-size + 4px;
+            &:before {
+                content: "";
+                display: block;
+                width: $input-check-radio-size;
+                height: $input-check-radio-size;
+                border: 1px solid;
+                border-color: $grayscale300;
+                border-radius: $input-border-radius;
+                position: absolute;
+                left: 0;
+                top: 0;
+                cursor: pointer;
+                @include transition(all $slow);
+            }
+            &:after {
+                display: block;
+                line-height: $input-check-radio-size;
+                font-size: $input-check-radio-size;
+                position: absolute;
+                top: 0;
+                left: 0;
+                visibility: hidden;
+                @include opacity(0);
+                @include transition(all $slow);
+                @include icon-fonts($icon-check, inherit, $input-check-radio-size);
+            }
+        }
+        &:checked {
+            & ~ label {
+                &:before {
+                    border-color: $black;
+                }
+                &:after {
+                    visibility: visible;
+                    @include opacity(1);
+                }
+            }
+        }
+    }
+    
+    @include query-large-up {
+        [type=submit] {
+            line-height: $input-line-height;
+            width: $input-line-height;
+        }
+        input, select {
+            line-height: $input-line-height - $input-wrapper-border*2;
+        }
+        &.select, &.field__input-wrapper--select, &.selector-wrapper {
+            &:after {
+                line-height: $input-line-height;
+                width: $input-line-height;
+            }
+        }
+    };
+}
+
+.fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .field {
+        // Assign field with background for label and text to display properly
+        width: 100%;
+        margin-bottom: 20px;
+        &.col {
+            width: calc(50% - 5px);
+        }
+        &.col-3 {
+            width: calc(100%/3 - 20px/3);
+        }
+    }
+}

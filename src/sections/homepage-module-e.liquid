@@ -1,0 +1,110 @@
+{% schema %}
+{
+    "name": "Homepage Module E",
+    "settings": [
+        {
+            "type": "text",
+            "id": "headline",
+            "label": "Headline Text",
+            "default": "Shop by category"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "link",
+            "name": "Category",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_a",
+                    "label": "Logo Image"
+                },
+                {
+                    "type": "text",
+                    "id": "headline",
+                    "label": "Link Title"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Homepage Module E",
+            "category": "Homepage",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+<section class="hpmodule hp-module-e">
+
+    <div class="flex-row">
+
+        <div class="column first">
+            {% if section.settings.headline != blank %}
+                <h3 class="headline title-font-4-light hide-large-up">{{ section.settings.headline }}</h3>
+            {% endif %}
+            {% if section.blocks.size > 0 %}
+                {% for block in section.blocks %}
+                    {% if block.settings.image_a != blank %}
+                            {% if forloop.first %}
+                                <div class="image-block show" data-handle="{{ block.settings.headline | handleize }}">
+                                    {%- include 'responsive-image-lazy',
+                                        image: block.settings.image_a,
+                                        imageSmall: block.settings.image_a,
+                                        alt: block.settings.image_a.alt,
+                                        size: '1500x',
+                                        sizeMedium: '1500x',
+                                        sizeSmall: '768x',
+                                        heightFix: false,
+                                    -%}
+                                </div>
+                            {% else %}
+                                <div class="image-block" data-handle="{{ block.settings.headline | handleize }}">
+                                    {%- include 'responsive-image',
+                                        image: block.settings.image_a,
+                                        imageSmall: block.settings.image_a,
+                                        alt: block.settings.image_a.alt,
+                                        size: '1500x',
+                                        sizeMedium: '1500x',
+                                        sizeSmall: '768x',
+                                        heightFix: false,
+                                    -%}
+                                </div>
+                            {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="column second">
+            <div class="block-container">
+                <div class="inner-wrapper">
+                    {% if section.settings.headline != blank %}
+                        <h3 class="headline title-font-4-light hide-medium-down">{{ section.settings.headline }}</h3>
+                    {% endif %}
+                    {% if section.blocks.size > 0 %}
+                        <div class="links-wrapper">
+                            {% for block in section.blocks %}
+                                {% if block.settings.headline != blank %}
+                                    {% if block.settings.headline != blank %}
+                                        <a href="{{ block.settings.link }}" class="headline-link title-font-5-light" data-handle="{{ block.settings.headline | handleize }}">{{ block.settings.headline }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "affiliate": {
+            "type": "utility-section-main"
+        }
+    },
+    "order": [
+        "affiliate"
+    ]
+}

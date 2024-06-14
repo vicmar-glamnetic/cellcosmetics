@@ -1,0 +1,53 @@
+---
+description: Your order invoice.
+---
+
+<container class="order-invoice">
+  <row>
+    <columns>
+      <p class="order-number__text">Invoice {{ order_name }}</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      {% if payment_terms.type == 'receipt' and payment_terms.next_payment.due_at == nil %}
+        {% assign due_date = 'now' %}
+      {% else %}
+        {% assign due_date = payment_terms.next_payment.due_at | default: nil %}
+      {% endif %}
+      {% if payment_terms.type == 'fulfillment' and payment_terms.next_payment.due_at == nil %}
+        <h2 class="email-title">Here is the invoice of your order. Payment of {{ order.total_outstanding | money }} is due on fulfillment</h2>
+      {% else %}
+        <h2 class="email-title">Here is the invoice of your order. Payment of {{ order.total_outstanding | money }} is due {{ due_date | date: format: 'date' }}</h2>
+      {% endif %}
+      {% if custom_message != blank %}
+      <div class="main-content">
+        {{ custom_message }}
+			</div>
+      {% endif %}
+      {% if checkout_payment_collection_url %}
+        <table class="actions" width="100%">
+          <tr>
+            <td class="button__cell first"><a href="{{ checkout_payment_collection_url }}" class="button__text">Pay now</a></td>
+            {% if shop.url %}
+              <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+            {% endif %}
+          </tr>
+        </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+
+  <row class="section customer-information">
+    <columns>
+      {{> customer_info}}
+    </columns>
+  </row>
+
+</container>

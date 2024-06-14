@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "accessibility": {
+            "type": "utility-section-main"
+        }
+    },
+    "order": [
+        "accessibility"
+    ]
+}

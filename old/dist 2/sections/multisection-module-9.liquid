@@ -1,0 +1,35 @@
+{% schema %}
+{
+    "name": "Multisection Module 9",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Body Text"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Multisection Module 9",
+            "category": "Additional Content",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+
+    <section class="multisection-module multisection-module-9">
+
+            <div class="block-container">
+
+                    {% if section.settings.description != blank %}
+                        <p class="description body-font-1 caption">{{ section.settings.description }}</p>
+                    {% endif %}
+
+
+            </div>
+
+    </section>

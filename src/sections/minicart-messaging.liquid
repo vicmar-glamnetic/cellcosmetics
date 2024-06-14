@@ -1,0 +1,45 @@
+{% schema %}
+{
+    "name": "Minicart Messaging",
+    "max_blocks": 3,
+    "blocks": [
+        {
+            "type": "messaging_block",
+            "name": "Message Block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Icon Image"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Message"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Minicart Messaging",
+            "category": "Minicart",
+            "settings": {
+
+            }
+        }
+    ]
+}
+{% endschema %}
+
+<div class="minicart-messages">
+    <div class="messaging-wrapper slick">
+        {% for block in section.blocks %}
+        <div class="block">
+            <img class="message-icon" alt="{{ block.settings.image.alt }}" src="{{ block.settings.image | img_url: '50x' }}">
+            <span class="message">{{ block.settings.text }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    

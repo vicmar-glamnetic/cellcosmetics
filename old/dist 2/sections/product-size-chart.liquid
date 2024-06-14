@@ -1,0 +1,86 @@
+{% schema %}
+{
+  "name": "Product Size Chart(s)",
+  "settings": [
+    {
+       "type":  "richtext",
+       "id":    "need_help_text",
+       "label": "Size chart help text",
+       "default": "<p>Email for size help</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "size_chart",
+      "name": "Size Chart",
+      "limit": 3,
+      "settings": [
+        {
+          "type":  "text",
+          "id":    "title",
+          "label": "Chart Title"
+        },
+        {
+          "type":  "richtext",
+          "id":    "extra_content",
+          "label": "Extra Content for the tab, usually use as instructions."
+        },
+        {
+          "type": "textarea",
+          "id": "chart_content",
+          "label": "Centimeters sizes",
+          "info": "Use the following structure to create columns: ['USA', 'XS', 'S', 'M', 'L', 'XL'] Copy previous snippet for as many rows the chart will have, columns are separated by commas"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Size Chart(s)",
+      "category": "Product",
+      "settings": {
+        
+      }
+    }
+  ]
+}
+{% endschema %}
+
+<div id="SizeChartModal" class="modal size-chart" role="dialog">
+    <div class="size-chart">
+        {% assign chart_size = section.blocks.size %}
+        {% if chart_size > 0 %}
+        {% assign counter = 0 %}
+        <div class="tab-container tab-accordion-system">
+            {%- assign activeClass = true -%}
+            {% for chart in section.blocks %}
+            <div class="system {% if activeClass %}active{% endif %}">
+                <div class="system-title system-title-{{ counter }} {% if forloop.last %}system-title-last{% endif %}" data-target="system-{{- counter -}}">
+                    {{- chart.settings.title -}}
+                </div>
+                <div class="system-content {% if activeClass %}active{% endif %}" data-target="system-{{- counter -}}">
+                    <div class="content-inner">
+                        <div class="extra-content">
+                            {{ chart.settings.extra_content }}
+                        </div>
+                        <div class="chart">
+                            {% assign chart_content = chart.settings.chart_content
+                                         | replace: '[', '<div class="chart-row"><div class="item">'
+                                         | replace: ',', '</div><div class="item">'
+                                         | replace: ']', '</div></div>' %}
+                            {{ chart_content }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% assign counter = counter | plus: 1 %}
+            {% assign activeClass = false %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if section.settings.need_help_text != blank %}
+        <div class="chart-actions">{{- section.settings.need_help_text -}}</div>
+        {% endif %}
+    </div>
+</div>

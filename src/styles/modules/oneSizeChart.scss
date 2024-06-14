@@ -1,0 +1,105 @@
+@import '../mixins/helper';
+
+//
+//  Common
+//  _____________________________________________
+#SizeChartModal {
+    display: none;
+}
+.drawer #SizeChartModal {
+    display: block;
+}
+.size-chart {
+    .chart {
+        .chart-row {
+
+        }
+        .item {
+
+        }
+    }
+}
+
+
+//
+// Small Screens Only
+//  _____________________________________________
+@include query-small {
+
+};
+
+//
+//  Medium Screens and Smaller
+//  _____________________________________________
+@include query-medium-down {
+    #SizeChartDrawerModal {
+        width: 100%;
+        overflow: visible;
+        .drawer-close {
+            right: -25px;
+            top: 10px;
+        }
+    }
+    .size-chart {
+        .chart {
+            display: flex;
+            flex-wrap: wrap;
+            .chart-row {
+                width: 33.3333%;
+                margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+            .item {
+
+            }
+        }
+    }
+};
+
+//
+// Medium Screens Only
+//  _____________________________________________
+@include query-medium {
+    
+};
+
+//
+// Large Screens
+//  _____________________________________________
+@include query-large-up {
+    #SizeChartDrawerModal {
+
+    }
+    .size-chart {
+        width: 750px;
+        .tab-container {
+            .system-title {
+                width: $sizeChartTabWidth;
+                &.system-title-0 {
+                    left: 0;
+                }
+                &.system-title-1 {
+                    left: $sizeChartTabWidth;
+                }
+                &.system-title-2 {
+                    left: $sizeChartTabWidth*2;
+                }
+            }
+            .system-content {
+                .content-inner {
+                    padding: 20px;
+                }
+            }
+        }
+        .chart {
+            .chart-row {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            .item {
+                width: $sizeChartColumnMaxWidth;
+            }
+        }
+    }
+};

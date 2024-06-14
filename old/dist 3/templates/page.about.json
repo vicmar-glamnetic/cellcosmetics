@@ -1,0 +1,36 @@
+{
+    "wrapper": "div.about-page",
+    "sections": {
+        "about-module-a": {
+            "type": "about-module-a"
+        },
+        "about-module-b": {
+            "type": "about-module-b"
+        },
+        "about-module-c": {
+            "type": "about-module-c"
+        },
+        "about-module-d": {
+            "type": "about-module-d"
+        },
+        "about-module-e": {
+            "type": "about-module-e"
+        },
+        "about-module-f": {
+            "type": "about-module-f"
+        },
+        "about-module-g": {
+            "type": "about-module-g"
+        }
+    },
+    "order": [
+        "about-module-a",
+        "about-module-b",
+        "about-module-c",
+        "about-module-d",
+        "about-module-e",
+        "about-module-f",
+        "about-module-g"
+
+    ]
+}

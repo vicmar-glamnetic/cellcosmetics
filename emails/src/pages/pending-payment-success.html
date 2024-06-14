@@ -1,0 +1,45 @@
+---
+description: Pending Payment Success.
+---
+
+{% capture email_title %}Your payment for {{ order.name }} has been received {% endcapture %}
+{% capture email_body %}
+Thank you for your payment for {{ order.name }}. Your payment has been received and you don't need to take any further action. If you have any questions about your order, please contact <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>.
+{% endcapture %}
+
+<container class="pending-payment-success">
+  <row>
+    <columns>
+      <p class="order-number__text">Order {{ order_name }}</p>
+    </columns>
+  </row>
+
+  <row>
+    <columns>
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">{{ email_body }}</div>
+      {% if order_status_url %}
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ order_status_url }}" class="button__text">View your order</a></td>
+          {% if shop.url %}
+          <td class="button__cell last"><a href="{{ shop.url }}" class="button__text">Continue Shopping</a></td>
+          {% endif %}
+        </tr>
+      </table>
+      {% endif %}
+    </columns>
+  </row>
+
+  <row class="section order-list">
+    <columns>
+      {{> product_list}}
+    </columns>
+  </row>
+
+  <row class="section customer-information">
+    <columns>
+      {{> customer_info}}
+    </columns>
+  </row>
+</container>

@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "terms": {
+            "type": "utility-section-main"
+        }
+    },
+    "order": [
+        "terms"
+    ]
+}

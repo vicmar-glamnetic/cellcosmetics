@@ -1,0 +1,12 @@
+<div id="CountryModal" class="drawer drawer-modal" role="dialog">
+    <div class="drawer-content">
+        <button class="drawer-close" type="button"><span class="visually-hidden">{{ 'general.accessibility.close_modal' | t }}</span></button>
+        <div class="text-wrapper"">
+            {{ settings.welcome_message }}
+        </div>
+        <div class="recommend-country-content">
+            {{ settings.recommended_country_content }}
+        </div>
+        {% render 'country-selector' %}
+    </div>
+</div>

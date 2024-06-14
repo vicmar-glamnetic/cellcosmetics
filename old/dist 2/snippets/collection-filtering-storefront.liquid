@@ -1,0 +1,89 @@
+{%- liquid 
+    for filter in collection.filters
+        if filter.active_values.size > 0
+            assign is_filtered = true
+        elsif filter.min_value.value != blank or filter.max_value.value != blank
+            assign is_filtered = true
+        elsif filter.url_to_remove contains 'availability'
+            assign is_filtered = true
+        endif
+    endfor
+-%}
+
+<div class="collection-nav-block filters storefront-filtering">
+    <button type="button" class="nav-title" data-title="{{ 'collections.filter.title' | t }}">{{ 'collections.filter.title' | t }}</button>
+    <div class="nav-content">
+        <div class="nav-list-container">
+            <form action="{{ collection.url }}">
+                {% if is_filtered != blank and is_filtered %}
+                    <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="clear-all clear-all-filters">Clear all</a>
+                {% endif %}
+                {%- for filter in collection.filters -%}
+                    <div class="filter {% if layout == 'one-column' %}nav-dropdown{% else %}nav-accordion{% endif %}">
+                        <button type="button" class="filter-title {% if layout == 'one-column' %}nav-dropdown-title{% else %}nav-accordion-title{% endif %}">{{ filter.label }}</button>
+                        <div class="filter-values {% if layout == 'one-column' %}nav-dropdown-content{% else %}nav-accordion-content{% endif %}" data-select="filter-{{title | handle}}">
+                            {% case filter.type %}
+                            {% when 'price_range' %}
+                                <div class="price-filter-wrapper min">
+                                    <label for="filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                        From
+                                    </label>
+                                    <span>
+                                        {{ cart.currency.symbol }}
+                                        <input 
+                                            name="{{ filter.min_value.param_name }}"
+                                            id="Filter-{{ filter.min_value.param_name }}"
+                                            {% if filter.min_value.value -%}
+                                                value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                                            {%- endif %}
+                                            class="price-filter min"
+                                            type="number"
+                                            placeholder="0"
+                                            min="0"
+                                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                        >
+                                    </span>
+                                </div>
+                                <div class="price-filter-wrapper max">
+                                    <label for="filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                        To
+                                    </label>
+                                    <span>
+                                        {{ cart.currency.symbol }}
+                                        <input 
+                                            name="{{ filter.max_value.param_name }}"
+                                            id="Filter-{{ filter.max_value.param_name }}"
+                                            {% if filter.max_value.value -%}
+                                                value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                                            {%- endif %}
+                                            class="price-filter max"
+                                            type="number"
+                                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                            min="0"
+                                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                        >
+                                    </span>
+                                </div>
+                            {% when 'list' %}
+                                {% for value in filter.values %}
+                                    <label for="filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                        <input
+                                            type="checkbox"
+                                            id="filter-{{ filter.param_name }}-{{ forloop.index }}"
+                                            name="{{ value.param_name }}"
+                                            value="{{ value.value }}"
+                                            {% if value.active %}checked{% endif %}
+                                            {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                                        >
+                                        {{ value.label }} ({{ value.count }})
+                                    </label>
+                                {% endfor %}
+                            {% endcase %}
+                        </div>
+                    </div>
+                {%- endfor -%}
+                <button type="submit" class="cta-1">{{ 'collections.filter.submit' | t }}</button>
+            </form>
+        </div>
+    </div>
+</div>

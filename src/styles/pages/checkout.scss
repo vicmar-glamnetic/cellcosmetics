@@ -1,0 +1,372 @@
+@import '../components/fonts';
+
+// Checkout Best Practices: https://help.shopify.com/en/themes/development/layouts/checkout/checkout-scss-liquid
+
+//
+// Checkout Variables
+// _____________________________________________
+
+// Shopify's default checkout breakpoints.
+// Do not change unless absolutely needed and with extensive testing.
+$checkoutMedium: 750px;
+$checkoutLarge: 1000px;
+$checkoutXLarge: 1300px;
+
+// Checkout specific variables
+$checkoutBorderColor: $lightGrey;
+$checkoutActiveColor: $black;
+$sidebarBackgroundColor: $lightGrey;
+
+//
+//  Typography
+//  _____________________________________________
+.template-checkout{
+    @include body-font-4;
+    font-size: 16px; // Checkout uses a scalable em scale
+    .site-logo{
+        line-height: $baseLineHeight;
+    }
+    .btn{
+        @include cta-font-2;
+    }
+    .breadcrumb{
+        .breadcrumb__item{
+            font-size: $baseFontSize;
+        }
+    }
+    .order-summary-toggle{
+        .order-summary-toggle__text, .total-recap__final-price{
+            @include body-font-4;
+        }
+    }
+    .reduction-code{
+        .reduction-code__text{
+            @include body-font-6;
+        }
+        svg{
+            vertical-align: middle;
+        }
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+html, body{
+    height: 100%;
+}
+.template-checkout{
+
+    &.has-bg-image{
+        .banner{
+            position: static;
+            .h1{
+                width: auto;
+            }
+        }
+        .content{
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 50px 20px 50px;
+            div.wrap{
+                background: white;
+                margin-left: auto;
+                margin-right: auto;
+                flex: 0 0 auto;
+            }
+            .order-summary__sections{
+                height: auto;
+                padding-top: 50px;
+            }
+            .order-summary-toggle{
+                max-width: 40em;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        .sidebar{
+            .field__label{
+                background-color: $white;
+            }
+        }
+        .order-summary-toggle{
+            border-top: 0;
+            margin-bottom: 0;
+            & + .wrap{
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+// Input Styles
+.field__input{
+    line-height: $input-line-height-mobile - $input-wrapper-border*2;
+    border-radius: $input-border-radius;
+    border-color: $checkoutBorderColor;
+    padding: 0 15px;
+}
+
+// Focus states
+.field__input:focus, .field__input-wrapper--flag-focus .field__input {
+    outline: none;
+    border-color: $checkoutActiveColor;
+    box-shadow: 0 0 0 1px $checkoutActiveColor;
+}
+.card-fields-container--loaded .field--active .field__input--iframe-container{
+    border-color: $checkoutActiveColor;
+    box-shadow: 0 0 0 1px $checkoutActiveColor;
+}
+
+// Error styles
+.field--error .field__input{
+    border-color: $color-error;
+    box-shadow: none;
+}
+.field__message--error{
+    color: $color-error;
+}
+
+// Checkboxes & Radios
+.input-checkbox, .input-radio{
+    &:focus{
+        border: 2px solid $checkoutActiveColor;
+    }
+    &:checked{
+        box-shadow: none;
+        background-color: $checkoutActiveColor;
+        border-width: 0;
+    }
+}
+
+.input-radio {
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        margin-left: -2px;
+        margin-top: -2px;
+        background-color: #fff;
+        border-radius: 50%;
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+        -webkit-transition: all 0.2s ease-in-out 0.1s;
+        transition: all 0.2s ease-in-out 0.1s;
+        opacity: 0;
+    }
+    &:checked {
+        &:after {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
+
+// Floating Labels, .floating-labels in a class on <html>
+.floating-labels{
+    .field__label{
+        margin: 0;
+        padding: 0 5px;
+        left: 12px;
+        top: -10px;
+        background-color: $white;
+        width: auto;
+    }
+    .field--show-floating-label{
+        .field__input{
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.main .field__caret{
+    display: none;
+}
+
+// Links
+a, .link{
+    color: $darkGrey;
+
+    &:hover, &:focus{
+        color: $checkoutActiveColor;
+    }
+}
+
+// Main Checkout CTA's
+.btn{
+    color: $white;
+    background-color: $black;
+    border-radius: $input-border-radius;
+    &:hover, &:focus{
+        opacity: 0.8;
+        background-color: $checkoutActiveColor;
+    }
+}
+
+// Header
+.banner{
+    padding: 0;
+}
+.site-logo{
+    @include icon-fonts-before($icon-onerockwell, inherit, 40px);
+    display: block;
+    text-align: center;
+}
+
+// Breadcrumbs
+.breadcrumb{
+    display: none;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $lightGrey;
+    .breadcrumb__item{
+        svg{
+            display: inline-block;
+        }
+    }
+}
+
+// Sidebar
+.sidebar{
+    &::after{
+        background-color: $sidebarBackgroundColor;
+    }
+    .product-table{
+        td{
+            vertical-align: top;
+        }
+    }
+    .product-thumbnail__wrapper{
+        border-radius: 0;
+    }
+    .product__image{
+        vertical-align: top;
+        padding-right: 16px;
+    }
+    .product-thumbnail{
+        border-radius: 0;
+        background: none;
+        height: auto;
+        min-height: 100px;
+        &::after{
+            content: '';
+            display: none;
+        }
+        img{
+            position: static;
+            width: 100%;
+            margin: 0;
+        }
+    }
+    .field__input{
+        background-color: transparent;
+    }
+    .field__label{
+        background-color: $sidebarBackgroundColor;
+    }
+}
+
+// Mobile Summary Toggle
+.order-summary-toggle{
+    background-color: $sidebarBackgroundColor;
+
+    &:hover, &:focus{
+        .order-summary-toggle__text{
+            color: $checkoutActiveColor;
+        }
+    }
+    .order-summary-toggle__text{
+        color: $black;
+        &:focus, &:hover{
+            color: $checkoutActiveColor;
+        }
+    }
+    .order-summary-toggle__icon-wrapper{
+        @include icon-fonts-before($icon-bag, inherit, inherit);
+		svg{
+			display: none;
+		}
+    }
+    .order-summary-toggle__text{
+        span{
+            @include icon-fonts-after($icon-chevron-down, inherit, inherit);
+            &::after{
+                display: inline-block !important;
+                padding-left: 9px;
+                vertical-align: bottom;
+            }
+        }
+		svg{
+            display: none;
+        }
+        &.order-summary-toggle__text--hide{
+            span{
+                @include icon-fonts-after($icon-chevron-up, inherit, inherit);
+            }
+        }
+	}
+}
+
+//Footer
+.main__footer{
+    text-align: center;
+    .policy-list__item{
+        float: none;
+        display: inline-block;
+    }
+}
+.step__footer{
+    text-align: center;
+    .step__footer__previous-link{
+        display: block;
+        svg{
+            display: none;
+        }
+        span{
+            @include icon-fonts-before($icon-chevron-left, inherit, inherit);
+            &::before{
+                display: inline-block;
+                padding-right: 6px;
+            }
+        }
+    }
+}
+
+@media all and (min-width: $checkoutMedium){
+    // Input Styles
+    .field__input{
+        line-height: $input-line-height - $input-wrapper-border*2;
+    }
+}
+
+@media all and (min-width: $checkoutLarge){
+    // Header
+    .banner{
+        display: block;
+        position: absolute;
+        width: 100%;
+        .h1{
+            width: 56%;
+        }
+        .site-logo{
+            &::before{
+                font-size: 50px;
+            }
+        }
+    }
+    .page--no-banner .main, .page--no-banner .sidebar{
+        padding-top: 5em;
+    }
+
+    // Breadcrumbs
+    .breadcrumb{
+        display: flex;
+    }
+}

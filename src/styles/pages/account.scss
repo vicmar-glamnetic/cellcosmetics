@@ -1,0 +1,768 @@
+@import '../components/fonts';
+@import '../components/tables';
+@import '../components/forms';
+
+//
+//  Typography
+//  _____________________________________________
+.account-banner {
+    @include body-utility-1;
+    text-transform: uppercase;
+}
+.account-wrapper {
+    .account-header {
+        .button {
+            @include cta-font-1;
+            width: 100%;
+            max-width: 400px;
+            color: $grayscale700;
+            background: $white;
+            border: 1px solid $grayscale700;
+            padding: 0 16px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            @include transition(background $slow, color $slow, border $slow);
+            &:not(.active) {
+                &:hover, &:focus {
+                    color: $white; 
+                    background: $cellcosmetRed;
+                    border-color: $cellcosmetRed;
+                }
+            }
+            &.active {
+                color: $cellcosmetRed;
+                border-color: $cellcosmetRed;
+            }
+        }
+        .title {
+            @include body-utility-1;
+            text-transform: uppercase;
+        }
+    }
+    .account-footer {
+        .title {
+            @include body-utility-1;
+            text-transform: uppercase;
+        }
+        .subtext {
+            @include body-font-3;
+        }
+        a.btn {
+            width: max-content !important;
+            min-width: 260px;
+        }
+    }
+    .account-body {
+        a.RecoverPassword {
+            @include body-font-6;
+            border-bottom: 1px solid;
+            display: inline-block;
+        }
+        a.HideRecoverPasswordLink {
+            @include cta-font-1;
+            border-bottom: 1px solid;
+            display: inline-block;
+            margin-top: 20px;
+            @include query-large-up {
+                font-size: 14px !important;
+                line-height: 24px !important;
+                letter-spacing: 1.12px !important;
+            }
+        }
+        .form-wrapper.modal {
+            .fieldset .field.col-3 {
+                width: 100% !important;
+                flex-grow: 1;
+                flex-basis: calc((100% / 3) - (20px / 3));
+                max-width: calc(50% - 5px);
+                &#AddressProvinceContainerNew, &[id^="AddressProvinceContainer_"] {
+                    padding: 0 10px;
+                }
+            }
+        }
+    }
+    .additional-content{
+        @include body-font-3;
+        font-size: 16px;
+    }
+    .actions {
+        .btn {
+            @include cta-2;
+            min-width: 260px;
+            width: max-content !important;
+        }
+        a {
+            @include body-font-3;
+        }
+        a.back {
+            &:before {
+                display: inline-block;
+                padding-right: 10px;
+                @include icon-fonts($icon-arrow-left, inherit, inherit);
+            }
+        }
+    }
+    .errors {
+        color: $red;
+    }
+    .additional-content{
+        max-width: 496px;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+        padding-top: 30px;
+        a{
+            text-decoration: underline;
+        }
+    }
+    #ResetSuccess, #ResetError {
+        h2 {
+            @include title-font-3;
+            text-transform: uppercase;
+        }
+        p {
+            @include body-font-2;
+        }
+    }
+    #RecoverPasswordForm {
+        h2 {
+            @include body-font-4;
+            text-transform: uppercase;
+        }
+        p {
+            @include body-font-3;
+            @include query-large-up {
+                font-size: 16px !important;
+                line-height: 24px !important;
+            }
+        }
+    }
+    #ResetPasswordForm, #ActiveAccountForm {
+        h1 {
+            @include body-font-4;
+            text-transform: uppercase;
+        }
+        p {
+            @include body-font-3;
+        }
+    }
+}
+.account-dashboard {
+    .order-list-empty {
+        p {
+            @include body-font-2;
+        }
+        a {
+            @include cta-font-1;
+            border-bottom: 1px solid;
+            display: inline-block;
+        }
+    }
+}
+.account-order-details {
+    .account-header {
+        .button {
+            display: inline-block;
+            @include cta-font-1;
+            width: 100%;
+            max-width: 400px;
+            color: $grayscale700;
+            background: $white;
+            border: 1px solid $grayscale700;
+            padding: 0 16px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            @include transition(background $slow, color $slow, border $slow);
+            @include query-large-up {
+                width: fit-content;
+                min-width: 260px;
+            }
+            &:not(.active) {
+                &:hover, &:focus {
+                    color: $white; 
+                    background: $cellcosmetRed;
+                    border-color: $cellcosmetRed;
+                }
+            }
+            &.active {
+                color: $cellcosmetRed;
+                border-color: $cellcosmetRed;
+            }
+        }
+    }
+    h2 {
+        @include title-font-7;
+        text-transform: uppercase;
+    }
+    .order-detial-info {
+        @include body-font-3;
+        h3, .title {
+            text-transform: uppercase;
+            @include title-font-7;
+        }
+    }
+    .return {
+        @include cta-font-1;
+        border-bottom: 1px solid;
+        display: inline-block;
+        margin-top: 20px;
+        @include query-large-up {
+            font-size: 14px !important;
+            line-height: 24px !important;
+            letter-spacing: 1.12px !important;
+        }
+    }
+}
+.account-addresses {
+    .default-label {
+        @include body-utility-1;
+        text-transform: uppercase;
+    }
+    .address-wrapper address {
+        @include body-font-2;
+    }
+    .address-actions {
+        @include body-font-3;
+        .address-delete,
+        .address-edit-toggle {
+            text-decoration: underline;
+        }
+    }
+    .address-form {
+        .title {
+            @include body-utility-1;
+            text-transform: uppercase;
+        }
+    }
+    .return {
+        @include cta-font-1;
+        border-bottom: 1px solid;
+        display: inline-block;
+        margin-top: 20px;
+        @include query-large-up {
+            font-size: 14px !important;
+            line-height: 24px !important;
+            letter-spacing: 1.12px !important;
+        }
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+.account-banner {
+    width: 100%;
+    padding: 50px 23px 25px;
+    @include flexcenter;
+    text-align: center;
+}
+.account-wrapper {
+    width: 100%;
+    height: 100%;
+    &:not(.account-details) {
+        // background: $lightGrey2;
+        @include flexcenter;
+        .account-body {
+            @include flexcenter;
+            padding: 23px;
+        }
+        .account-footer {
+            padding: 23px;
+        }
+    }
+    &.account-details {
+        padding: 23px;
+        .account-header {
+            display: flex;
+            flex-direction: column;
+            .first {
+                margin-bottom: 15px;
+            }
+        }
+        .account-body {
+            margin: 50px 0;
+            h2 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            &.empty {
+                @include flexcenter;
+            }
+        }
+    }
+    .account {
+        width: 100%;
+        background: $white;
+    }
+    .account-header {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        line-height: $headerSmallScreenHeight;
+        .title {
+            text-align: center;
+        }
+    }
+    .account-footer {
+        @include flexcenter;
+        text-align: center;
+        .title,.subtext {
+            margin-bottom: 10px;
+        }
+        .btn {
+            margin-top: 10px;
+        }
+    }
+    .fieldset {
+        .field {
+            background: $white;
+        }
+    }
+    .actions {
+        text-align: center;
+        .btn {
+            margin-bottom: 10px;
+        }
+        a {
+            display: inline-block;
+        }
+    }
+}
+
+#RecoverPasswordForm, #ResetError {
+    text-align: center;
+    h2 {
+        margin-bottom: 10px;
+    }
+    p {
+        margin-bottom: 35px;
+    }
+}
+
+#ResetSuccess {
+    text-align: center;
+    .title, .subtext {
+        margin-bottom: 10px;
+    }
+    .actions {
+        margin-top: 20px;
+    }
+}
+
+#ResetPasswordForm, #ActiveAccountForm {
+    text-align: center;
+    h1 {
+        margin-bottom: 9px;
+    }
+    p {
+        margin-bottom: 35px;
+    }
+}
+
+#CustomerLoginForm, #CustomerRegisterForm, #RecoverPasswordForm {
+    max-width: 496px;
+    margin: 0 auto;
+    width: 100%;
+    .actions {
+        margin-top: 20px;
+    }
+}
+
+#CustomerRegisterForm {
+    .fieldset.newsletter {
+        .field .input-wrapper {
+            // text-align: center;
+            label{
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.account-dashboard {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+    max-width: $xxLargeScreen;
+    .account-details {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        .account-body.empty {
+            flex-grow: 1;
+            @include flexcenter;
+        }
+    }
+    .order-list-empty {
+        text-align: center;
+        p {
+            margin-bottom: 30px;
+        }
+    }
+    .order-list {
+        width: 100%;
+        .responsive-table {
+            @include table-style-1;
+            td span {
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+.account-order-details {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+    max-width: $xxLargeScreen;
+    .account-header {
+        padding: 0 23px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        @include query-large-up {
+            flex-direction: row;
+        }
+        .button.first {
+            margin-bottom: 15px;
+            @include query-large-up {
+                margin-bottom: 0;
+                margin-right: 15px;
+            }
+        }
+    }
+    .order-detail-list {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .responsive-table {
+            @include table-style-2;
+            tr {
+                border-bottom: 1px solid #B0B0B3;
+                td {
+                    border-top: 0 !important;
+                    &:first-child {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                    }
+                }
+            }
+            .product-image {
+                max-width: 80px;
+                width: 50%;
+                position: relative;
+                img {
+                    width: 100%;
+                    display: block;
+                }
+            }
+            
+        }
+        .back-link {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .totals-table {
+            margin-top: 30px;
+            @include table-total-style;
+        }
+    }
+    .order-detial-info {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
+        h3, .title {
+            margin-bottom: 20px;
+        }
+        .status {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.account-addresses {
+    .address-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: stretch;
+        .customer-address {
+            order: 2;
+            &.default-address {
+                order: 1;
+                border: 1px solid $cellcosmetRed;
+                border-right-color: transparent;
+                border-left-color: transparent;
+            }
+            .default-label {
+                padding: 10px 0;
+                color: $cellcosmetRed;
+            }
+            .address-wrapper {
+                padding: 25px 0 60px;
+                position: relative;
+            }
+            .address-actions {
+                position: absolute;
+                z-index: 1;
+                bottom: 20px;
+                left: 0;
+                width: 100%;
+                .address-edit-toggle {
+                    margin-right: 30px;
+                }
+            }
+        }
+    }
+    .address-form {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: rgba(0,0,0,0.2);
+        @include flexcenter;
+        .modal {
+            position: relative;
+            background: $white;
+            overflow: auto;
+            .address-edit-toggle,
+            .address-new-toggle {
+                @include icon-fonts-after($icon-close, $black, 20px);
+                position: absolute;
+                z-index: 1;
+                top: 20px;
+                right: 20px;
+            }
+        }
+        .title {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    }
+}
+
+//
+//  X-Small screen sizes - Under 375px
+//  _____________________________________________
+@include query-xsmall {
+    #CustomerRegisterForm {
+        .fieldset.dob, .fieldset.name {
+            .field.col {
+                width: 100% !important;
+            }
+        }
+        .fieldset.newsletter {
+            .field .input-wrapper {
+                text-align: left !important;
+            }
+        }
+    }
+    .account-addresses {
+        .address-list {
+            flex-direction: column !important;
+            align-items: flex-start;
+            justify-content: center;
+            .customer-address {
+                flex-grow: 1 !important;
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+@include query-xsmall-up {
+    .account-dashboard {
+        .responsive-table-row {
+            td.total {
+                .details {
+                    float: right;
+                }
+                @include clearfix();
+            }
+        }
+    }
+}
+
+@include query-medium {
+    .account-addresses {
+        .address-list {
+            justify-content: flex-start !important;
+            .customer-address {
+                width: calc((100% / 3) - 20px) !important;
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+//
+//  Small + Medium screen sizes - Prev: Tablet and Mobile
+//  _____________________________________________
+@include query-medium-down {
+    .account-wrapper {
+        &:not(.account-details) {
+
+        }
+        .account {
+            margin: 100px 0;
+            width: 100%;
+        }
+    }
+    #CustomerRegisterForm {
+        .fieldset:not(.dob):not(.name) {
+            .field.col {
+                width: 100%;
+            }
+        }
+    }
+    .account-order-details {
+        .order-detail-list {
+            .responsive-table {
+                .product-info {
+                    padding: 10px;
+                }
+            }
+            .back-link, .totals-table {
+                width: 100%;
+            }
+        }
+        .order-detial-info {
+            flex-wrap: wrap;
+            & > div {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+    }
+    .account-addresses {
+        .address-list {
+            justify-content: space-between;
+            margin-bottom: 30px;
+            .customer-address {
+                width: calc(50% - 30px);
+            }
+        }
+        .address-form {
+            z-index: 1001; // Cover the header
+            .modal {
+                width: 100%;
+                height: 100%;
+                padding: 40px 20px;
+            }
+            .fieldset {
+                .field.col-3 {
+                    width: calc(50% - 5px);
+                    &:first-child {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+};
+
+//
+//  Large screen sizes - Prev: Desktop
+//  _____________________________________________
+@include query-large-up {
+    .account-dashboard, .account-addresses {
+        // Total height - HeaderHeight - FooterTopHeight
+        min-height: calc(100vh - var(--header-height, #{$headerLargeScreenHeight * 2 + 20px}) - #{$footerTopLargeScreenHeight});
+        padding: 0 93px;
+        .account-header {
+            flex-direction: row !important;
+            .button {
+                width: max-content !important;
+                min-width: 260px !important;
+                &.first {
+                    margin-bottom: 0 !important;
+                    margin-right: 20px !important;
+                }
+            }
+        }
+    }
+    .account-wrapper {
+        &:not(.account-details) {
+            // Total height - HeaderHeight - FooterTopHeight
+            min-height: calc(100vh - var(--header-height, #{$headerLargeScreenHeight * 2 + 20px}) - #{$footerTopLargeScreenHeight});
+            .account {
+                margin: 50px 0;
+            }
+            .account-footer {
+                padding-top: 50px;
+            }
+        }
+    }
+    .account-order-details {
+        .order-detail-list {
+            .responsive-table {
+                .product-info {
+                    padding: 20px;
+                }
+            }
+            .back-link {
+                width: 40%;
+            }
+            .totals-table {
+                width: 37%;
+            }
+        }
+        .order-detial-info {
+            & > div {
+                padding-right: 60px;
+            }
+        }
+    }
+    .account-addresses {
+        .address-list {
+            margin: 50px 0;
+            justify-content: flex-start;
+            .customer-address {
+                margin-right: 20px;
+                margin-bottom: 25px;
+                width: calc((100% / 3) - 20px) !important;
+            }
+            & + .actions {
+                width: 100%;
+                position: relative;
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: center;
+                a {
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    margin-top: 0 !important;
+                }
+                .btn {
+                    max-width: 288px;
+                    margin-bottom: 0 !important;
+                }
+            }
+        }
+        .address-form {
+            .modal {
+                padding: 44px;
+                max-height: 90%;
+                max-width: 673px;
+            }
+        }
+    }
+};

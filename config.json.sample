@@ -1,0 +1,12 @@
+/**
+ * This file contains the information needed for Shopify to authenticate
+ * requests and edit/update your remote theme files.
+ *
+ * store: the myshopify.com store URL
+ * password: the ThemeKit Access password for the given store
+ */
+
+{
+    "store": "project-x-1r", 
+    "password": "shptka_77b32245b35aac71efa969abd372f346"
+}

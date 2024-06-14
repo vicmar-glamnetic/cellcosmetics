@@ -1,0 +1,710 @@
+@import './helper';
+
+/*============================================================================
+  Fonts & Icons vars
+==============================================================================*/
+
+$icon-account: "\e918";
+$icon-bag: "\e919";
+$icon-dropdown: "\e91a";
+$icon-arrow-right: "\e91b";
+$icon-alert-circle: "\e91c";
+$icon-arrow-down: "\e91d";
+$icon-arrow-left: "\e91e";
+$icon-arrow-right2: "\e91f";
+$icon-arrow-up: "\e920";
+$icon-check: "\e921";
+$icon-chevron-down: "\e922";
+$icon-chevron-left: "\e923";
+$icon-chevron-right: "\e924";
+$icon-chevron-up: "\e925";
+$icon-grid: "\e926";
+$icon-heart: "\e927";
+$icon-mail: "\e928";
+$icon-onerockwell2: "\e929";
+$icon-maximize-2: "\e92a";
+$icon-minimize-2: "\e92b";
+$icon-onerockwell: "\e92c";
+$icon-circle: "\e92d";
+$icon-move: "\e930";
+$icon-pause: "\e931";
+$icon-play: "\e932";
+$icon-refresh-cw: "\e934";
+$icon-search2: "\e939";
+$icon-close: "\e937";
+$icon-navigation: "\e938";
+$icon-search: "\e939";
+$icon-checkbox_empty: "\e93a";
+$icon-checkbox_filled: "\e93b";
+$icon-amazon: "\ea87";
+$icon-google: "\ea88";
+$icon-google-plus: "\ea8b";
+$icon-facebook: "\ea90";
+$icon-instagram: "\ea92";
+$icon-whatsapp: "\ea93";
+$icon-twitter: "\ea96";
+$icon-youtube: "\ea9d";
+$icon-vimeo: "\eaa0";
+$icon-appleinc: "\eabe";
+$icon-android: "\eac0";
+$icon-linkedin2: "\eaca";
+$icon-pinterest: "\ead1";
+$icon-paypal: "\ead8";
+$icon-safari: "\eadd";
+$icon-facebook-f-brands: "\e92e";
+$icon-instagram-brands: "\e92f";
+$icon-map-marker-alt-solid: "\e933";
+$icon-pinterest-brands: "\e936";
+$icon-search-solid: "\e939";
+$icon-shopping-bag-solid: "\e919";
+$icon-twitter-brands: "\e93e";
+$icon-Delete: "\e93f";
+$icon-phone: "\e942";
+$icon-Low-Emissions: "\e900";
+$icon-Natural-Ingredients: "\e917";
+$icon-No-animal-testing: "\e940";
+$icon-Responsible-Packaging: "\e941";
+$icon-cellcosmet: "\e901";
+$iconFont: 'onerockwell';
+$iconFontHash: 'zc4ni4';
+
+$fontPath: '../styles/fonts/';
+$fontFamilyFallback: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$fontFamily-1: 'HelveticaNeue';
+$fontFamily-2: 'HelveticaNeueLt';
+$fontFamily-3: 'HelveticaNeueMd';
+$fontFamily-4: 'HelveticaNeueBd';
+// $fontFamily-5: 'AvenirNext-Regular';
+
+$baseFontSize: 16px;
+$baseFontWeight: 300;
+$baseLineHeight: 1.6;
+
+$cta-height: 41px;
+$cta-height-mobile: 41px;
+$cta-border-width: 1px;
+$cta-side-padding: 16px;
+
+/*============================================================================
+  Fonts & Icons helper mixins
+==============================================================================*/
+
+@mixin font-family-import($fileName,$svg:false,$italic:null) {
+    @if $svg {
+        @font-face {
+            font-family: $fileName;
+            src: url('../fonts/#{$fileName}.woff') format('woff'), // Pretty Modern Browsers
+               url('../fonts/#{$fileName}.ttf') format('truetype'), // Safari, Android, iOS
+               url('../fonts/#{$fileName}.svg') format('svg'); // Legacy iOS
+            font-weight: normal;
+            font-style: normal;
+        }
+    } @else {
+        @font-face {
+            font-family: $fileName;
+            src: url('../fonts/#{$fileName}.woff') format('woff'), // Pretty Modern Browsers
+               url('../fonts/#{$fileName}.ttf') format('truetype'), // Safari, Android, iOS
+               url('../fonts/#{$fileName}.woff2') format('woff2'); // Pretty Modern Browsers
+            font-weight: normal;
+            font-style: normal;
+        }
+        @if $italic {
+            @font-face {
+                font-family: $fileName;
+                src: url('../fonts/#{$fileName}-Italic.woff') format('woff'), // Pretty Modern Browsers
+                   url('../fonts/#{$fileName}-Italic.ttf') format('truetype'), // Safari, Android, iOS
+                   url('../fonts/#{$fileName}-Italic.woff2') format('woff2'); // Legacy iOS
+                font-weight: normal;
+                font-style: italic;
+            }
+        }
+    }
+}
+
+@mixin font-smoothing($value) {
+    @if $value == antialiased {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    } @else {
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    }
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+@mixin base-font {
+    @include font-smoothing(antialiased);
+    font-weight: normal;
+}
+
+@mixin icon-fonts-base(){
+    font-family: #{$iconFont} !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+}
+@mixin icon-fonts($content, $color, $size){
+    @include icon-fonts-base();
+    @if $color != '' { color: $color; }
+    content: $content;
+    font-size: $size;
+    text-indent: 0;
+}
+@mixin icon-fonts-before($content, $color, $size){
+    text-decoration: none;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    @include hideIconFallbackText();
+    &:before {
+        display: block;
+        @include icon-fonts($content, $color, $size);
+    }
+}
+@mixin icon-fonts-after($content, $color, $size){
+    text-decoration: none;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    @include hideIconFallbackText();
+    &:after {
+        display: block;
+        @include icon-fonts($content, $color, $size);
+    }
+}
+@mixin icon-btn($content, $color, $size) {
+    @include icon-fonts-before($content, $color, $size);
+    border: 0;
+    background: none;
+    padding: 0;
+}
+
+/*============================================================================
+  Global Fonts
+==============================================================================*/
+@mixin base-font-1 { 
+    // HelveticaNeue Regular
+    @include base-font;
+    font-family: $fontFamily-1, $fontFamilyFallback;
+}
+@mixin base-font-2 { 
+    // HelveticaNeue Light
+    @include base-font;
+    font-family: $fontFamily-2, $fontFamilyFallback;
+}
+@mixin base-font-3 { 
+    // HelveticaNeue Medium
+    @include base-font;
+    font-family: $fontFamily-3, $fontFamilyFallback;
+}
+@mixin base-font-4 { 
+    // HelveticaNeue Bold
+    @include base-font;
+    font-family: $fontFamily-4, $fontFamilyFallback;
+}
+// @mixin base-font-5 { 
+//     // AvenirNext-Regular
+//     @include base-font;
+//     font-family: $fontFamily-5, $fontFamilyFallback;
+// }
+
+// Headline/XL Heading Regular
+@mixin title-font-1 {
+    @include base-font-1;        
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 44px;
+    font-size: 36px;
+    letter-spacing: 1.8px;
+    @include query-large-up {
+        letter-spacing: 2.8px;
+        font-size: 56px;       
+        line-height: 64px;      
+    }
+}
+// Headline/XL Heading Light
+@mixin title-font-1-light {
+    @include base-font-2;        
+    text-transform: uppercase;
+    line-height: 44px;
+    font-size: 36px;
+    letter-spacing: 1.8px;
+    @include query-large-up {   
+        letter-spacing: 2.8px;
+        font-size: 56px;       
+        line-height: 64px;  
+    }
+}
+// Headline/H1 Regular
+@mixin title-font-2 {
+    @include base-font-1;
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: 1.6px;
+    font-weight: 400;
+    text-transform: uppercase;
+    @include query-large-up {
+        letter-spacing: 2.1px;
+        font-size: 42px;
+        line-height: 48px;
+    }
+}
+// Headline/H1 Light
+@mixin title-font-2-light {
+    @include base-font-2;
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: 1.6px;
+    font-weight: 300;
+    text-transform: uppercase;
+    @include query-large-up {
+        letter-spacing: 2.1px;
+        font-size: 42px;
+        line-height: 48px;
+    }
+}
+// Headline/H2 Regular
+@mixin title-font-3 {
+    @include base-font-1;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 1.2px;
+    @include query-large-up {
+        font-size: 36px;
+        line-height: 44px;
+        letter-spacing: 1.8px;
+    }
+}
+// Headline/H2 Light
+@mixin title-font-3-light {
+    @include base-font-2;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 1.2px;
+    font-weight: 300;
+    @include query-large-up {
+        font-size: 36px;
+        line-height: 44px;
+        letter-spacing: 1.8px;
+    }
+}
+// Headline/H3 Regular
+@mixin title-font-4 {
+    @include base-font-1;
+    line-height: 28px;
+    letter-spacing: 1px;
+    font-size: 20px;
+    text-transform: uppercase;
+    @include query-large-up {
+        font-size: 32px;
+        line-height: 36px;
+        letter-spacing: 1.6px;
+    }
+}
+// Headline/H3 Light
+@mixin title-font-4-light {
+    @include base-font-2;
+    line-height: 28px;
+    letter-spacing: 1px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 300;
+    @include query-large-up {
+        font-size: 32px;
+        line-height: 36px;
+        letter-spacing: 1.6px;
+    }
+}
+// Headline/H4 Regular
+@mixin title-font-5 {
+    @include base-font-1;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    @include query-large-up {
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 1.2px;
+    }
+}
+// Headline/H4 Light
+@mixin title-font-5-light {
+    @include base-font-2;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 300;
+    @include query-large-up {
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 1.2px;
+    }
+}
+// Headline/H5 Regular
+@mixin title-font-6 {
+    @include base-font-1;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+// Headline/H5 Light 
+@mixin title-font-6-light {
+    @include base-font-2;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+// Body & Utility/Eyebrow Large
+@mixin title-font-7 {
+    @include base-font-3;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+// Body & Utility/Paragraph Large
+@mixin body-font-1 {
+    @include base-font-2;
+    font-weight: 300;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 28px;
+}
+// Body & Utility/Paragraph Large emphasis
+@mixin body-font-1-emphasis {
+    @include base-font-1;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 28px;
+}
+// Body & Utility/Paragraph Regular
+@mixin body-font-2 {
+    @include base-font-2;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+}
+// Body & Utility/Paragraph Regular emphasis
+@mixin body-font-2-emphasis {
+    @include base-font-1;
+    font-size: 16px;
+    line-height: 24px;
+}
+// Body & Utility/Paragraph Small
+@mixin body-font-3 {
+    @include base-font-2;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+}
+// Body & Utility/Paragraph Small emphasis
+@mixin body-font-3-emphasis {
+    @include base-font-1;
+    font-size: 14px;
+    line-height: 20px;
+}
+// Body & Utility/Label
+@mixin body-font-4 {
+    @include base-font-3;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.8px;
+}
+// Body & Utility/Small label
+@mixin body-font-5 {
+    @include base-font-3;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.7px;
+}
+// Body & Utility/Caption
+@mixin body-font-6  {
+    @include base-font-1;
+    font-size: 12px;
+    line-height: 16px;
+}
+/* Body & Utility/CTA */
+@mixin body-font-7 {
+    @include base-font-4;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+}
+/* Body & Utility/Small CTA */
+@mixin body-font-8 {
+    @include base-font-4;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+}
+/* Body & Utility/Custom */
+@mixin body-utility-1 {
+    @include base-font-3;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.7px;
+    @include query-large-up {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.8px;
+    }
+}
+@mixin body-utility-2 {
+    @include base-font-3;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    @include query-large-up {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.7px;
+    }
+}
+@mixin body-utility-3 {
+    @include base-font-1;
+    font-size: 12px;
+    font-weight: 450;
+    line-height: 15px;
+    letter-spacing: 1px;
+    @include query-large-up {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0;
+    }
+}
+@mixin body-utility-4 {
+    @include base-font-1;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    @include query-large-up {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.7px;
+    }
+}
+
+/*============================================================================
+  Navigation
+==============================================================================*/
+@mixin nav-font-1 {
+    @include body-font-1;
+}
+
+/*============================================================================
+  CTA and CTA Links
+==============================================================================*/
+// Body & Utility/CTA
+@mixin cta-font-1 {
+    @include base-font-3;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+}
+// Body & Utility/Small CTA
+@mixin cta-font-2 {
+    @include base-font-1;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 2px;
+    @include query-large-up {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 2px;
+    }
+}
+// Navigation font
+@mixin cta-font-3 {
+    @include base-font-1;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.05em;
+    @include query-large-up {
+        font-size: 14px;
+        line-height: 24px;
+        letter-spacing: 0.08em;
+    }
+}
+@mixin cta {
+    // CTA common styles
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+    height: $cta-height-mobile;
+    border: $cta-border-width solid;
+    outline: $cta-border-width solid transparent;
+    background: transparent;
+    padding: 3px $cta-side-padding 0;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    @include transition(background $slow, color $slow, border $slow);
+    @include query-large-up {
+        width: auto;
+        height: $cta-height;
+    }
+    &:not(.disabled) {
+        &:active {
+            background: transparent !important;
+            outline-offset: -$cta-border-width*2;
+        }
+    }
+    &.disabled {
+        @include opacity(0.4);
+    }
+}
+// CTA / Primary
+@mixin cta-1 {
+    @include cta-font-1;
+    @include cta;
+    color: $grayscale700;
+    background: $white;
+    border: 1px solid $white;
+    &:not(.disabled) {
+        @include query-large-up {
+            &:hover, &:focus {
+                color: $white;
+                background: $grayscale700;
+                border-color: $grayscale700;
+            }
+        }
+        &:active {
+            color: $white;
+        }
+    }
+}
+// CTA / Secondary
+@mixin cta-2 {
+    @include cta-font-1;
+    @include cta;
+    color: $grayscale800;
+    background: $white;
+    border: 1px solid $grayscale800;
+    &:not(.disabled) {
+        @include query-large-up {
+            &:hover, &:focus {
+                color: $white; 
+                background: $grayscale800;
+                border-color: $grayscale800;
+            }
+        }
+        &:active {
+            color: $white;
+        }
+    }
+}
+
+@mixin cta-3 {
+    @include cta-font-1;
+    @include cta;
+    color: $black;
+    background: transparent;
+    border: 1px solid $black;
+    &:not(.disabled) {
+        @include query-large-up {
+            &:hover, &:focus {
+                color: $white; 
+                background: $black;
+                border-color: $white;
+            }
+        }
+        &:active {
+            color: $white;
+        }
+    }
+}
+@mixin cta-link {
+    // CTA Link common styles
+    text-transform: uppercase;
+}
+@mixin cta-link-1 {
+    @include cta-font-1;
+    @include cta-link;
+    color: $black;
+    & > span {
+        @include underlineAnimation($black);
+        display: inline-block;
+    }
+}
+@mixin cta-link-2 {
+    @include cta-font-1;
+    @include cta-link;
+    color: $white;
+    & > span {
+        @include underlineAnimation($white);
+        display: inline-block;
+    }
+}
+@mixin cta-link-3 {
+    @include body-font-6;
+    text-decoration: underline;
+}
+
+/*============================================================================
+  TAGS
+==============================================================================*/
+// Tags / Product Tags
+@mixin tag-1 {
+    @include base-font-1;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: $cellcosmetRed;
+    background: transparent;
+    border: 1px solid $cellcosmetRed;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 103px;
+    width: 100%;
+    padding-top: 2px;
+    @include query-medium-down {
+        font-size: 9px;
+        line-height: 16px;
+        letter-spacing: 0.9px;
+        height: 26px;
+        max-width: 82px;
+    }
+}
+// Tags 
+@mixin tag-2 {
+    @include base-font-1;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    color: $white;
+    background: $black;
+    border-color: transparent;
+    outline: 0;
+    height: 30px;
+}

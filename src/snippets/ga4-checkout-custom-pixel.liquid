@@ -1,0 +1,126 @@
+{% comment %}
+    Backup of script for custom web pixel alternative for GA4 checkout tracking
+    To be added within a custom pixel in Shopify admin > Settings > Customer Events
+    Utilizes Shopify's published customer events to collect and send data at appropriate times
+    For more info, see: https://help.shopify.com/en/manual/promoting-marketing/pixels/custom-pixels/code
+
+    NOTE: Do not include the <script></script> tags when adding to the custom pixel.  
+    Those tags are only included in this file for formatting purposes.
+    If using this custom pixel approach for checkout events, be sure those events are not sent elsewhere as well.
+{% endcomment %}
+
+<script>// Remove script tag
+
+// Step 1. Add and initialize your third-party JavaScript pixel (make sure to exclude HTML)
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','XXX-XXXXXXX'); // Update with correct GTM ID
+
+window.dataLayer = window.dataLayer || [];
+
+// Step 2. Subscribe to customer events using the analytics.subscribe() API
+
+function pushToDataLayer(dataObj) {
+  window.dataLayer.push({ ecommerce: null });
+  window.dataLayer.push(dataObj);
+}
+                        
+function getEventItems(data) {
+  var gtmCheckout = data;
+  var itemsArray = [];
+
+  for (var item of gtmCheckout.lineItems) {
+    var itemObj = {
+      item_id: item.variant.sku,
+      item_name: item.variant.product.title,
+      item_brand: item.variant.product.vendor,
+      item_variant: item.variant.title,
+      price: item.variant.price.amount,
+      quantity: item.quantity
+    };
+
+    itemsArray.push(itemObj);
+  }
+
+  return itemsArray;
+}
+
+analytics.subscribe('payment_info_submitted', (event) => {
+  var gtmCheckout = event.data.checkout;
+  var items = getEventItems(gtmCheckout);
+
+  var dataLayerObject = {
+    event: "dl_add_payment_info",
+    ecommerce: {
+      currency: gtmCheckout.currencyCode,
+      value: gtmCheckout.totalPrice.amount,
+      items: items
+    }
+  }
+
+  pushToDataLayer(dataLayerObject);
+})
+
+
+analytics.subscribe('checkout_started', (event) => {
+  var gtmCheckout = event.data.checkout;
+  var items = getEventItems(gtmCheckout);
+
+  var dataLayerObject = {
+    event: "dl_begin_checkout",
+    ecommerce: {
+      currency: gtmCheckout.currencyCode,
+      value: gtmCheckout.totalPrice.amount,
+      items: items
+    }
+  }
+
+  pushToDataLayer(dataLayerObject);
+})
+
+analytics.subscribe('checkout_completed', (event) => {
+  var gtmCheckout = event.data.checkout;
+  var items = getEventItems(gtmCheckout);
+  
+  var dataLayerObject = {
+    event: "dl_purchase",
+    ecommerce: {
+      transaction_id: gtmCheckout.order.id,
+      currency: gtmCheckout.currencyCode,
+      value: gtmCheckout.totalPrice.amount,
+      tax: gtmCheckout.totalTax.amount,
+      shipping: gtmCheckout.shippingLine.price.amount,
+      items: items
+    }
+  }
+  pushToDataLayer(dataLayerObject);
+})
+
+// Remove script tag</script>
+
+<script>// Remove script tag
+
+  // Alternative init: only initialize on checkout & order status pages
+  // For use when: you're implementing GTM site-wide via the repo but using custom pixels for checkout events
+  // We don't want to include GTM twice and send duplicates of auto-collected events
+
+  (function() {
+    let pageURL = init.context.document.location.href;
+    if (pageURL.includes('checkout') || (pageURL.includes('order') && !pageURL.includes('account/order'))) {
+      console.log("init GTM checkout");
+
+      let initGTM = function(w,d,s,l,i) {
+        w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      }
+
+      initGTM(window,document,'script','dataLayer','GTM-XXXXXXX');
+      window.dataLayer = window.dataLayer || [];
+    }
+  })();
+  
+// Remove script tag</script>

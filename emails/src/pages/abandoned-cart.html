@@ -1,0 +1,44 @@
+---
+description: Your shopping cart is waiting for you
+---
+
+{% capture email_title %} Your shopping cart is waiting for you {% endcapture %}
+{% capture email_body %}
+{% if billing_address.first_name %}Hi {{ billing_address.first_name }}, w{% else %}
+W{% endif %}e noticed there {% if item_count == 1 %}was an item{% else %}were some items{% endif %} left in your shopping cart.
+If you're ready to complete your order, your cart is waiting for your return.
+{% endcapture %}
+
+<container class="abandoned-cart">
+
+  <row>
+    <columns>
+      
+      <h2 class="email-title">{{ email_title }}</h2>
+      <div class="main-content">
+        {% if custom_message != blank %}
+        <p>{{ custom_message }}</p>
+        {% elsif reserve_inventory_until %}
+        <p>{{ email_body }}</p>
+        {% endif %}
+      </div>
+
+      <table class="actions" width="100%">
+        <tr>
+          <td class="button__cell first"><a href="{{ url }}" class="button__text">Complete your purchase</a></td>
+          {% if shop.url %}
+            <td class="button__cell last secondary"><a href="{{ shop.url }}" class="button__text">Visit Store</a></td>
+          {% endif %}
+        </tr>
+      </table>
+
+      <row class="section order-list">
+        <columns>
+          {{> product_list}}
+        </columns>
+      </row>
+
+    </columns>
+  </row>
+
+</container>

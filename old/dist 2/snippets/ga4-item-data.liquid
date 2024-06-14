@@ -1,0 +1,6 @@
+<script type="application/json" 
+    data-ga-item-json 
+    {% if itemVariant %}data-ga-variant-id="{{itemVariant.id}}"{% endif %}
+>
+    {{- item | json -}}
+</script>

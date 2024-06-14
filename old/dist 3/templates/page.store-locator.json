@@ -1,0 +1,10 @@
+{
+    "sections": {
+        "store-locator": {
+            "type": "page-store-locator"
+        }
+    },
+    "order": [
+        "store-locator"
+    ]
+}
