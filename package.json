@@ -2,7 +2,7 @@
   "name": "shopify-theme",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.config.js",
     "start": "webpack --watch"
   },
   "devDependencies": {
