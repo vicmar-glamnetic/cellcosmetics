@@ -1,2 +1,0 @@
-(self.webpackChunkproject_x=self.webpackChunkproject_x||[]).push([[511],{729:(e,r,t)=>{"use strict";t.r(r);var n=t(978),a=t(353),c=t(56);(0,n.Z)((()=>{ORW.enableGTM&&(ORW.marketing=ORW.marketing||new a.Z,ORW.marketing.viewCart());const e=document.querySelector("main form.cart");e&&new c.Z({el:e})}))}}]);
-//# sourceMappingURL=theme.ae6dfc4c1b074239786d.js.map

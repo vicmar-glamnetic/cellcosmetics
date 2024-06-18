@@ -93,27 +93,27 @@ $cta-side-padding: 16px;
     @if $svg {
         @font-face {
             font-family: $fileName;
-            src: url('../fonts/#{$fileName}.woff') format('woff'), // Pretty Modern Browsers
-               url('../fonts/#{$fileName}.ttf') format('truetype'), // Safari, Android, iOS
-               url('../fonts/#{$fileName}.svg') format('svg'); // Legacy iOS
+            src: url('../styles/fonts/#{$fileName}.woff') format('woff'), // Pretty Modern Browsers
+               url('../styles/fonts/#{$fileName}.ttf') format('truetype'), // Safari, Android, iOS
+               url('../styles/fonts/#{$fileName}.svg') format('svg'); // Legacy iOS
             font-weight: normal;
             font-style: normal;
         }
     } @else {
         @font-face {
             font-family: $fileName;
-            src: url('../fonts/#{$fileName}.woff') format('woff'), // Pretty Modern Browsers
-               url('../fonts/#{$fileName}.ttf') format('truetype'), // Safari, Android, iOS
-               url('../fonts/#{$fileName}.woff2') format('woff2'); // Pretty Modern Browsers
+            src: url('../styles/fonts/#{$fileName}.woff') format('woff'), // Pretty Modern Browsers
+               url('../styles/fonts/#{$fileName}.ttf') format('truetype'), // Safari, Android, iOS
+               url('../styles/fonts/#{$fileName}.woff2') format('woff2'); // Pretty Modern Browsers
             font-weight: normal;
             font-style: normal;
         }
         @if $italic {
             @font-face {
                 font-family: $fileName;
-                src: url('../fonts/#{$fileName}-Italic.woff') format('woff'), // Pretty Modern Browsers
-                   url('../fonts/#{$fileName}-Italic.ttf') format('truetype'), // Safari, Android, iOS
-                   url('../fonts/#{$fileName}-Italic.woff2') format('woff2'); // Legacy iOS
+                src: url('../styles/fonts/#{$fileName}-Italic.woff') format('woff'), // Pretty Modern Browsers
+                   url('../styles/fonts/#{$fileName}-Italic.ttf') format('truetype'), // Safari, Android, iOS
+                   url('../styles/fonts/#{$fileName}-Italic.woff2') format('woff2'); // Legacy iOS
                 font-weight: normal;
                 font-style: italic;
             }

@@ -1,0 +1,54 @@
+{%- assign templateType = template | replace: '.', ' ' | truncatewords: 1, '' | handle -%}
+<!doctype html>
+<html class="no-js supports-no-cookies html-template-{{ templateType }}" lang="{{ shop.locale }}">
+    <head>
+        {% comment %}
+            Meta tags
+        {% endcomment %}
+        {% include '1r-head-code' %}
+
+        {% comment %}
+          Template specific overides
+        {% endcomment %}
+        {{ content_for_header }}
+        <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
+    </head>
+    <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in{% endif %} template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {% if template.suffix %}template-suffix-{{ template.suffix }}{% endif %} page-{{ page_title | handle }}" data-tempsuffix="{{ template.suffix }}">
+        <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+        <button id="global-overlay" class=""></button>
+        
+        {% if settings.custom_body_code != blank %}
+            {{ settings.custom_body_code }}
+        {% endif %}
+
+        {% include 'header' %}
+
+        <main role="main" id="MainContent">
+            {{ content_for_layout }}
+        </main>
+        
+        {% include 'footer' %}
+    
+        {%- if settings.sub_modal_enable and templateType == 'index' -%}
+            {% include 'subscribe-modal' %}
+        {%- endif -%}
+        
+        {%- if settings.cookie_banner_enable -%}
+            {% include 'cookie-banner' %}
+        {%- endif -%}
+        
+        <div id="responsive-indicator" class="hide"></div>
+        
+        {%- if settings.product_compare_enable != blank -%}
+            {% include 'product-compare' %}
+        {%- endif -%}
+
+        {% comment %}
+            1R FE Framework including CSS and JS
+        {% endcomment %}
+        {% include '1r-framework' %}
+        {% render 'country-modal' %}
+
+        <script src="{{ 'bundle.js' | asset_url }}" defer></script>
+    </body>
+</html>

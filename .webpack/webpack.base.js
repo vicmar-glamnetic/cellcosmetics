@@ -3,6 +3,7 @@ const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const plugins = require('./plugins');
 const rules = require('./rules');
 const LogAssetsPlugin = require('./LogAssetsPlugin');
+const CombinedCsvMappingPlugin = require('./plugins/CombinedCsvMappingPlugin');  // Add this line
 
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development';
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -52,6 +53,9 @@ module.exports = (entryName) => ({
         plugins.progress(),
         new LogAssetsPlugin({
             outputDir: join(__dirname, '..', 'dist')
+        }),
+        new CombinedCsvMappingPlugin({  // Add this plugin
+            outputDir: join(__dirname, '..', 'mappings')
         }),
     ],
     resolve: {
