@@ -43,10 +43,6 @@
             {% include 'product-compare' %}
         {%- endif -%}
 
-        {% comment %}
-            1R FE Framework including CSS and JS
-        {% endcomment %}
-        {% include '1r-framework' %}
         {% render 'country-modal' %}
 
         <script src="{{ 'bundle.js' | asset_url }}" defer></script>
